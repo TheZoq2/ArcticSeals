@@ -20,6 +20,8 @@ void Game::setup()
     world.addEntity(testEntity2);
 
     mainUIWindow.create(sf::Vector2f(0, 0), sf::Vector2f(150, 900), sf::Color(60,60,60));
+
+    mouseHandler.addListener(&mouseTest);
 }
 
 void Game::loop()
@@ -42,6 +44,10 @@ void Game::loop()
             unsigned int height = 720;
             
             window->setSize(sf::Vector2<unsigned int>(width, height));
+        }
+        if(event.type == sf::Event::MouseMoved)
+        {
+            mouseHandler.handleMoveEvent(&event);
         }
     }
 

@@ -6,6 +6,7 @@
 #include "world.h"
 #include "staticentity.h"
 #include "uiwindow.h"
+#include "mouseeventhandler.h"
 
 class Game
 {
@@ -26,6 +27,17 @@ private:
     sf::Texture texture;
 
     UIWindow mainUIWindow;
+    MouseEventHandler mouseHandler;
+
+    class MouseEventTest : public MouseListener
+    {
+        public:
+            void onMouseMove(MouseData data)
+            {
+                std::cout << "x: " << data.position.x << std::endl;
+            }
+    };
+    MouseEventTest mouseTest;
 };
 
 #endif

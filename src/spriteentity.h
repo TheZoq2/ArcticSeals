@@ -7,7 +7,7 @@
 #include "entity.h"
 #include "sprite.h"
 
-class StaticEntity : public Entity
+class SpriteEntity : public Entity
 {
 public:
     void create(sf::Texture* texture);

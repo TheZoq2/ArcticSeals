@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "world.h"
-#include "staticentity.h"
+#include "spriteentity.h"
 #include "uiwindow.h"
 #include "mouseeventhandler.h"
 
@@ -25,19 +25,10 @@ private:
     World world;
 
     sf::Texture texture;
+    sf::Texture texture2;
 
     UIWindow mainUIWindow;
     MouseEventHandler mouseHandler;
-
-    class MouseEventTest : public MouseListener
-    {
-        public:
-            void onMouseMove(MouseData data)
-            {
-                std::cout << "x: " << data.position.x << std::endl;
-            }
-    };
-    MouseEventTest mouseTest;
 };
 
 #endif

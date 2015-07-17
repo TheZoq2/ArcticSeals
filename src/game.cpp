@@ -5,16 +5,18 @@ void Game::setup()
     this->window = new sf::RenderWindow(sf::VideoMode(800,600), "Test");
 
     texture.loadFromFile("../media/img/rockblob.png");
-    StaticEntity* testEntity = new StaticEntity();
-    StaticEntity* testEntity1 = new StaticEntity();
-    StaticEntity* testEntity2 = new StaticEntity();
-    testEntity->create(&texture);
+    texture2.loadFromFile("../media/img/fir3.png");
+    SpriteEntity* testEntity = new SpriteEntity();
+    SpriteEntity* testEntity1 = new SpriteEntity();
+    SpriteEntity* testEntity2 = new SpriteEntity();
+    testEntity->create(&texture2);
     testEntity1->create(&texture);
     testEntity2->create(&texture);
     
-    testEntity1->setPosition(sf::Vector2f(50, 0));
+    testEntity->setPosition(sf::Vector2f(0, 0));
+    testEntity->setDepth(1);
+    testEntity1->setPosition(sf::Vector2f(0, 0));
     testEntity2->setPosition(sf::Vector2f(200, 50));
-    testEntity->setPosition(sf::Vector2f(600, 50));
 
     //TODO: MEmory leak
     EntityGroup* testGroup = new EntityGroup();
@@ -22,15 +24,14 @@ void Game::setup()
 
     testGroup->addEntity(testEntity);
     testGroup->addEntity(testEntity1);
-    testGroup2->addEntity(testEntity2);
+    //testGroup2->addEntity(testEntity2);
     
     world.addEntityGroup(testGroup, 1);
     world.addEntityGroup(testGroup2, 0.5);
 
-    mainUIWindow.create(sf::Vector2f(0, 0), sf::Vector2f(150, 900), sf::Color(60,60,60));
+    //mainUIWindow.create(sf::Vector2f(0, 0), sf::Vector2f(150, 900), sf::Color(60,60,60));
 
     mouseHandler.setup(this->window);
-    mouseHandler.addListener(&mouseTest);
 }
 
 void Game::loop()
@@ -48,10 +49,11 @@ void Game::loop()
         {
             //unsigned int width = event.size.width;
             //unsigned int height = event.size.height;
-            unsigned int width = 1920;
-            unsigned int height = 1080;
+            unsigned int width = 1600;
+            unsigned int height = 900;
             
             window->setSize(sf::Vector2<unsigned int>(width, height));
+            window->setPosition(sf::Vector2i(0,0));
         }
         if(event.type == sf::Event::MouseMoved)
         {
@@ -62,7 +64,7 @@ void Game::loop()
     //Redraw stuff
     window->clear(sf::Color::Black);
     
-    world.draw(window, sf::Vector2f(-200, 0));
+    world.draw(window, sf::Vector2f(0, 0));
 
     mainUIWindow.draw(window, sf::Vector2f(0, 0));
 

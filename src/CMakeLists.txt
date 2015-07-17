@@ -22,7 +22,7 @@ set(EXECUTABLE_NAME "myproject")
 add_executable(${EXECUTABLE_NAME} 
     main.cpp 
     game.cpp
-    staticentity.cpp
+    spriteentity.cpp
     sprite.cpp
     world.cpp
     entity.cpp
@@ -31,7 +31,7 @@ add_executable(${EXECUTABLE_NAME}
     mouseeventhandler.cpp
     entitygroup.cpp
     game.h
-    staticentity.h
+    spriteentity.h
     sprite.h
     world.h
     entity.h

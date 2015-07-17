@@ -7,15 +7,21 @@ World::~World()
 {
 }
 
-void World::addEntity(Entity* entity)
+void World::addEntityGroup(EntityGroup* group, float paralaxAmount)
 {
-    this->entities.push_back(entity);
+    Layer layer; //The new layer to add;
+    layer.eGroup = group;
+    layer.paralaxAmount = paralaxAmount;
+
+    layers.push_back(layer);
 }
 
 void World::draw(sf::RenderWindow* window, sf::Vector2f cameraPos)
 {
-    for(uint16_t i = 0; i < entities.size(); i++)
+    for(std::vector<Layer>::iterator it = layers.begin(); it != layers.end(); it++)
     {
-        entities.at(i)->draw(window, cameraPos);
+        Layer layer = *it;
+
+        layer.eGroup->draw(window, cameraPos * layer.paralaxAmount);
     }
 }

@@ -25,9 +25,11 @@ add_executable(${EXECUTABLE_NAME}
     staticentity.cpp
     sprite.cpp
     world.cpp
+    entity.cpp
     uicomponent.cpp
     uiwindow.cpp
     mouseeventhandler.cpp
+    entitygroup.cpp
     game.h
     staticentity.h
     sprite.h
@@ -36,6 +38,7 @@ add_executable(${EXECUTABLE_NAME}
     uicomponent.h
     uiwindow.h
     mouseeventhandler.h
+    entitygroup.h
     )
 
 

@@ -14,19 +14,27 @@ void Game::setup()
     
     testEntity1->setPosition(sf::Vector2f(50, 0));
     testEntity2->setPosition(sf::Vector2f(200, 50));
+    testEntity->setPosition(sf::Vector2f(600, 50));
 
-    world.addEntity(testEntity);
-    world.addEntity(testEntity1);
-    world.addEntity(testEntity2);
+    //TODO: MEmory leak
+    EntityGroup* testGroup = new EntityGroup();
+    EntityGroup* testGroup2 = new EntityGroup();
+
+    testGroup->addEntity(testEntity);
+    testGroup->addEntity(testEntity1);
+    testGroup2->addEntity(testEntity2);
+    
+    world.addEntityGroup(testGroup, 1);
+    world.addEntityGroup(testGroup2, 0.5);
 
     mainUIWindow.create(sf::Vector2f(0, 0), sf::Vector2f(150, 900), sf::Color(60,60,60));
 
+    mouseHandler.setup(this->window);
     mouseHandler.addListener(&mouseTest);
 }
 
 void Game::loop()
 {
-
     //Handle window events
     sf::Event event;
     while(window->pollEvent(event))
@@ -40,8 +48,8 @@ void Game::loop()
         {
             //unsigned int width = event.size.width;
             //unsigned int height = event.size.height;
-            unsigned int width = 1280;
-            unsigned int height = 720;
+            unsigned int width = 1920;
+            unsigned int height = 1080;
             
             window->setSize(sf::Vector2<unsigned int>(width, height));
         }

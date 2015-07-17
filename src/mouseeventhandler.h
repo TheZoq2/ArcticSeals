@@ -21,11 +21,13 @@ public:
 class MouseEventHandler
 {
 public:
-
+    void setup(sf::Window* window);
     void addListener(MouseListener* listener);
 
     void handleMoveEvent(sf::Event* event);
 private:
     std::vector<MouseListener*> listeners;
+
+    sf::Window* window;
 };
 #endif

@@ -27,6 +27,10 @@
 *.out
 *.app
 
+#Build directory
+build/*
+debug/*
+
 # Vim
 *.sw*
 

@@ -1,6 +1,9 @@
 #ifndef H_GAME
 #define H_GAME
 
+#include <vector>
+#include <string>
+
 #include <SFML/Graphics.hpp>
 
 #include "world.h"
@@ -29,6 +32,10 @@ private:
 
     UIWindow mainUIWindow;
     MouseEventHandler mouseHandler;
+
+    EntityGroup* generateForestBackground();
+
+    float cameraX;
 };
 
 #endif

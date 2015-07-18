@@ -46,7 +46,7 @@ void EntityGroup::onEntityDepthChange(Entity* entity)
     insertEntity(entity);
 }
 
-void EntityGroup::draw(sf::RenderWindow* window, sf::Vector2f position)
+void EntityGroup::draw(sf::RenderWindow* window)
 {
     std::vector<Entity*>::iterator it;
 
@@ -54,6 +54,6 @@ void EntityGroup::draw(sf::RenderWindow* window, sf::Vector2f position)
     {
         Entity* entity = *it;
 
-        entity->draw(window, position);
+        entity->draw(window);
     }
 }

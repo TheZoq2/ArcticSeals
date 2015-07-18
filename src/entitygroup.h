@@ -15,7 +15,7 @@ public:
     //TODO: Make sure entity is only added once
     void addEntity(Entity* entity);
 
-    void draw(sf::RenderWindow* window, sf::Vector2f position);
+    void draw(sf::RenderWindow* window);
 
     void onEntityDepthChange(Entity* entity);
 

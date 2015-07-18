@@ -11,7 +11,7 @@ class Entity
 public:
     Entity();
     
-    virtual void draw(sf::RenderWindow* window, sf::Vector2f cameraPos) = 0;
+    virtual void draw(sf::RenderWindow* window) = 0;
 
     void setDepth(int depth);
     void setGroup(EntityGroup* group);

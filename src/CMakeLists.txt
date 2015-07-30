@@ -17,6 +17,8 @@ configure_file(
   )
 include_directories("${PROJECT_BINARY_DIR}")
 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs")
+
 # Define sources and executable
 set(EXECUTABLE_NAME "myproject")
 add_executable(${EXECUTABLE_NAME} 
@@ -30,6 +32,11 @@ add_executable(${EXECUTABLE_NAME}
     uiwindow.cpp
     mouseeventhandler.cpp
     entitygroup.cpp
+    physicsentity.cpp
+    line.cpp
+    vec2f.cpp
+    platform.cpp
+    player.cpp
     game.h
     spriteentity.h
     sprite.h
@@ -39,6 +46,10 @@ add_executable(${EXECUTABLE_NAME}
     uiwindow.h
     mouseeventhandler.h
     entitygroup.h
+    line.h
+    physicsentity.h
+    vec2f.h
+    platform.h
     )
 
 

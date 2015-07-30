@@ -5,6 +5,10 @@ Entity::Entity()
     this->depth = 0; //Setting the default depth
 }
 
+void Entity::setPosition(Vec2f pos)
+{
+    this->pos = pos;
+}
 void Entity::setDepth(int depth)
 {
     this->depth = depth;
@@ -15,7 +19,6 @@ void Entity::setDepth(int depth)
         group->onEntityDepthChange(this);
     }
 }
-
 void Entity::setGroup(EntityGroup* group)
 {
     this->group = group;

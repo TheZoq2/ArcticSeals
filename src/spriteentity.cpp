@@ -5,12 +5,12 @@ void SpriteEntity::create(sf::Texture* texture)
     this->sprite.setTexture(*texture);
 }
 
-void SpriteEntity::setPosition(sf::Vector2f pos)
+void SpriteEntity::setPosition(Vec2f pos)
 {
-    this->pos = pos;
+    Entity::setPosition(pos);
     this->sprite.setPosition(pos);
 }
-void SpriteEntity::setScale(sf::Vector2f scale)
+void SpriteEntity::setScale(Vec2f scale)
 {
     sprite.setScale(scale);
 }
@@ -20,15 +20,13 @@ void SpriteEntity::draw(sf::RenderWindow* window)
     window->draw(sprite);
 }
 
-void SpriteEntity::setOrigin(sf::Vector2f origin)
+void SpriteEntity::setOrigin(Vec2f origin)
 {
     this->origin = origin;
 
-    sf::Vector2f coordOrigin;
+    Vec2f coordOrigin;
     coordOrigin.x = sprite.getTextureRect().width * origin.x;
     coordOrigin.y = sprite.getTextureRect().height * origin.y;
-
-    std::cout << coordOrigin.x << std::endl;
 
     this->sprite.setOrigin(coordOrigin);
 }

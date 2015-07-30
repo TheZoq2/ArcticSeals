@@ -3,20 +3,36 @@
 void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
+    done = false;
 
     for(int i = 0; i < 5; i++)
     {
         world.addEntityGroup(generateForestBackground(), i * 0.20);
     }
+    Player* physEnt = new Player(sf::Vector2f(30, 100));
+    physEnt->setPosition(Vec2f(500, -500));
+    world.getMainGroup()->addEntity(physEnt);
 
-    //mainUIWindow.create(sf::Vector2f(0, 0), sf::Vector2f(150, 900), sf::Color(60,60,60));
+    mainUIWindow.create(Vec2f(0, 0), Vec2f(150, 900), sf::Color(60,60,60));
 
     mouseHandler.setup(this->window);
+
+    //Lots of memory leaks here
+    Platform* platform = new Platform();
+    platform->create(Vec2f(0,0));
+    platform->addPoint(-10,0);
+    platform->addPoint(300, 25);
+    platform->addPoint(500, -5);
+    platform->addPoint(4000, 0);
+
+    world.getMainGroup()->addPlatform(platform);
 }
 
 void Game::loop()
 {
-    cameraX += 0.3;
+    float frameTime = (gameClock.getElapsedTime() - lastFrame).asSeconds();
+    lastFrame = gameClock.getElapsedTime();
+
     //Handle window events
     sf::Event event;
     while(window->pollEvent(event))
@@ -28,11 +44,6 @@ void Game::loop()
 
         if(event.type == sf::Event::Resized)
         {
-            //unsigned int width = event.size.width;
-            //unsigned int height = event.size.height;
-            unsigned int width = 1920;
-            unsigned int height = 1080;
-            
             //window->setSize(sf::Vector2<unsigned int>(width, height));
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             window->setView(sf::View(visibleArea));
@@ -46,9 +57,14 @@ void Game::loop()
     //Redraw stuff
     window->clear(sf::Color::Black);
     
-    world.draw(window, sf::Vector2f(cameraX, -256));
+    world.update(frameTime);
+    world.draw(window, Vec2f(cameraX, -256));
 
-    //mainUIWindow.draw(window, sf::Vector2f(0, 0));
+    sf::View view = window->getView();
+
+    view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
+    window->setView(view);
+    mainUIWindow.draw(window, Vec2f(0, 0));
 
     window->display();
 
@@ -104,9 +120,9 @@ EntityGroup* Game::generateForestBackground()
 
         entity->create(textures.at(rand() % textures.size()));
 
-        entity->setOrigin(sf::Vector2f(0.5, 1));
-        entity->setPosition(sf::Vector2f(posX, posY));
-        entity->setScale(sf::Vector2f(scale, scale));
+        entity->setOrigin(Vec2f(0.5, 1));
+        entity->setPosition(Vec2f(posX, posY));
+        entity->setScale(Vec2f(scale, scale));
         entity->setDepth(rand() % 5);
 
         group->addEntity(entity);

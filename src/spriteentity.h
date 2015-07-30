@@ -6,25 +6,25 @@
 
 #include "entity.h"
 #include "sprite.h"
+#include "vec2f.h"
 
 class SpriteEntity : public Entity
 {
 public:
     void create(sf::Texture* texture);
 
-    void setPosition(sf::Vector2f pos);
-    void setScale(sf::Vector2f scale);
+    void setPosition(Vec2f pos);
+    void setScale(Vec2f scale);
 
     void draw(sf::RenderWindow* window);
 
     //Sets the origin of the sprite in percentage.
-    void setOrigin(sf::Vector2f origin);
+    void setOrigin(Vec2f origin);
 private:
     sf::Sprite sprite;
 
-    sf::Vector2f pos;
-    sf::Vector2f scale;
-    sf::Vector2f origin;
+    Vec2f scale;
+    Vec2f origin;
 };
 
 #endif

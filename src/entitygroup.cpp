@@ -1,8 +1,24 @@
 #include "entitygroup.h"
 
+EntityGroup::EntityGroup()
+{
+    nextPlatformID = 0;
+}
 void EntityGroup::addEntity(Entity* entity)
 {
+    entity->setGroup(this);
     this->insertEntity(entity);
+}
+void EntityGroup::addPlatform(Platform* platform)
+{
+
+    IDPlatform newPlatform;
+    newPlatform.id = nextPlatformID;
+    newPlatform.platform = platform;
+
+    this->platforms.push_back(newPlatform);
+
+    nextPlatformID++;
 }
 
 void EntityGroup::insertEntity(Entity* entity)
@@ -46,6 +62,13 @@ void EntityGroup::onEntityDepthChange(Entity* entity)
     insertEntity(entity);
 }
 
+void EntityGroup::update(float frameTime)
+{
+    for(auto it : entities)
+    {
+        it->update(frameTime);
+    }
+}
 void EntityGroup::draw(sf::RenderWindow* window)
 {
     std::vector<Entity*>::iterator it;
@@ -56,4 +79,69 @@ void EntityGroup::draw(sf::RenderWindow* window)
 
         entity->draw(window);
     }
+
+    for(auto it : platforms)
+    {
+        it.platform->draw(window);
+    }
+}
+
+bool EntityGroup::platformExists(uint32_t id)
+{
+    for(auto it : platforms)
+    {
+        if(it.id == id)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+Platform* EntityGroup::getPlatformByID(uint32_t id)
+{
+    for(auto it : platforms)
+    {
+        if(it.id == id)
+        {
+            return it.platform;
+        }
+    }
+    return NULL;
+}
+
+EntityGroup::PlatformCollisionResult EntityGroup::getPlatformCollision(Vec2f originPos, Line* line)
+{
+
+    //Finding which platform, if any is hit first
+    PlatformCollisionResult result;
+    result.intResult.intersected = false;
+    float lowestDist;
+    for(auto it : platforms)
+    {
+        Line::IntersectResult intResult = it.platform->getCollision(line);
+        
+        if(intResult.intersected == true)
+        {
+            float intersectDist = ((Vec2f)(intResult.pos - originPos)).length();
+            //If this is the first intersection
+            if(result.intResult.intersected == false)
+            {
+                result.intResult = intResult;
+                result.platformID = it.id;
+                
+                lowestDist = intersectDist;
+            }
+            else
+            {
+                if(intersectDist < lowestDist)
+                {
+                    lowestDist = intersectDist;
+                    result.intResult = intResult;
+                    result.platformID = it.id;
+                }
+            }
+        }
+    }
+
+    return result;
 }

@@ -7,8 +7,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "line.h"
 #include "entity.h"
 #include "entitygroup.h"
+#include "vec2f.h"
 
 class World
 {
@@ -19,7 +21,15 @@ public:
     //void addEntity(Entity* entity);
     void addEntityGroup(EntityGroup* group, float paralaxAmount);
 
-    void draw(sf::RenderWindow* window, sf::Vector2f cameraPos);
+    void draw(sf::RenderWindow* window, Vec2f cameraPos);
+    void update(float frameTime);
+
+    void addPlatformLine(Line* line);
+
+    float getGravity();
+    std::vector<Line*>* getPlatformLines();
+
+    EntityGroup* getMainGroup();
 private:
     struct Layer
     {
@@ -29,5 +39,8 @@ private:
 
     //std::vector<Entity*> entities;
     std::vector<Layer> layers;
+    EntityGroup mainGroup;
+
+    float gravity;
 };
 #endif

@@ -10,6 +10,10 @@
 #include "spriteentity.h"
 #include "uiwindow.h"
 #include "mouseeventhandler.h"
+#include "line.h"
+#include "vec2f.h"
+#include "physicsentity.h"
+#include "player.h"
 
 class Game
 {
@@ -36,6 +40,10 @@ private:
     EntityGroup* generateForestBackground();
 
     float cameraX;
+
+    sf::Clock gameClock;
+    sf::Time frameTime;
+    sf::Time lastFrame;
 };
 
 #endif

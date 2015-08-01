@@ -20,18 +20,31 @@ void Game::setup()
     //Lots of memory leaks here
     Platform* platform = new Platform();
     platform->create(Vec2f(0,0));
-    platform->addPoint(-10,0);
-    platform->addPoint(300, 25);
-    platform->addPoint(500, -5);
-    platform->addPoint(4000, 0);
+    platform->addPoint(-200,0);
+    platform->addPoint(100, 25);
+    platform->addPoint(300, -5);
+
+    Platform* platform2 = new Platform();
+    platform2->create(Vec2f(0,100));
+    platform2->addPoint(400, 0);
+    platform2->addPoint(500, 0);
+    platform2->addPoint(800, 100);
+
+    movingPlatform.create(Vec2f(100, -100));
+    movingPlatform.addPoint(0, 0);
+    movingPlatform.addPoint(100, 0);
+    movingPlatform.addPoint(200, 20);
 
     world.getMainGroup()->addPlatform(platform);
+    world.getMainGroup()->addPlatform(platform2);
+    world.getMainGroup()->addPlatform(&movingPlatform);
 }
 
 void Game::loop()
 {
     float frameTime = (gameClock.getElapsedTime() - lastFrame).asSeconds();
     lastFrame = gameClock.getElapsedTime();
+
 
     //Handle window events
     sf::Event event;
@@ -57,8 +70,6 @@ void Game::loop()
     //Redraw stuff
     window->clear(sf::Color::Black);
     
-    world.update(frameTime);
-    world.draw(window, Vec2f(cameraX, -256));
 
     sf::View view = window->getView();
 
@@ -66,6 +77,29 @@ void Game::loop()
     window->setView(view);
     mainUIWindow.draw(window, Vec2f(0, 0));
 
+    if(moveDir == false)
+    {
+        movingPos += 50 * frameTime;
+
+        if(movingPos > 0)
+        {
+            moveDir = true;
+        }
+    }
+    else
+    {
+        if(movingPos < -500)
+        {
+            moveDir = false;
+        }
+
+        movingPos -= 50 * frameTime;
+    }
+
+    //movingPlatform.setPosition(Vec2f(100, movingPos));
+
+    world.update(frameTime);
+    world.draw(window, Vec2f(cameraX, -256));
     window->display();
 
     //Exit if the window has been closed

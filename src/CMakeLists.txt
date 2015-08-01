@@ -28,8 +28,8 @@ add_executable(${EXECUTABLE_NAME}
     sprite.cpp
     world.cpp
     entity.cpp
-    uicomponent.cpp
-    uiwindow.cpp
+    zui/uicomponent.cpp
+    zui/window.cpp
     mouseeventhandler.cpp
     entitygroup.cpp
     physicsentity.cpp
@@ -42,8 +42,6 @@ add_executable(${EXECUTABLE_NAME}
     sprite.h
     world.h
     entity.h
-    uicomponent.h
-    uiwindow.h
     mouseeventhandler.h
     entitygroup.h
     line.h

@@ -8,7 +8,7 @@
 
 #include "world.h"
 #include "spriteentity.h"
-#include "uiwindow.h"
+#include "zui/window.h"
 #include "mouseeventhandler.h"
 #include "line.h"
 #include "vec2f.h"
@@ -44,6 +44,10 @@ private:
     sf::Clock gameClock;
     sf::Time frameTime;
     sf::Time lastFrame;
+
+    Platform movingPlatform;
+    float movingPos;
+    bool moveDir;
 };
 
 #endif

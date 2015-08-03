@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "uicomponent.h"
+#include "../vec2f.h"
 
 namespace zui
 {
@@ -13,9 +14,9 @@ namespace zui
         Window();
         ~Window();
     
-        void create(sf::Vector2f pos, sf::Vector2f size, sf::Color color);
+        void create(sf::Vector2f pos, Vec2f size, sf::Color color);
     
-        void drawSelf(sf::RenderWindow* window, sf::Vector2f totalPos);
+        void drawSelf(sf::RenderWindow* window, Vec2f totalPos);
     
         void setPosition(sf::Vector2f pos);
     private:

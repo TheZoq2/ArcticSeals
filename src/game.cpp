@@ -15,7 +15,16 @@ void Game::setup()
 
     mainUIWindow.create(Vec2f(0, 0), Vec2f(150, 900), sf::Color(60,60,60));
 
+    zui::TextButton::ButtonColor buttonColor;
+    buttonColor.pressColor = sf::Color(150,150,255);
+    buttonColor.hoverColor = sf::Color(100, 100, 255);
+    buttonColor.defaultColor = sf::Color(0,0,255);
+    zui::TextButton* testButton = new zui::TextButton("test", Vec2f(0,0), Vec2f(140, 60), buttonColor, "Click");
+    testButton->setPosition(Vec2f(5,5));
+    mainUIWindow.addChildComponent(testButton);
+
     mouseHandler.setup(this->window);
+    mouseHandler.addListener(&mainUIWindow);
 
     //Lots of memory leaks here
     Platform* platform = new Platform();
@@ -65,6 +74,14 @@ void Game::loop()
         {
             mouseHandler.handleMoveEvent(&event);
         }
+        if(event.type == sf::Event::MouseButtonPressed)
+        {
+            mouseHandler.handleMousePressed(&event);
+        }
+        if(event.type == sf::Event::MouseButtonReleased)
+        {
+            mouseHandler.handleMouseReleased(&event);
+        }
     }
 
     //Redraw stuff
@@ -76,25 +93,6 @@ void Game::loop()
     view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
     window->setView(view);
     mainUIWindow.draw(window, Vec2f(0, 0));
-
-    if(moveDir == false)
-    {
-        movingPos += 50 * frameTime;
-
-        if(movingPos > 0)
-        {
-            moveDir = true;
-        }
-    }
-    else
-    {
-        if(movingPos < -500)
-        {
-            moveDir = false;
-        }
-
-        movingPos -= 50 * frameTime;
-    }
 
     //movingPlatform.setPosition(Vec2f(100, movingPos));
 

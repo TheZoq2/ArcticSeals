@@ -15,8 +15,6 @@ void Player::update(float time)
     {
         velocity.x = (maxSpeed * 2 * sf::Joystick::getAxisPosition(0, sf::Joystick::X) / 100.0f); 
 
-        std::cout << sf::Joystick::getAxisPosition(0, sf::Joystick::X) / 100.0f << std::endl;
-
         if(sf::Joystick::isButtonPressed(0, 0))
         {
             jump(300);

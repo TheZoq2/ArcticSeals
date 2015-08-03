@@ -9,6 +9,7 @@
 #include "world.h"
 #include "spriteentity.h"
 #include "zui/window.h"
+#include "zui/textbutton.h"
 #include "mouseeventhandler.h"
 #include "line.h"
 #include "vec2f.h"
@@ -34,7 +35,7 @@ private:
     sf::Texture texture;
     sf::Texture texture2;
 
-    UIWindow mainUIWindow;
+    zui::Window mainUIWindow;
     MouseEventHandler mouseHandler;
 
     EntityGroup* generateForestBackground();

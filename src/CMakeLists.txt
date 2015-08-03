@@ -22,21 +22,6 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-
 # Define sources and executable
 set(EXECUTABLE_NAME "myproject")
 add_executable(${EXECUTABLE_NAME} 
-    main.cpp 
-    game.cpp
-    spriteentity.cpp
-    sprite.cpp
-    world.cpp
-    entity.cpp
-    zui/uicomponent.cpp
-    zui/window.cpp
-    mouseeventhandler.cpp
-    entitygroup.cpp
-    physicsentity.cpp
-    line.cpp
-    vec2f.cpp
-    platform.cpp
-    player.cpp
     game.h
     spriteentity.h
     sprite.h
@@ -44,10 +29,35 @@ add_executable(${EXECUTABLE_NAME}
     entity.h
     mouseeventhandler.h
     entitygroup.h
-    line.h
     physicsentity.h
+    zui/uicomponent.h
+    zui/window.h
+    zui/inputcomponent.h
+    zui/button.h
+    zui/textbutton.h
+    line.h
     vec2f.h
     platform.h
+    player.h
+
+    main.cpp 
+    game.cpp
+    spriteentity.cpp
+    sprite.cpp
+    world.cpp
+    entity.cpp
+    mouseeventhandler.cpp
+    entitygroup.cpp
+    physicsentity.cpp
+    zui/uicomponent.cpp
+    zui/window.cpp
+    zui/inputcomponent.cpp
+    zui/button.cpp
+    zui/textbutton.cpp
+    line.cpp
+    vec2f.cpp
+    platform.cpp
+    player.cpp
     )
 
 

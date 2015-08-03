@@ -1,30 +1,28 @@
 #ifndef H_INPUTCOMPONENT
 #define H_INPUTCOMPONENT
 
-#include "inputcomponent.h"
-
 #include <string>
 #include <vector>
 
-class InputComponent;
+#include "../vec2f.h"
 
-class InputListener
+namespace zui
 {
-public:
-    void onInputChange(InputComponent* changedComponent);
-};
+    class InputComponent
+    {
+    public:
+        InputComponent(std::string name);
 
-class InputComponent
-{
-public:
-    bool boolValue();
-    int intValue();
-    float floatValue();
-    std::stirng stringValue();
+        virtual bool boolValue() = 0;
+        virtual int intValue() = 0;
+        virtual float floatValue() = 0;
+        virtual std::string stringValue() = 0;
 
-private:
-    std::string name;
+        std::string getName();
+    private:
+        std::string name;
     
-    std::vector<InputListener*> listeners;
+        bool valueChanged;
+    };
 };
 #endif

@@ -29,6 +29,8 @@ public:
     void handleMouseMove(MouseData mouseData, Vec2f parentPos);
     bool handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos);
 private:
+    void changeState(State state);
+
     sf::RectangleShape box;
     sf::Text textDisplay;
 

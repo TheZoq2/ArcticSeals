@@ -62,47 +62,36 @@ void TextButton::handleMouseMove(MouseData mouseData, Vec2f parentPos)
     {
         if(state == State::OFF)
         {
-            state = HOVERED;
+            changeState(HOVERED);
         }
     }
     else
     {
-        state = State::OFF;
+        changeState(OFF);
     }
 }
 bool TextButton::handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos)
 {
-    UIComponent::handleMouseButtonChange(button, position, pressed, parentPos + pos);
+    bool catchChange = UIComponent::handleMouseButtonChange(button, position, pressed, parentPos + pos);
 
-    bool catchChange = false;
     //If this is a left click
-    if(button == sf::Mouse::Button::Left)
+    if(button == sf::Mouse::Button::Left && catchChange == false)
     {
         if(this->posIsOnButton(position, parentPos))
         {
             if(pressed == true)
             {
-                state = State::PRESSED;
-
-                //Notify the parent of this change
-                UIComponent::onInputChange(this);
-                    
-                std::cout << "pressed" << std::endl;
+                changeState(State::PRESSED);
             }
             else
             {
                 if(state == State::PRESSED)
                 {
                     //Set the state to clicked
-                    state = State::CLICKED;
-                    
-                    //Notify the parent of the change
-                    UIComponent::onInputChange(this);
+                    changeState(State::CLICKED);
 
                     //Set state to hovered
-                    state = State::HOVERED;
-
-                    std::cout << "clicked" << std::endl;
+                    changeState(State::HOVERED);
                 }
             }
 
@@ -111,4 +100,24 @@ bool TextButton::handleMouseButtonChange(sf::Mouse::Button button, Vec2f positio
     }
 
     return catchChange;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//private methods
+////////////////////////////////////////////////////////////////////////////////
+
+void TextButton::changeState(State state)
+{
+    bool notifyOfChange = true;
+    if(state == this->state)
+    {
+        notifyOfChange = false;
+    }
+
+    this->state = state;
+
+    if(notifyOfChange)
+    {
+        UIComponent::onInputChange(this);
+    }
 }

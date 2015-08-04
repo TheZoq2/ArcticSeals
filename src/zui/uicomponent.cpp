@@ -6,8 +6,10 @@ UIComponent::UIComponent()
 {
     this->pos = Vec2f(0,0);
     this->parent = NULL;
+
 }
 UIComponent::UIComponent(Vec2f pos)
+    : UIComponent()
 {
     this->pos = pos;
 }
@@ -16,6 +18,10 @@ UIComponent::UIComponent(Vec2f pos)
 void UIComponent::setPosition(Vec2f pos)
 {
     this->pos = pos;
+}
+void UIComponent::setParent(UIComponent* parent)
+{
+    this->parent = parent;
 }
 
 void UIComponent::draw(sf::RenderWindow* window, sf::Vector2f parentPos)
@@ -38,6 +44,8 @@ void UIComponent::addUIValueListener(UIValueListener* listener, std::string comp
 void UIComponent::addChildComponent(UIComponent* child)
 {
     this->children.push_back(std::unique_ptr<UIComponent>(child));
+
+    child->setParent(this);
 }
 
 void UIComponent::onInputChange(InputComponent* component)

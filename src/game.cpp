@@ -22,6 +22,8 @@ void Game::setup()
     zui::TextButton* testButton = new zui::TextButton("test", Vec2f(0,0), Vec2f(140, 60), buttonColor, "Click");
     testButton->setPosition(Vec2f(5,5));
     mainUIWindow.addChildComponent(testButton);
+    mainUIWindow.addUIValueListener(&uiTest, "test");
+
 
     mouseHandler.setup(this->window);
     mouseHandler.addListener(&mainUIWindow);

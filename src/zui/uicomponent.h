@@ -31,6 +31,7 @@ public:
     virtual void drawSelf(sf::RenderWindow* window, Vec2f parentPos) = 0;
 
     virtual void setPosition(Vec2f pos);
+    void setParent(UIComponent* parent);
     
     void addChildComponent(UIComponent* child);
 

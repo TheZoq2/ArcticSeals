@@ -49,6 +49,16 @@ private:
     Platform movingPlatform;
     float movingPos;
     bool moveDir;
+
+    class UIListenerTest : public zui::UIValueListener
+    {
+    public:
+        void onUIChange(zui::InputComponent* changedComponent)
+        {
+            std::cout << changedComponent->intValue() << std::endl;
+        };
+    };
+    UIListenerTest uiTest;
 };
 
 #endif

@@ -5,7 +5,7 @@ zui::Window::Window()
 zui::Window::~Window()
 {}
 
-void zui::Window::create(sf::Vector2f pos, Vec2f size, sf::Color color)
+void zui::Window::create(Vec2f pos, Vec2f size, sf::Color color)
 {
     this->size = size;
     this->color = color;
@@ -16,7 +16,7 @@ void zui::Window::create(sf::Vector2f pos, Vec2f size, sf::Color color)
     
 }
 
-void zui::Window::setPosition(sf::Vector2f pos)
+void zui::Window::setPosition(Vec2f pos)
 {
     UIComponent::setPosition(pos);
     this->shape.setPosition(pos);

@@ -37,4 +37,5 @@ std::string  Button::stringValue()
         case PRESSED:
             return "held";
     }
+    return "";
 }

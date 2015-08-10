@@ -20,10 +20,10 @@ void Game::setup()
     buttonColor.hoverColor = sf::Color(100, 100, 255);
     buttonColor.defaultColor = sf::Color(0,0,255);
     zui::TextButton* testButton = new zui::TextButton("test", Vec2f(0,0), Vec2f(140, 60), buttonColor, "Click");
-    testButton->setPosition(Vec2f(5,5));
+    testButton->setPosition(Vec2f(800,400));
     mainUIWindow.addChildComponent(testButton);
     mainUIWindow.addUIValueListener(&uiTest, "test");
-
+    mainUIWindow.addUIValueListener(&uiTest, "testList");
 
     mouseHandler.setup(this->window);
     mouseHandler.addListener(&mainUIWindow);
@@ -49,6 +49,34 @@ void Game::setup()
     world.getMainGroup()->addPlatform(platform);
     world.getMainGroup()->addPlatform(platform2);
     world.getMainGroup()->addPlatform(&movingPlatform);
+
+    //Searching for files in the img directory
+    const std::string imgDir = "../media/img/";
+
+    //Generate a vector of images
+    std::vector<std::pair<std::string, std::string> > imgElements;
+
+    DIR* dir;
+    struct dirent* ent;
+    if((dir = opendir(imgDir.data())) != NULL)
+    {
+        while((ent = readdir(dir)) != NULL)
+        {
+            std::cout << "Found file: " << ent->d_name << " of type: " << ent->d_type << std::endl;
+            
+            std::string filename = ent->d_name;
+
+            //If the file type is a .png
+            if(filename.find_last_not_of(".png") != filename.length() -1 && filename.find(".png") != std::string::npos)
+            {
+                imgElements.push_back(std::pair<std::string, std::string>(imgDir + filename, imgDir + filename));
+            }
+        }
+        closedir(dir);
+    }
+
+    zui::ImgList* testList = new zui::ImgList(imgElements, Vec2f(100,0), Vec2f(500, 500), "testList");
+    mainUIWindow.addChildComponent(testList);
 }
 
 void Game::loop()
@@ -70,7 +98,12 @@ void Game::loop()
         {
             //window->setSize(sf::Vector2<unsigned int>(width, height));
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-            window->setView(sf::View(visibleArea));
+            sf::View view(visibleArea);
+            view.setViewport(sf::FloatRect(0,0,1,1));
+            //view.setSize(event.size.width, event.size.height);
+            window->setView(view);
+
+            std::cout << "Window size: " << window->sf::Window::getSize().x << "  "<< view.getSize().x << std::endl;
         }
         if(event.type == sf::Event::MouseMoved)
         {
@@ -90,16 +123,18 @@ void Game::loop()
     window->clear(sf::Color::Black);
     
 
+
+    //movingPlatform.setPosition(Vec2f(100, movingPos));
+
+    world.update(frameTime);
+    world.draw(window, Vec2f(cameraX, -256));
+
     sf::View view = window->getView();
 
     view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
     window->setView(view);
     mainUIWindow.draw(window, Vec2f(0, 0));
 
-    //movingPlatform.setPosition(Vec2f(100, movingPos));
-
-    world.update(frameTime);
-    world.draw(window, Vec2f(cameraX, -256));
     window->display();
 
     //Exit if the window has been closed

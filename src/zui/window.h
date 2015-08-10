@@ -14,11 +14,11 @@ namespace zui
         Window();
         ~Window();
     
-        void create(sf::Vector2f pos, Vec2f size, sf::Color color);
+        void create(Vec2f pos, Vec2f size, sf::Color color);
     
         void drawSelf(sf::RenderWindow* window, Vec2f totalPos);
     
-        void setPosition(sf::Vector2f pos);
+        void setPosition(Vec2f pos);
     private:
         sf::Vector2f size;
         sf::Color color;

@@ -3,13 +3,17 @@
 
 #include <vector>
 #include <string>
+#include <dirent.h>
 
 #include <SFML/Graphics.hpp>
+
+//#include "depend/dirent.h"
 
 #include "world.h"
 #include "spriteentity.h"
 #include "zui/window.h"
 #include "zui/textbutton.h"
+#include "zui/imglist.h"
 #include "mouseeventhandler.h"
 #include "line.h"
 #include "vec2f.h"
@@ -55,7 +59,7 @@ private:
     public:
         void onUIChange(zui::InputComponent* changedComponent)
         {
-            std::cout << changedComponent->intValue() << std::endl;
+            std::cout << changedComponent->stringValue() << std::endl;
         };
     };
     UIListenerTest uiTest;

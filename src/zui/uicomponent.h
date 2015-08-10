@@ -27,8 +27,7 @@ class UIComponent : public MouseListener
 {
 public:
 
-    virtual void draw(sf::RenderWindow* window, sf::Vector2f parentPos);
-    virtual void drawSelf(sf::RenderWindow* window, Vec2f parentPos) = 0;
+    void draw(sf::RenderWindow* window, sf::Vector2f parentPos);
 
     virtual void setPosition(Vec2f pos);
     void setParent(UIComponent* parent);
@@ -37,7 +36,8 @@ public:
 
     void addUIValueListener(UIValueListener* listener, std::string inputName);
     //Function called when a child component has been updated
-    void onInputChange(InputComponent* component); 
+    virtual void onInputChange(InputComponent* component); 
+    virtual void notifyListeners(InputComponent* component);
 
     //Event listener for mouse movement.
     void onMouseMove(MouseData mouseData);
@@ -47,6 +47,8 @@ public:
     //parent components
     virtual bool handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos);
 protected:
+    virtual void drawSelf(sf::RenderWindow* window, Vec2f actualPos) = 0;
+
     UIComponent();
     UIComponent(Vec2f pos);
 

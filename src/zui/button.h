@@ -12,10 +12,10 @@ namespace zui
     public:
         Button(Vec2f pos, std::string name);
         
-        bool boolValue();
-        int intValue();
-        float floatValue();
-        std::string stringValue();
+        virtual bool boolValue();
+        virtual int intValue();
+        virtual float floatValue();
+        virtual std::string stringValue();
     protected:
         enum State
         {

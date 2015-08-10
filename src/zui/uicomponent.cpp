@@ -50,6 +50,16 @@ void UIComponent::addChildComponent(UIComponent* child)
 
 void UIComponent::onInputChange(InputComponent* component)
 {
+    notifyListeners(component);
+
+    //Notify the parent of the change if one exists
+    if(parent != NULL)
+    {
+        parent->onInputChange(component);
+    }
+}
+void UIComponent::notifyListeners(InputComponent* component)
+{
     //Iterating over the listeners to check if a listener is listening for this specific component
     for(auto it : valueListeners)
     {
@@ -57,12 +67,6 @@ void UIComponent::onInputChange(InputComponent* component)
         {
             it.second->onUIChange(component);
         }
-    }
-
-    //Notify the parent of the change if one exists
-    if(parent != NULL)
-    {
-        parent->onInputChange(component);
     }
 }
 

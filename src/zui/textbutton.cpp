@@ -10,14 +10,18 @@ TextButton::TextButton(std::string name, Vec2f pos, Vec2f size, TextButton::Butt
     this->size = size;
     this->colors = colors;
     
+    font.loadFromFile("../media/fonts/Abel-Regular.ttf");
+
     //Creating the shape
     box.setSize(size);
     textDisplay.setString(text);
+    textDisplay.setCharacterSize(24);
+    textDisplay.setFont(font);
+    textDisplay.setOrigin(textDisplay.getLocalBounds().width / 2, textDisplay.getLocalBounds().height / 2);
 }
 
-void TextButton::drawSelf(sf::RenderWindow* window, Vec2f parentPos)
+void TextButton::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
 {
-    box.setPosition(pos + parentPos);
     
     if(state == State::PRESSED)
     {
@@ -32,7 +36,11 @@ void TextButton::drawSelf(sf::RenderWindow* window, Vec2f parentPos)
         box.setFillColor(colors.defaultColor);
     }
 
-    textDisplay.setPosition(pos + parentPos);
+    //Positioning the text propperly
+    Vec2f textPos = actualPos + size / 2.0f;
+    textDisplay.setPosition(textPos);
+
+    box.setPosition(actualPos);
 
     window->draw(box);
     window->draw(textDisplay);

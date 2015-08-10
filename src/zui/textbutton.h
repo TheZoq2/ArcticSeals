@@ -20,7 +20,7 @@ public:
     };
     TextButton(std::string name, Vec2f pos, Vec2f size, ButtonColor colors, std::string text);
 
-    void drawSelf(sf::RenderWindow* window, Vec2f parentPos);
+    void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
 
     void setPosition(Vec2f pos);
 
@@ -39,6 +39,8 @@ private:
     Vec2f size;
 
     std::string text;
+    
+    sf::Font font;
 };
 };
 #endif

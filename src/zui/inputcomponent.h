@@ -13,10 +13,15 @@ namespace zui
     public:
         InputComponent(std::string name);
 
-        virtual bool boolValue() = 0;
-        virtual int intValue() = 0;
-        virtual float floatValue() = 0;
-        virtual std::string stringValue() = 0;
+        virtual bool boolValue();
+        virtual int intValue();
+        virtual float floatValue();
+        virtual std::string stringValue();
+        
+        virtual void setValue(bool val);
+        virtual void setValue(int val);
+        virtual void setValue(float val);
+        virtual void setValue(std::string val);
 
         std::string getName();
     private:

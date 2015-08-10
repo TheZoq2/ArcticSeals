@@ -6,6 +6,8 @@
 #include <memory>
 
 #include "zui/window.h"
+#include "leveleditor.h"
+#include "mouseeventhandler.h"
 
 class Editor
 {
@@ -24,6 +26,8 @@ private:
     sf::Time frameTime;
     sf::Time lastFrame;
 
-    zui::Window mainUIWindow;
+    LevelEditor levelEditor;
+
+    MouseEventHandler mouseHandler;
 };
 #endif

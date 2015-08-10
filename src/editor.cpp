@@ -4,8 +4,10 @@ void Editor::setup()
 {
     window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "editor");
 
-    mainUIWindow.create(Vec2f(0,0), Vec2f(300,1080), sf::Color(150,150,150));
-
+    levelEditor.setupUI();
+    
+    mouseHandler.setup(window);
+    mouseHandler.addListener(levelEditor.getMainWindow());
 }
 void Editor::loop()
 {
@@ -31,6 +33,18 @@ void Editor::loop()
             //view.setSize(event.size.width, event.size.height);
             window->setView(view);
         }
+        if(event.type == sf::Event::MouseMoved)
+        {
+            mouseHandler.handleMoveEvent(&event);
+        }
+        if(event.type == sf::Event::MouseButtonPressed)
+        {
+            mouseHandler.handleMousePressed(&event);
+        }
+        if(event.type == sf::Event::MouseButtonReleased)
+        {
+            mouseHandler.handleMouseReleased(&event);
+        }
     }
     //Exit if the window has been closed
     if(window->isOpen() == false)
@@ -42,7 +56,7 @@ void Editor::loop()
     //Redraw stuff
     window->clear(sf::Color::Black);
     
-    mainUIWindow.draw(window, Vec2f(0,0));
+    levelEditor.draw(window);
 
     window->display();
 

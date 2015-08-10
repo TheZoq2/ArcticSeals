@@ -18,6 +18,7 @@ public:
         sf::Color hoverColor;
         sf::Color pressColor;
     };
+    TextButton(std::string name);
     TextButton(std::string name, Vec2f pos, Vec2f size, ButtonColor colors, std::string text);
 
     void drawSelf(sf::RenderWindow* window, Vec2f actualPos);

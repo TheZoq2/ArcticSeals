@@ -70,6 +70,7 @@ add_executable(${EDITOR_NAME}
     vec2f.cpp
     platform.cpp
     player.cpp
+    leveleditor.cpp
     )
 
 

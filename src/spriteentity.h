@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <memory>
 
 #include "entity.h"
 #include "sprite.h"
@@ -11,7 +12,9 @@
 class SpriteEntity : public Entity
 {
 public:
-    void create(sf::Texture* texture);
+    void create(std::shared_ptr<sf::Texture> texture);
+
+    virtual SpriteEntity* clone();
 
     void setPosition(Vec2f pos);
     void setScale(Vec2f scale);
@@ -21,6 +24,7 @@ public:
     //Sets the origin of the sprite in percentage.
     void setOrigin(Vec2f origin);
 private:
+    std::shared_ptr<sf::Texture> texture;
     sf::Sprite sprite;
 
     Vec2f scale;

@@ -12,11 +12,12 @@ class Entity
 {
 public:
     Entity();
+    Entity(Entity* pattern);
     
     virtual void draw(sf::RenderWindow* window) = 0;
     virtual void update(float time){};
 
-    void setPosition(Vec2f pos);
+    virtual void setPosition(Vec2f pos);
     void setDepth(int depth);
     void setGroup(EntityGroup* group);
 

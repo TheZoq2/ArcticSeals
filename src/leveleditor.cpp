@@ -83,12 +83,11 @@ void LevelEditor::setupUI()
 
 void LevelEditor::draw(sf::RenderWindow* window)
 {
-    mainWindow.draw(window, Vec2f(0,0));
-
     if(ghostEntity != NULL)
     {
         ghostEntity->draw(window);
     }
+    mainWindow.draw(window, Vec2f(0,0));
 }
 
 void LevelEditor::onUIChange(zui::InputComponent* component)
@@ -108,7 +107,8 @@ void LevelEditor::onUIChange(zui::InputComponent* component)
         entityList->setActive(false);
         this->newEntityName = component->stringValue();
 
-        editingMode = EditingMode::CREATE;
+        //editingMode = EditingMode::CREATE;
+        changeMode(EditingMode::CREATE);
     }
 }
 
@@ -156,19 +156,14 @@ void LevelEditor::onMouseButtonChange(sf::Mouse::Button button, Vec2f position, 
         }
         case CREATE:
         {
-            std::cout << "Click in create mode" << std::endl;
-            if(button == sf::Mouse::Left && pressed)
-            {
-                createGhostEntity(worldPos);
-            }
+            
             break;
         }
     }
-    std::cout << "Click" << std::endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-//                           Private function
+//                           Private functions
 /////////////////////////////////////////////////////////////////////////////
 void LevelEditor::generateEntityList()
 {
@@ -199,10 +194,9 @@ void LevelEditor::generateEntityList()
 
 void LevelEditor::createGhostEntity(Vec2f worldPos)
 {
-    std::cout << "Hello world" << std::endl;
     if(newEntityName != "")
     {
-        sf::Texture* texture = new sf::Texture();
+        std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
         texture->loadFromFile(newEntityName);
 
         SpriteEntity* newEntity = new SpriteEntity();
@@ -211,4 +205,39 @@ void LevelEditor::createGhostEntity(Vec2f worldPos)
         ghostEntity = newEntity;
         ghostEntity->setPosition(worldPos);
     }
+}
+
+void LevelEditor::changeMode(LevelEditor::EditingMode newMode)
+{
+    exitMode();
+    switch(newMode)
+    {
+        case SELECT:
+        {
+
+            break;
+        }
+        case MOVE:
+        {
+            break;
+        }
+        case SCALE:
+        {
+            break;
+        }
+        case ROTATE:
+        {
+            break;
+        }
+        case CREATE:
+        {
+            createGhostEntity(Vec2f(0,0));
+            break;
+        }
+    }
+
+    this->editingMode = newMode;
+}
+void LevelEditor::exitMode()
+{
 }

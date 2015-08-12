@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <dirent.h>
+#include <memory>
 
 #include "zui/window.h"
 #include "zui/textbutton.h"
@@ -28,6 +29,15 @@ public:
     void onMouseMove(MouseData moveData, sf::RenderWindow* window);
     void onMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, sf::RenderWindow* window);
 private:
+    enum EditingMode
+    {
+        SELECT,
+        MOVE,
+        SCALE,
+        ROTATE,
+        CREATE,
+    };
+
     const static std::string SELECT_BUTTON_NAME;
     const static std::string MOVE_BUTTON_NAME;
     const static std::string SCALE_BUTTON_NAME;
@@ -39,14 +49,9 @@ private:
 
     void createGhostEntity(Vec2f worldPos);
 
-    enum EditingMode
-    {
-        SELECT,
-        MOVE,
-        SCALE,
-        ROTATE,
-        CREATE,
-    };
+    void changeMode(EditingMode newMode);
+    void exitMode(); //Exit the current mode and clean up everything
+
     EditingMode editingMode;
 
     sf::View worldView;

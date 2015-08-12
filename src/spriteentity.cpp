@@ -1,8 +1,19 @@
 #include "spriteentity.h"
 
-void SpriteEntity::create(sf::Texture* texture)
+void SpriteEntity::create(std::shared_ptr<sf::Texture> texture)
 {
     this->sprite.setTexture(*texture);
+}
+
+SpriteEntity* SpriteEntity::clone()
+{
+    SpriteEntity* newEntity = new SpriteEntity();
+    newEntity->create(this->texture);
+    newEntity->setScale(this->scale);
+    newEntity->setOrigin(this->origin);
+    newEntity->setPosition(this->pos);
+
+    return newEntity;
 }
 
 void SpriteEntity::setPosition(Vec2f pos)

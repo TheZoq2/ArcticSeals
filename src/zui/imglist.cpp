@@ -22,7 +22,7 @@ ImgList::ImgList(Vec2f pos, Vec2f size, std::string name)
     buttonColor.pressColor = sf::Color(100,100,255);
     Vec2f buttonSize(120,40);
 
-    okButton = std::unique_ptr<TextButton>(new TextButton("OK_BUTTON", Vec2f(padding, size.y - buttonSize.y - padding), buttonSize, buttonColor,"OK"));
+    okButton = std::unique_ptr<TextButton>(new TextButton("OK_BUTTON", Vec2f(padding, padding), buttonSize, buttonColor,"OK"));
     okButton->setParent(this);
 }
 ImgList::ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2f pos, Vec2f size, std::string name)
@@ -55,7 +55,7 @@ void ImgList::setElements(std::vector< std::pair < std::string, std::string > > 
     selectedElement = NULL;
     value = "";
     
-    Vec2f inputPos(padding, padding);
+    Vec2f inputPos(padding, padding + okButton->getSize().y + padding);
     for(auto& it : elements)
     {
         float nextX = inputPos.x + imgSize + padding;

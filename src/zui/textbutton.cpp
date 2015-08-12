@@ -50,6 +50,10 @@ void TextButton::setPosition(Vec2f pos)
 {
     UIComponent::setPosition(pos);
 }
+Vec2f TextButton::getSize()
+{
+    return size;
+}
 
 bool TextButton::posIsOnButton(Vec2f checkPos, Vec2f parentPos)
 {

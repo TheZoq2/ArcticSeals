@@ -9,12 +9,14 @@ class PhysicsEntity : public Entity
 public:
     PhysicsEntity(Vec2f size);
     
-    void draw(sf::RenderWindow* window);
-    void update(float time);
+    virtual PhysicsEntity* clone();
 
-    void jump(float speed);
+    virtual void draw(sf::RenderWindow* window);
+    virtual void update(float time);
+
+    virtual void jump(float speed);
     
-    void setPosition(Vec2f pos);
+    virtual void setPosition(Vec2f pos);
 protected:
     enum GroundState
     {

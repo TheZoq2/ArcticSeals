@@ -24,6 +24,7 @@ public:
     void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
 
     void setPosition(Vec2f pos);
+    Vec2f getSize();
 
     bool posIsOnButton(Vec2f checkPos, Vec2f parentPos);
 

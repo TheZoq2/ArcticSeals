@@ -10,6 +10,13 @@ PhysicsEntity::PhysicsEntity(Vec2f size)
     this->gravity = 9.82 * 30;
 }
 
+PhysicsEntity* PhysicsEntity::clone()
+{
+    PhysicsEntity* newEntity = (PhysicsEntity*) Entity::clone();
+    
+    return newEntity();
+}
+
 void PhysicsEntity::update(float time)
 {
     Vec2f newPos = pos;

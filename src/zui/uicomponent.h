@@ -61,5 +61,5 @@ protected:
     
     std::vector< std::pair<std::string, UIValueListener*> > valueListeners;
 };
-};
+}
 #endif

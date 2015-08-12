@@ -28,5 +28,5 @@ namespace zui
         State state;
     private:
     };
-};
+}
 #endif

@@ -2,14 +2,59 @@
 
 using namespace zui;
 
-ImgList::ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2f pos, Vec2f size, std::string name)
+ImgList::ImgList(Vec2f pos, Vec2f size, std::string name)
     :UIComponent(pos), InputComponent(name)
 {
+    this->active = false;
     this->selectedElement = NULL;
     this->size = size;
     this->bgColor = sf::Color(150,150,150);
     this->value = "";
 
+    //Creating the background shape
+    bgShape.setSize(size);
+    bgShape.setFillColor(bgColor);
+
+    //Button parameters
+    TextButton::ButtonColor buttonColor;
+    buttonColor.defaultColor = sf::Color(0,0,255);
+    buttonColor.hoverColor = sf::Color(150,150,255);
+    buttonColor.pressColor = sf::Color(100,100,255);
+    Vec2f buttonSize(120,40);
+
+    okButton = std::unique_ptr<TextButton>(new TextButton("OK_BUTTON", Vec2f(padding, size.y - buttonSize.y - padding), buttonSize, buttonColor,"OK"));
+    okButton->setParent(this);
+}
+ImgList::ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2f pos, Vec2f size, std::string name)
+    : ImgList(pos, size, name)
+{
+
+    this->setElements(elements);
+}
+
+void ImgList::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
+{
+    if(active == true)
+    {
+        bgShape.setPosition(actualPos);
+        window->draw(bgShape);
+
+        okButton->draw(window, actualPos);
+
+        for(auto& it : listElements)
+        {
+            it->draw(window, actualPos);
+        }
+    }
+}
+
+void ImgList::setElements(std::vector< std::pair < std::string, std::string > > elements)
+{
+    //Clearing the old elements
+    listElements.clear();
+    selectedElement = NULL;
+    value = "";
+    
     Vec2f inputPos(padding, padding);
     for(auto& it : elements)
     {
@@ -29,33 +74,6 @@ ImgList::ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2
 
         inputPos.x += padding + imgSize;
     }
-
-    //Creating the background shape
-    bgShape.setSize(size);
-    bgShape.setFillColor(bgColor);
-
-    //Button parameters
-    TextButton::ButtonColor buttonColor;
-    buttonColor.defaultColor = sf::Color(0,0,255);
-    buttonColor.hoverColor = sf::Color(150,150,255);
-    buttonColor.pressColor = sf::Color(100,100,255);
-    Vec2f buttonSize(120,40);
-
-    okButton = std::unique_ptr<TextButton>(new TextButton("OK_BUTTON", Vec2f(padding, size.y - buttonSize.y - padding), buttonSize, buttonColor,"OK"));
-    okButton->setParent(this);
-}
-
-void ImgList::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
-{
-    bgShape.setPosition(actualPos);
-    window->draw(bgShape);
-
-    okButton->draw(window, actualPos);
-
-    for(auto& it : listElements)
-    {
-        it->draw(window, actualPos);
-    }
 }
 
 void ImgList::onInputChange(InputComponent* component)
@@ -74,7 +92,7 @@ void ImgList::onInputChange(InputComponent* component)
             this->value = ((ImgListElement*) component)->getValueName();
         }
     }
-    else if(component->getName().compare("OK_BUTTON"))
+    else if(component->getName().compare("OK_BUTTON") == 0)
     {
         if(component->boolValue() == true)
         {
@@ -104,34 +122,51 @@ std::string ImgList::stringValue()
 
 void ImgList::handleMouseMove(MouseData data, Vec2f parentPos)
 {
-    Vec2f actualPos = pos + parentPos;
-    
-    UIComponent::handleMouseMove(data, actualPos);
-
-    okButton->handleMouseMove(data, actualPos);
-    for(auto& it : listElements)
+    if(active == true)
     {
-        it->handleMouseMove(data, actualPos);
+        Vec2f actualPos = pos + parentPos;
+        
+        UIComponent::handleMouseMove(data, actualPos);
+
+        okButton->handleMouseMove(data, actualPos);
+        for(auto& it : listElements)
+        {
+            it->handleMouseMove(data, actualPos);
+        }
     }
 }
 bool ImgList::handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos)
 {
-    Vec2f actualPos = pos + parentPos;
-
-    bool block = UIComponent::handleMouseButtonChange(button, position, pressed, actualPos);
-    
-    if(block == false)
+    if(active == true)
     {
-        for(auto& it : listElements)
+        Vec2f actualPos = pos + parentPos;
+
+        bool block = UIComponent::handleMouseButtonChange(button, position, pressed, actualPos);
+        
+        if(block == false)
         {
-            if(it->handleMouseButtonChange(button, position, pressed, actualPos))
+            for(auto& it : listElements)
             {
-                block = true;
+                if(it->handleMouseButtonChange(button, position, pressed, actualPos))
+                {
+                    block = true;
+                }
             }
         }
-    }
 
-    return block;
+        if(block == false)
+        {
+            block = okButton->handleMouseButtonChange(button, position, pressed, actualPos);
+        }
+
+        return block;
+    }
+    return false;
+}
+
+void ImgList::setActive(bool active)
+{
+    this->active = active;
 }
 
 void ImgList::setBackgroundColor(sf::Color bgColor)

@@ -1,6 +1,6 @@
 #include "mouseeventhandler.h"
 
-void MouseEventHandler::setup(sf::Window* window)
+void MouseEventHandler::setup(sf::RenderWindow* window)
 {
     this->window = window;
 }
@@ -21,6 +21,7 @@ void MouseEventHandler::handleMoveEvent(sf::Event* event)
     for(unsigned int i = 0; i < listeners.size(); i++)
     {
         listeners[i]->onMouseMove(data);
+        listeners[i]->onMouseMove(data, window);
     }
 }
 void MouseEventHandler::handleMousePressed(sf::Event* event)
@@ -29,6 +30,7 @@ void MouseEventHandler::handleMousePressed(sf::Event* event)
     for(auto& it : listeners)
     {
         it->onMouseButtonChange(event->mouseButton.button, position, true);
+        it->onMouseButtonChange(event->mouseButton.button, position, true, window);
     }
 }
 void MouseEventHandler::handleMouseReleased(sf::Event* event)
@@ -37,5 +39,6 @@ void MouseEventHandler::handleMouseReleased(sf::Event* event)
     for(auto& it : listeners)
     {
         it->onMouseButtonChange(event->mouseButton.button, position, false);
+        it->onMouseButtonChange(event->mouseButton.button, position, false, window);
     }
 }

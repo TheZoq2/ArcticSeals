@@ -51,5 +51,5 @@ private:
 
     bool pointIsOnElement(Vec2f point, Vec2f actualPos);
 };
-};
+}
 #endif

@@ -43,5 +43,5 @@ private:
     
     sf::Font font;
 };
-};
+}
 #endif

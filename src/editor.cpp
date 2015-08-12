@@ -8,6 +8,7 @@ void Editor::setup()
     
     mouseHandler.setup(window);
     mouseHandler.addListener(levelEditor.getMainWindow());
+    mouseHandler.addListener(&levelEditor);
 }
 void Editor::loop()
 {

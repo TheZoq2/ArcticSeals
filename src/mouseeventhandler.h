@@ -19,13 +19,15 @@ class MouseListener
 {
 public:
     virtual void onMouseMove(MouseData mouseData){};
+    virtual void onMouseMove(MouseData mouseData, sf::RenderWindow* window){};
     virtual void onMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed){};
+    virtual void onMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, sf::RenderWindow* window){};
 };
 
 class MouseEventHandler
 {
 public:
-    void setup(sf::Window* window);
+    void setup(sf::RenderWindow* window);
     void addListener(MouseListener* listener);
 
     void handleMoveEvent(sf::Event* event);
@@ -34,6 +36,6 @@ public:
 private:
     std::vector<MouseListener*> listeners;
 
-    sf::Window* window;
+    sf::RenderWindow* window;
 };
 #endif

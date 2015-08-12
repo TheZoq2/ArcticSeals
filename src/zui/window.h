@@ -25,5 +25,5 @@ namespace zui
     
         sf::RectangleShape shape;
     };
-};
+}
 #endif

@@ -17,7 +17,7 @@ configure_file(
   )
 include_directories("${PROJECT_BINARY_DIR}")
 
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs")
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
 
 # Define sources and executable
 set(EXECUTABLE_NAME "myproject")

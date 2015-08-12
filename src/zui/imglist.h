@@ -22,11 +22,15 @@ class ImgList : public UIComponent, InputComponent
 public:
     //Elements is a vector with pairs of filename and value for each img element.
     //First is pair, last is value
+    ImgList(Vec2f pos, Vec2f size, std::string name);
     ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2f pos, Vec2f size, std::string name);
 
     void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
 
     void setBackgroundColor(sf::Color bgColor);
+    void setElements(std::vector< std::pair< std::string, std::string > > elements);
+
+    void setActive(bool active);
     
     void onInputChange(InputComponent* component); 
     std::string stringValue();
@@ -51,6 +55,8 @@ private:
     std::unique_ptr< TextButton > okButton;
 
     std::string value;
+
+    bool active;
 };
-};
+}
 #endif

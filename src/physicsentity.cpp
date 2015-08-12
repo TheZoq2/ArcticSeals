@@ -12,9 +12,7 @@ PhysicsEntity::PhysicsEntity(Vec2f size)
 
 PhysicsEntity* PhysicsEntity::clone()
 {
-    PhysicsEntity* newEntity = (PhysicsEntity*) Entity::clone();
-    
-    return newEntity();
+    return new PhysicsEntity(*this);
 }
 
 void PhysicsEntity::update(float time)

@@ -3,17 +3,12 @@
 void SpriteEntity::create(std::shared_ptr<sf::Texture> texture)
 {
     this->sprite.setTexture(*texture);
+    this->texture = texture;
 }
 
 SpriteEntity* SpriteEntity::clone()
 {
-    SpriteEntity* newEntity = new SpriteEntity();
-    newEntity->create(this->texture);
-    newEntity->setScale(this->scale);
-    newEntity->setOrigin(this->origin);
-    newEntity->setPosition(this->pos);
-
-    return newEntity;
+    return new SpriteEntity(*this);
 }
 
 void SpriteEntity::setPosition(Vec2f pos)

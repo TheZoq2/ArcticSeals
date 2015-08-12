@@ -1,5 +1,6 @@
 #include "game.h"
 
+
 void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
@@ -163,11 +164,11 @@ EntityGroup* Game::generateForestBackground()
     images.push_back("../media/img/fir2.png");
     //images.push_back("../media/img/fir3.png");
 
-    std::vector<sf::Texture*> textures;
+    std::vector< std::shared_ptr< sf::Texture > > textures;
 
     for(unsigned int i = 0; i < images.size(); i++)
     {
-        textures.push_back(new sf::Texture());
+        textures.push_back(std::make_shared<sf::Texture>());
         textures.back()->loadFromFile(images.at(i));
     }
     

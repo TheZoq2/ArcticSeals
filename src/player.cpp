@@ -4,6 +4,10 @@ Player::Player(Vec2f size)
     : PhysicsEntity(size)
 {
 }
+Player* Player::clone()
+{
+    return new Player(*this);
+}
 
 void Player::update(float time)
 {

@@ -6,8 +6,9 @@ class Player : public PhysicsEntity
 {
 public:
     Player(Vec2f size);
+    virtual Player* clone();
 
-    void update(float time);
+    virtual void update(float time);
 private:
 };
 #endif

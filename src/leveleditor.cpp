@@ -204,6 +204,8 @@ void LevelEditor::createGhostEntity(Vec2f worldPos)
 
         ghostEntity = newEntity;
         ghostEntity->setPosition(worldPos);
+
+        std::cout << texture.use_count() << std::endl;
     }
 }
 

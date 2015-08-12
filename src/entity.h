@@ -12,7 +12,8 @@ class Entity
 {
 public:
     Entity();
-    Entity(Entity* pattern);
+
+    virtual Entity* clone() = 0;
     
     virtual void draw(sf::RenderWindow* window) = 0;
     virtual void update(float time){};

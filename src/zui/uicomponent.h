@@ -46,6 +46,8 @@ public:
     //Handle mouse button press and releases. Return true if the component should bock the press for
     //parent components
     virtual bool handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos);
+
+    //virtual bool posIsOnUI(Vec2f checkPos);
 protected:
     virtual void drawSelf(sf::RenderWindow* window, Vec2f actualPos) = 0;
 

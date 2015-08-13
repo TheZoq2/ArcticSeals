@@ -4,6 +4,8 @@ void Editor::setup()
 {
     window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "editor");
 
+    uiView = window->getDefaultView();
+
     levelEditor.setupUI();
     
     mouseHandler.setup(window);
@@ -14,7 +16,6 @@ void Editor::loop()
 {
     float frameTime = (gameClock.getElapsedTime() - lastFrame).asSeconds();
     lastFrame = gameClock.getElapsedTime();
-
 
     //Handle window events
     sf::Event event;
@@ -29,10 +30,11 @@ void Editor::loop()
         {
             //window->setSize(sf::Vector2<unsigned int>(width, height));
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-            sf::View view(visibleArea);
-            view.setViewport(sf::FloatRect(0,0,1,1));
+            uiView.reset(visibleArea);
+            uiView.setViewport(sf::FloatRect(0,0,1,1));
+
             //view.setSize(event.size.width, event.size.height);
-            window->setView(view);
+            //window->setView(view);
         }
         if(event.type == sf::Event::MouseMoved)
         {
@@ -58,6 +60,9 @@ void Editor::loop()
     window->clear(sf::Color::Black);
     
     levelEditor.draw(window);
+
+    window->setView(uiView);
+    levelEditor.drawUI(window);
 
     window->display();
 

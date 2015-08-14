@@ -110,6 +110,10 @@ void LevelEditor::onUIChange(zui::InputComponent* component)
         //editingMode = EditingMode::CREATE;
         changeMode(EditingMode::CREATE);
     }
+    else if(componentName == SELECT_BUTTON_NAME)
+    {
+        changeMode(EditingMode::SELECT);
+    }
 }
 
 
@@ -242,4 +246,28 @@ void LevelEditor::changeMode(LevelEditor::EditingMode newMode)
 }
 void LevelEditor::exitMode()
 {
+    switch(editingMode)
+    {
+        case SELECT:
+        {
+
+            break;
+        }
+        case MOVE:
+        {
+            break;
+        }
+        case SCALE:
+        {
+            break;
+        }
+        case ROTATE:
+        {
+            break;
+        }
+        case CREATE:
+        {
+            break;
+        }
+    }
 }

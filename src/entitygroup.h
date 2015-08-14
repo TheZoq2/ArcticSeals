@@ -36,6 +36,8 @@ public:
     bool platformExists(uint32_t id);
 
     PlatformCollisionResult getPlatformCollision(Vec2f originPos, Line* line); 
+
+    Entity* getFirstCollision(Vec2f point);
 private:
     uint32_t nextPlatformID;
 
@@ -48,7 +50,7 @@ private:
     //Insert an entity in the correct location in the entity vector based on depth
     void insertEntity(Entity* entity); 
 
-    std::vector<Entity*> entities;
+    std::vector< std::unique_ptr< Entity > > entities;
     std::vector<IDPlatform> platforms;
 };
 #endif

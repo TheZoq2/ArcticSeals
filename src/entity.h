@@ -12,6 +12,7 @@ class Entity
 {
 public:
     Entity();
+    //virtual ~Entity();
 
     virtual Entity* clone() = 0;
     
@@ -19,10 +20,12 @@ public:
     virtual void update(float time){};
 
     virtual void setPosition(Vec2f pos);
-    void setDepth(int depth);
-    void setGroup(EntityGroup* group);
+    virtual void setDepth(int depth);
+    virtual void setGroup(EntityGroup* group);
 
     int getDepth();
+
+    virtual bool pointIsOnEntity(Vec2f point);
 protected:
     Vec2f pos;
 

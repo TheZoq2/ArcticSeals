@@ -36,3 +36,14 @@ void SpriteEntity::setOrigin(Vec2f origin)
 
     this->sprite.setOrigin(coordOrigin);
 }
+
+bool SpriteEntity::pointIsOnEntity(Vec2f point)
+{
+    sf::FloatRect spriteShape = sprite.getGlobalBounds();
+
+    if(spriteShape.contains(point))
+    {
+        return true;
+    }
+    return false;
+}

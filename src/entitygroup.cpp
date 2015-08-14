@@ -23,35 +23,30 @@ void EntityGroup::addPlatform(Platform* platform)
 
 void EntityGroup::insertEntity(Entity* entity)
 {
-    std::vector<Entity*>::iterator it;
-
     //Go through the entities and find where to put the new entity
-    for(it = entities.begin(); it != entities.end(); it++)
+    for(auto it = entities.begin(); it != entities.end(); it++)
     {
-        Entity* cEntity = *it;
-        
         //Check if the depth is correct
-        if(cEntity->getDepth() > entity->getDepth())
+        if(it->get()->getDepth() > entity->getDepth())
         {
-            entities.insert(it, entity);
+            entities.insert(it, std::unique_ptr<Entity>(entity));
             //We found the correct location which means we are done. Return to avoid weird issues.
             return;
         }
     }
     
     //The entity should be added in the back because it has the lowest depth yet
-    entities.push_back(entity);
+    entities.push_back(std::unique_ptr<Entity>(entity));
 }
 
 void EntityGroup::onEntityDepthChange(Entity* entity)
 {
+    std::vector< std::unique_ptr<Entity> >::iterator it;
     //Remove the entity from the list
-    std::vector<Entity*>::iterator it;
-
     for(it = entities.begin(); it != entities.end(); it++)
     {
         //If this is the element we are looking for
-        if(*it == entity)
+        if(it->get() == entity)
         {
             entities.erase(it);
             break; //Avoid going further. Iterator is broken now
@@ -64,20 +59,16 @@ void EntityGroup::onEntityDepthChange(Entity* entity)
 
 void EntityGroup::update(float frameTime)
 {
-    for(auto it : entities)
+    for(auto& it : entities)
     {
         it->update(frameTime);
     }
 }
 void EntityGroup::draw(sf::RenderWindow* window)
 {
-    std::vector<Entity*>::iterator it;
-
-    for(it = entities.begin(); it != entities.end(); it++)
+    for(auto& it : entities)
     {
-        Entity* entity = *it;
-
-        entity->draw(window);
+        it->draw(window);
     }
 
     for(auto it : platforms)
@@ -140,6 +131,24 @@ EntityGroup::PlatformCollisionResult EntityGroup::getPlatformCollision(Vec2f ori
                     result.platformID = it.id;
                 }
             }
+        }
+    }
+
+    return result;
+}
+
+Entity* EntityGroup::getFirstCollision(Vec2f point)
+{
+    Entity* result = NULL;
+
+    //Because entities are stored in draw order, we can search from the back
+    //and return the firt entity that we find that collides with the point
+    for(auto it = entities.end(); it != entities.begin(); it--)
+    {
+        if(it->get()->pointIsOnEntity(point))
+        {
+            result = it->get();
+            break;
         }
     }
 

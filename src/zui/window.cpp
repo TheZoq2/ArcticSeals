@@ -7,7 +7,7 @@ zui::Window::~Window()
 
 void zui::Window::create(Vec2f pos, Vec2f size, sf::Color color)
 {
-    this->size = size;
+    UIComponent::size = size;
     this->color = color;
     UIComponent::pos = pos;
     

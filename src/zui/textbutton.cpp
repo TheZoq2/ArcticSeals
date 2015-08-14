@@ -7,7 +7,7 @@ TextButton::TextButton(std::string name, Vec2f pos, Vec2f size, TextButton::Butt
     : Button(pos, name)
 {
     this->text = text;
-    this->size = size;
+    UIComponent::size = size;
     this->colors = colors;
     
     font.loadFromFile("../media/fonts/Abel-Regular.ttf");
@@ -20,31 +20,6 @@ TextButton::TextButton(std::string name, Vec2f pos, Vec2f size, TextButton::Butt
     textDisplay.setOrigin(textDisplay.getLocalBounds().width / 2, textDisplay.getLocalBounds().height / 2);
 }
 
-void TextButton::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
-{
-    
-    if(state == State::PRESSED)
-    {
-        box.setFillColor(colors.pressColor);
-    }
-    else if(state == State::HOVERED)
-    {
-        box.setFillColor(colors.hoverColor);
-    }
-    else
-    {
-        box.setFillColor(colors.defaultColor);
-    }
-
-    //Positioning the text propperly
-    Vec2f textPos = actualPos + size / 2.0f;
-    textDisplay.setPosition(textPos);
-
-    box.setPosition(actualPos);
-
-    window->draw(box);
-    window->draw(textDisplay);
-}
 
 void TextButton::setPosition(Vec2f pos)
 {
@@ -55,22 +30,12 @@ Vec2f TextButton::getSize()
     return size;
 }
 
-bool TextButton::posIsOnButton(Vec2f checkPos, Vec2f parentPos)
-{
-    Vec2f fullPos = pos + parentPos;
-
-    if(checkPos.x > fullPos.x && checkPos.x < fullPos.x + size.x && checkPos.y > fullPos.y && checkPos.y < fullPos.y + size.y)
-    {
-        return true;
-    }
-    return false;
-}
-
 void TextButton::handleMouseMove(MouseData mouseData, Vec2f parentPos)
 {
-    UIComponent::handleMouseMove(mouseData, parentPos + pos);
+    Vec2f actualPos = parentPos + pos;
+    UIComponent::handleMouseMove(mouseData, actualPos);
 
-    if(posIsOnButton((sf::Vector2f) mouseData.position, parentPos))
+    if(posIsOnComponent((sf::Vector2f) mouseData.position, actualPos))
     {
         if(state == State::OFF)
         {
@@ -84,12 +49,13 @@ void TextButton::handleMouseMove(MouseData mouseData, Vec2f parentPos)
 }
 bool TextButton::handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos)
 {
-    bool catchChange = UIComponent::handleMouseButtonChange(button, position, pressed, parentPos + pos);
+    Vec2f actualPos = parentPos + pos;
+    bool catchChange = UIComponent::handleMouseButtonChange(button, position, pressed, actualPos);
 
     //If this is a left click
     if(button == sf::Mouse::Button::Left && catchChange == false)
     {
-        if(this->posIsOnButton(position, parentPos))
+        if(this->posIsOnComponent(position, actualPos))
         {
             if(pressed == true)
             {
@@ -117,6 +83,31 @@ bool TextButton::handleMouseButtonChange(sf::Mouse::Button button, Vec2f positio
 ////////////////////////////////////////////////////////////////////////////////
 //private methods
 ////////////////////////////////////////////////////////////////////////////////
+void TextButton::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
+{
+    
+    if(state == State::PRESSED)
+    {
+        box.setFillColor(colors.pressColor);
+    }
+    else if(state == State::HOVERED)
+    {
+        box.setFillColor(colors.hoverColor);
+    }
+    else
+    {
+        box.setFillColor(colors.defaultColor);
+    }
+
+    //Positioning the text propperly
+    Vec2f textPos = actualPos + size / 2.0f;
+    textDisplay.setPosition(textPos);
+
+    box.setPosition(actualPos);
+
+    window->draw(box);
+    window->draw(textDisplay);
+}
 
 void TextButton::changeState(State state)
 {

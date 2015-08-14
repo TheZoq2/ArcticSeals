@@ -9,6 +9,7 @@
 #include "leveleditor.h"
 #include "mouseeventhandler.h"
 
+
 class Editor
 {
 public:
@@ -21,6 +22,7 @@ private:
     bool done;
 
     sf::RenderWindow* window;
+    sf::View uiView;
 
     sf::Clock gameClock;
     sf::Time frameTime;

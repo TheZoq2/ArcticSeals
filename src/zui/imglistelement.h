@@ -17,7 +17,6 @@ class ImgListElement :  public UIComponent, InputComponent
 public:
     ImgListElement(std::string imgPath, std::string valueName, Vec2f pos, Vec2f size);
 
-    void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
 
     void setPosition(Vec2f pos);
 
@@ -31,6 +30,9 @@ public:
     virtual bool handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos);
     
     static const std::string DEFAULT_NAME; 
+protected:
+    virtual void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
+
 private:
     enum State
     {
@@ -40,7 +42,6 @@ private:
     };
     State state;
 
-    Vec2f size;
     float scale;
 
     std::string imgPath;

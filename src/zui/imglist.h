@@ -25,7 +25,6 @@ public:
     ImgList(Vec2f pos, Vec2f size, std::string name);
     ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2f pos, Vec2f size, std::string name);
 
-    void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
 
     void setBackgroundColor(sf::Color bgColor);
     void setElements(std::vector< std::pair< std::string, std::string > > elements);
@@ -39,11 +38,13 @@ public:
     //Handle mouse button press and releases. Return true if the component should bock the press for
     //parent components
     bool handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos);
+protected:
+    virtual void drawSelf(sf::RenderWindow* window, Vec2f actualPos);
+    
+    virtual bool posIsOnComponent(Vec2f checkPos, Vec2f actualPos);
 private:
     const float padding = 10; //Amount of padding in pixels between two elements
     const float imgSize = 100;
-
-    Vec2f size;
 
     std::vector< std::unique_ptr< ImgListElement> > listElements;
 

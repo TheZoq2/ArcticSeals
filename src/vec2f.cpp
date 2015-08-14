@@ -17,6 +17,11 @@ float Vec2f::length()
     return sqrt(pow(x, 2) + pow(y, 2));
 }
 
+Vec2f::operator sf::Vector2i()
+{
+    return sf::Vector2i(x, y);
+}
+
 Vec2f& Vec2f::operator=(const Vec2f& other)
 {
     //Vec2f newVec;

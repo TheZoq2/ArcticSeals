@@ -12,6 +12,8 @@
 #include "zui/inputcomponent.h"
 #include "entity.h"
 #include "spriteentity.h"
+#include "entitygroup.h"
+
 
 class LevelEditor : public MouseListener, zui::UIValueListener
 {
@@ -21,6 +23,7 @@ public:
     void setupUI();
 
     void draw(sf::RenderWindow* window);
+    void drawUI(sf::RenderWindow* window);
 
     void onUIChange(zui::InputComponent* changedComponent);
 
@@ -38,19 +41,13 @@ private:
         CREATE,
     };
 
-    const static std::string SELECT_BUTTON_NAME;
-    const static std::string MOVE_BUTTON_NAME;
-    const static std::string SCALE_BUTTON_NAME;
-    const static std::string ROTATE_BUTTON_NAME;
-    const static std::string ENTITYSEL_BUTTON_NAME;
-    const static std::string ENTITYSEL_LIST_NAME;
-
     void generateEntityList();
 
     void createGhostEntity(Vec2f worldPos);
 
     void changeMode(EditingMode newMode);
     void exitMode(); //Exit the current mode and clean up everything
+    void addGhostEntity();
 
     EditingMode editingMode;
 
@@ -59,10 +56,22 @@ private:
     Entity* ghostEntity;
     std::string newEntityName;
 
+    EntityGroup editedGroup;
+
+    //UI stuff
+    const static std::string SELECT_BUTTON_NAME;
+    const static std::string MOVE_BUTTON_NAME;
+    const static std::string SCALE_BUTTON_NAME;
+    const static std::string ROTATE_BUTTON_NAME;
+    const static std::string ENTITYSEL_BUTTON_NAME;
+    const static std::string ENTITYSEL_LIST_NAME;
+
     zui::Window mainWindow;
 
     std::vector< zui::TextButton* > modeButtons;
     zui::TextButton* entitySelButton;
     zui::ImgList* entityList;
+
+    bool movingCamera;
 };
 #endif

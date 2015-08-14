@@ -28,6 +28,7 @@ class UIComponent : public MouseListener
 public:
 
     void draw(sf::RenderWindow* window, sf::Vector2f parentPos);
+    bool posIsOnUI(Vec2f checkPos, Vec2f parentPos);
 
     virtual void setPosition(Vec2f pos);
     void setParent(UIComponent* parent);
@@ -46,13 +47,16 @@ public:
     //Handle mouse button press and releases. Return true if the component should bock the press for
     //parent components
     virtual bool handleMouseButtonChange(sf::Mouse::Button button, Vec2f position, bool pressed, Vec2f parentPos);
+
 protected:
     virtual void drawSelf(sf::RenderWindow* window, Vec2f actualPos) = 0;
+    virtual bool posIsOnComponent(Vec2f checkPos, Vec2f actualPos);
 
     UIComponent();
     UIComponent(Vec2f pos);
 
     sf::Vector2f pos;
+    Vec2f size;
     
     //std::vector<UIComponent*> components;
     std::vector< std::unique_ptr< UIComponent > > children;

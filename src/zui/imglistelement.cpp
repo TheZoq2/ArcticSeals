@@ -7,7 +7,7 @@ const std::string ImgListElement::DEFAULT_NAME = "ImgListElement";
 ImgListElement::ImgListElement(std::string imgPath, std::string valueName, Vec2f pos, Vec2f size)
     : UIComponent(pos), InputComponent(DEFAULT_NAME)
 {
-    this->size = size;
+    UIComponent::size = size;
 
     this->imgPath = imgPath;
     this->valueName = valueName;
@@ -52,7 +52,7 @@ void ImgListElement::handleMouseMove(MouseData mouseData, Vec2f parentPos)
     Vec2f actualPos = pos + parentPos;
     UIComponent::handleMouseMove(mouseData, actualPos);
 
-    if(pointIsOnElement((sf::Vector2f)mouseData.position, actualPos))
+    if(posIsOnComponent((sf::Vector2f)mouseData.position, actualPos))
     {
         if(state == State::DEFAULT)
         {
@@ -78,7 +78,7 @@ bool ImgListElement::handleMouseButtonChange(sf::Mouse::Button button, Vec2f pos
     {
         if(button == sf::Mouse::Left && pressed == true)
         {
-            if(pointIsOnElement(position, actualPos))
+            if(posIsOnComponent(position, actualPos))
             {
                 state = State::SELECTED;
 
@@ -123,7 +123,3 @@ std::string ImgListElement::getValueName()
 //                          Private functions
 ///////////////////////////////////////////////////////////////////////////////////////
 
-bool ImgListElement::pointIsOnElement(Vec2f point, Vec2f actualPos)
-{
-    return point.x > actualPos.x && point.y > actualPos.y && point.x < actualPos.x + size.x && point.y < actualPos.y + size.y;
-}

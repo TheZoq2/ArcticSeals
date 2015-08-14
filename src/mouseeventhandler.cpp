@@ -15,8 +15,10 @@ void MouseEventHandler::handleMoveEvent(sf::Event* event)
     //Creating a struct to store the data in 
     MouseData data;
     
-    data.position = sf::Mouse::getPosition(*window);
-    data.moved = sf::Vector2i(event->mouseMove.x, event->mouseMove.y);
+    data.position =  Vec2f(event->mouseMove.x, event->mouseMove.y);
+    data.moved = Vec2f(event->mouseMove.x, event->mouseMove.y) - oldPos;
+
+    oldPos = data.position;
 
     for(unsigned int i = 0; i < listeners.size(); i++)
     {

@@ -10,8 +10,8 @@
 
 struct MouseData
 {
-    sf::Vector2i position;
-    sf::Vector2i moved;
+    Vec2f position;
+    Vec2f moved;
 };
 
 //Interface for classes that need to listen to mouse events
@@ -35,6 +35,8 @@ public:
     void handleMouseReleased(sf::Event* event);
 private:
     std::vector<MouseListener*> listeners;
+
+    Vec2f oldPos;
 
     sf::RenderWindow* window;
 };

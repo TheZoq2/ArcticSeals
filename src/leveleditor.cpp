@@ -11,6 +11,7 @@ LevelEditor::LevelEditor()
 {
     this->worldView.setSize(1920, 1080);
     this->ghostEntity = NULL;
+    this->movingCamera = false;
 }
 
 void LevelEditor::setupUI()
@@ -83,10 +84,18 @@ void LevelEditor::setupUI()
 
 void LevelEditor::draw(sf::RenderWindow* window)
 {
+    window->setView(worldView);
+    
+    //Draw the entityGroup that is being edited
+    editedGroup.draw(window);
+
     if(ghostEntity != NULL)
     {
         ghostEntity->draw(window);
     }
+}
+void LevelEditor::drawUI(sf::RenderWindow* window)
+{
     mainWindow.draw(window, Vec2f(0,0));
 }
 
@@ -126,12 +135,26 @@ void LevelEditor::onMouseMove(MouseData mouseData, sf::RenderWindow* window)
 {
     //Converting the position to world coordinates
     Vec2f worldPos = window->mapPixelToCoords(mouseData.position, worldView);
+    //Vec2f worldMove = window->mapPixelToCoords(mouseData.moved, worldView);
+    
+    //Calculating the movement in the world this 'frame'
+    Vec2f oldMousePos = mouseData.position - mouseData.moved;
+    Vec2f oldWorldPos = window->mapPixelToCoords(oldMousePos, worldView);
+    
+    Vec2f worldMove = worldPos - oldWorldPos;
 
-    if(editingMode == EditingMode::CREATE)
+    if(movingCamera)
     {
-        if(this->ghostEntity != NULL)
+        worldView.move(-worldMove);
+    }
+    else
+    {
+        if(editingMode == EditingMode::CREATE)
         {
-            this->ghostEntity->setPosition(worldPos);
+            if(this->ghostEntity != NULL)
+            {
+                this->ghostEntity->setPosition(worldPos);
+            }
         }
     }
 }
@@ -140,28 +163,41 @@ void LevelEditor::onMouseButtonChange(sf::Mouse::Button button, Vec2f position, 
     //Converting the position to world coordinates
     Vec2f worldPos = window->mapPixelToCoords((sf::Vector2i) position, worldView);
 
-    switch(editingMode)
+    bool mouseIsOnUI = mainWindow.posIsOnUI(position, Vec2f(0,0));
+
+    if(button == sf::Mouse::Middle)
     {
-        case SELECT:
+        movingCamera = pressed;
+    }
+
+    if(movingCamera == false)
+    {
+        switch(editingMode)
         {
-            break;
-        }
-        case MOVE:
-        {
-            break;
-        }
-        case SCALE:
-        {
-            break;
-        }
-        case ROTATE:
-        {
-            break;
-        }
-        case CREATE:
-        {
-            
-            break;
+            case SELECT:
+            {
+                break;
+            }
+            case MOVE:
+            {
+                break;
+            }
+            case SCALE:
+            {
+                break;
+            }
+            case ROTATE:
+            {
+                break;
+            }
+            case CREATE:
+            {
+                if(button == sf::Mouse::Left && pressed == true && mouseIsOnUI == false)
+                {
+                    editedGroup.addEntity(ghostEntity->clone());
+                }
+                break;
+            }
         }
     }
 }
@@ -205,6 +241,7 @@ void LevelEditor::createGhostEntity(Vec2f worldPos)
 
         SpriteEntity* newEntity = new SpriteEntity();
         newEntity->create(texture);
+        newEntity->setOrigin(Vec2f(0.5, 0.5));
 
         ghostEntity = newEntity;
         ghostEntity->setPosition(worldPos);

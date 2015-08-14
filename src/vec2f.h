@@ -16,5 +16,7 @@ public:
 
     Vec2f& operator=(const Vec2f& other);
     Vec2f& operator=(const sf::Vector2f& other);
+
+    operator sf::Vector2i();
 };
 #endif

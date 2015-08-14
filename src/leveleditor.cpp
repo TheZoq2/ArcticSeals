@@ -141,7 +141,7 @@ void LevelEditor::onMouseMove(MouseData mouseData, sf::RenderWindow* window)
 
     if(movingCamera)
     {
-        worldView.move(worldMove);
+        worldView.move(-worldMove);
     }
     else
     {
@@ -158,6 +158,8 @@ void LevelEditor::onMouseButtonChange(sf::Mouse::Button button, Vec2f position, 
 {
     //Converting the position to world coordinates
     Vec2f worldPos = window->mapPixelToCoords((sf::Vector2i) position, worldView);
+
+    bool mouseIsOnUI = mainWindow.posIsOnUI(position, Vec2f(0,0));
 
     if(button == sf::Mouse::Middle)
     {
@@ -186,7 +188,7 @@ void LevelEditor::onMouseButtonChange(sf::Mouse::Button button, Vec2f position, 
             }
             case CREATE:
             {
-                if(button == sf::Mouse::Left && pressed == true)
+                if(button == sf::Mouse::Left && pressed == true && mouseIsOnUI == false)
                 {
                     editedGroup.addEntity(ghostEntity->clone());
                 }

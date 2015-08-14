@@ -14,13 +14,13 @@ namespace zui
         Window();
         ~Window();
     
-        void create(Vec2f pos, Vec2f size, sf::Color color);
+        virtual void create(Vec2f pos, Vec2f size, sf::Color color);
     
-        void drawSelf(sf::RenderWindow* window, Vec2f totalPos);
+        virtual void drawSelf(sf::RenderWindow* window, Vec2f totalPos);
     
-        void setPosition(Vec2f pos);
+        virtual void setPosition(Vec2f pos);
+    protected:
     private:
-        sf::Vector2f size;
         sf::Color color;
     
         sf::RectangleShape shape;

@@ -5,6 +5,7 @@ using namespace zui;
 UIComponent::UIComponent()
 {
     this->pos = Vec2f(0,0);
+    this->size = Vec2f(0, 0);
     this->parent = NULL;
 
 }
@@ -36,6 +37,30 @@ void UIComponent::draw(sf::RenderWindow* window, sf::Vector2f parentPos)
     }
 }
 
+bool UIComponent::posIsOnUI(Vec2f checkPos, Vec2f parentPos)
+{
+    bool result = false;
+
+    Vec2f actualPos = parentPos + pos;
+
+    result = result || posIsOnComponent(checkPos, actualPos);
+
+    for(auto& it : children)
+    {
+        result = result || it->posIsOnUI(checkPos, actualPos);
+    }
+
+    return result;
+}
+bool UIComponent::posIsOnComponent(Vec2f checkPos, Vec2f actualPos)
+{
+    if(checkPos.x >= actualPos.x && checkPos.x <= actualPos.x + size.x && checkPos.y >= actualPos.y && checkPos.y <= actualPos.y + size.y)
+    {
+        return true;
+    }
+    return false;
+}
+
 void UIComponent::addUIValueListener(UIValueListener* listener, std::string componentName)
 {
     std::pair<std::string, UIValueListener*> pair(componentName, listener);
@@ -47,6 +72,7 @@ void UIComponent::addChildComponent(UIComponent* child)
 
     child->setParent(this);
 }
+
 
 void UIComponent::onInputChange(InputComponent* component)
 {

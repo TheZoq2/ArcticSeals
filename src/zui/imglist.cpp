@@ -7,7 +7,7 @@ ImgList::ImgList(Vec2f pos, Vec2f size, std::string name)
 {
     this->active = false;
     this->selectedElement = NULL;
-    this->size = size;
+    UIComponent::size = size;
     this->bgColor = sf::Color(150,150,150);
     this->value = "";
 
@@ -32,21 +32,6 @@ ImgList::ImgList(std::vector<std::pair<std::string, std::string>> elements, Vec2
     this->setElements(elements);
 }
 
-void ImgList::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
-{
-    if(active == true)
-    {
-        bgShape.setPosition(actualPos);
-        window->draw(bgShape);
-
-        okButton->draw(window, actualPos);
-
-        for(auto& it : listElements)
-        {
-            it->draw(window, actualPos);
-        }
-    }
-}
 
 void ImgList::setElements(std::vector< std::pair < std::string, std::string > > elements)
 {
@@ -173,4 +158,32 @@ void ImgList::setBackgroundColor(sf::Color bgColor)
 {
     this->bgColor = bgColor;
     this->bgShape.setFillColor(bgColor);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//          Private/protecteded
+/////////////////////////////////////////////////////////////////////////////////
+void ImgList::drawSelf(sf::RenderWindow* window, Vec2f actualPos)
+{
+    if(active == true)
+    {
+        bgShape.setPosition(actualPos);
+        window->draw(bgShape);
+
+        okButton->draw(window, actualPos);
+
+        for(auto& it : listElements)
+        {
+            it->draw(window, actualPos);
+        }
+    }
+}
+
+bool ImgList::posIsOnComponent(Vec2f checkPos, Vec2f actualPos)
+{
+    if(active == true)
+    {
+        return UIComponent::posIsOnComponent(checkPos, actualPos);
+    }
+    return false;
 }

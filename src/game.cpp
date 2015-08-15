@@ -5,79 +5,16 @@ void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
     done = false;
+    
+    //Generating terrrain
+    int terrainSize = 100;
 
-    for(int i = 0; i < 5; i++)
+    std::vector<float> terrainPoints;
+    for(int i = 0; i < terrainSize; i++)
     {
-        world.addEntityGroup(generateForestBackground(), i * 0.20);
+        terrainPoints.push_back(rand() % 100);
     }
-    Player* physEnt = new Player(sf::Vector2f(30, 100));
-    physEnt->setPosition(Vec2f(500, -500));
-    world.getMainGroup()->addEntity(physEnt);
-
-    mainUIWindow.create(Vec2f(0, 0), Vec2f(150, 900), sf::Color(60,60,60));
-
-    zui::TextButton::ButtonColor buttonColor;
-    buttonColor.pressColor = sf::Color(150,150,255);
-    buttonColor.hoverColor = sf::Color(100, 100, 255);
-    buttonColor.defaultColor = sf::Color(0,0,255);
-    zui::TextButton* testButton = new zui::TextButton("test", Vec2f(0,0), Vec2f(140, 60), buttonColor, "Click");
-    testButton->setPosition(Vec2f(800,400));
-    mainUIWindow.addChildComponent(testButton);
-    mainUIWindow.addUIValueListener(&uiTest, "test");
-    mainUIWindow.addUIValueListener(&uiTest, "testList");
-
-    mouseHandler.setup(this->window);
-    mouseHandler.addListener(&mainUIWindow);
-
-    //Lots of memory leaks here
-    Platform* platform = new Platform();
-    platform->create(Vec2f(0,0));
-    platform->addPoint(-200,0);
-    platform->addPoint(100, 25);
-    platform->addPoint(300, -5);
-
-    Platform* platform2 = new Platform();
-    platform2->create(Vec2f(0,100));
-    platform2->addPoint(400, 0);
-    platform2->addPoint(500, 0);
-    platform2->addPoint(800, 100);
-
-    movingPlatform.create(Vec2f(100, -100));
-    movingPlatform.addPoint(0, 0);
-    movingPlatform.addPoint(100, 0);
-    movingPlatform.addPoint(200, 20);
-
-    world.getMainGroup()->addPlatform(platform);
-    world.getMainGroup()->addPlatform(platform2);
-    world.getMainGroup()->addPlatform(&movingPlatform);
-
-    //Searching for files in the img directory
-    const std::string imgDir = "../media/img/";
-
-    //Generate a vector of images
-    std::vector<std::pair<std::string, std::string> > imgElements;
-
-    DIR* dir;
-    struct dirent* ent;
-    if((dir = opendir(imgDir.data())) != NULL)
-    {
-        while((ent = readdir(dir)) != NULL)
-        {
-            std::cout << "Found file: " << ent->d_name << " of type: " << ent->d_type << std::endl;
-            
-            std::string filename = ent->d_name;
-
-            //If the file type is a .png
-            if(filename.find_last_not_of(".png") != filename.length() -1 && filename.find(".png") != std::string::npos)
-            {
-                imgElements.push_back(std::pair<std::string, std::string>(imgDir + filename, imgDir + filename));
-            }
-        }
-        closedir(dir);
-    }
-
-    zui::ImgList* testList = new zui::ImgList(imgElements, Vec2f(100,0), Vec2f(500, 500), "testList");
-    mainUIWindow.addChildComponent(testList);
+    ground.create(terrainPoints);
 }
 
 void Game::loop()
@@ -135,6 +72,8 @@ void Game::loop()
     view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
     window->setView(view);
     mainUIWindow.draw(window, Vec2f(0, 0));
+
+    ground.draw(window);
 
     window->display();
 

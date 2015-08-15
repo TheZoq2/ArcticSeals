@@ -44,6 +44,7 @@ add_executable(${EXECUTABLE_NAME}
     vec2f.cpp
     platform.cpp
     player.cpp
+    ground.cpp
     )
 # Define sources and executable
 set(EDITOR_NAME "editor")

@@ -19,6 +19,7 @@
 #include "vec2f.h"
 #include "physicsentity.h"
 #include "player.h"
+#include "ground.h"
 
 class Game
 {
@@ -54,15 +55,7 @@ private:
     float movingPos;
     bool moveDir;
 
-    class UIListenerTest : public zui::UIValueListener
-    {
-    public:
-        void onUIChange(zui::InputComponent* changedComponent)
-        {
-            std::cout << changedComponent->stringValue() << std::endl;
-        };
-    };
-    UIListenerTest uiTest;
+    Ground ground;
 };
 
 #endif

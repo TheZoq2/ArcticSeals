@@ -1,8 +1,9 @@
 #ifndef H_PLAYER
 #define H_PLAYER
 
-#include "physicsentity.h"
-class Player : public PhysicsEntity
+#include "humanentity.h"
+
+class Player : public HumanEntity
 {
 public:
     Player(Vec2f size);

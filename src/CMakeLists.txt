@@ -45,6 +45,7 @@ add_executable(${EXECUTABLE_NAME}
     platform.cpp
     player.cpp
     ground.cpp
+    humanentity.cpp
     )
 # Define sources and executable
 set(EDITOR_NAME "editor")
@@ -72,6 +73,7 @@ add_executable(${EDITOR_NAME}
     platform.cpp
     player.cpp
     leveleditor.cpp
+    humanentity.cpp
     )
 
 

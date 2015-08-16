@@ -28,6 +28,10 @@ int Entity::getDepth()
 {
     return this->depth;
 }
+Vec2f Entity::getPosition()
+{
+    return pos;
+}
 
 bool Entity::pointIsOnEntity(Vec2f point)
 {

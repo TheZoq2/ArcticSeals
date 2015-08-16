@@ -42,6 +42,8 @@ private:
 
     zui::Window mainUIWindow;
     MouseEventHandler mouseHandler;
+    sf::View uiView;
+    sf::View worldView;
 
     EntityGroup* generateForestBackground();
 
@@ -55,7 +57,7 @@ private:
     float movingPos;
     bool moveDir;
 
-    Ground ground;
+    Player* player;
 };
 
 #endif

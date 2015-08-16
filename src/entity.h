@@ -24,6 +24,7 @@ public:
     virtual void setGroup(EntityGroup* group);
 
     int getDepth();
+    Vec2f getPosition();
 
     virtual bool pointIsOnEntity(Vec2f point);
 protected:

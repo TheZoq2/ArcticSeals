@@ -5,16 +5,28 @@ void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
     done = false;
+    worldView = window->getDefaultView();
     
-    //Generating terrrain
-    int terrainSize = 100;
+    EntityGroup* mainGroup = this->world.getMainGroup();
 
-    std::vector<float> terrainPoints;
-    for(int i = 0; i < terrainSize; i++)
-    {
-        terrainPoints.push_back(rand() % 100);
-    }
-    ground.create(terrainPoints);
+    Platform* groundPlatform = new Platform();
+    groundPlatform->addPoint(Vec2f(0,0));
+    groundPlatform->addPoint(Vec2f(300,100));
+    groundPlatform->addPoint(Vec2f(700,100));
+    groundPlatform->addPoint(Vec2f(- 700,100));
+
+    movingPlatform.addPoint(0,0);
+    movingPlatform.addPoint(100,0);
+    movingPlatform.addPoint(200,0);
+    movingPlatform.setPosition(Vec2f(700, 100));
+
+    mainGroup->addPlatform(groundPlatform);
+    mainGroup->addPlatform(&movingPlatform);
+
+    player = new Player(Vec2f(30,100));
+    player->setPosition(Vec2f(5, -100));
+    mainGroup->addEntity(player);
+
 }
 
 void Game::loop()
@@ -37,11 +49,10 @@ void Game::loop()
             //window->setSize(sf::Vector2<unsigned int>(width, height));
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             sf::View view(visibleArea);
-            view.setViewport(sf::FloatRect(0,0,1,1));
+            uiView.reset(visibleArea);
+            //view.setViewport(sf::FloatRect(0,0,1,1));
             //view.setSize(event.size.width, event.size.height);
-            window->setView(view);
-
-            std::cout << "Window size: " << window->sf::Window::getSize().x << "  "<< view.getSize().x << std::endl;
+            //window->setView(view);
         }
         if(event.type == sf::Event::MouseMoved)
         {
@@ -62,18 +73,38 @@ void Game::loop()
     
 
 
-    //movingPlatform.setPosition(Vec2f(100, movingPos));
+    if(moveDir)
+    {
+        movingPos += 30 * frameTime;
 
+        if(movingPos > 300)
+        {
+            moveDir = false;
+        }
+    }
+    else
+    {
+        movingPos -= 30 * frameTime;
+
+        if(movingPos < -200)
+        {
+            moveDir = true;
+        }
+
+    }
+
+    movingPlatform.setPosition(Vec2f(100, movingPos));
+
+    window->setView(worldView);
     world.update(frameTime);
-    world.draw(window, Vec2f(cameraX, -256));
+    world.draw(window, Vec2f(player->getPosition()));
 
-    sf::View view = window->getView();
+    //sf::View view = window->getView();
 
-    view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
-    window->setView(view);
+
+    window->setView(uiView);
+    uiView.setCenter(uiView.getSize().x / 2, uiView.getSize().y / 2);
     mainUIWindow.draw(window, Vec2f(0, 0));
-
-    ground.draw(window);
 
     window->display();
 

@@ -63,23 +63,25 @@ Vec2f Platform::getGlobalPos(float localX)
 {
     Vec2f result(0,0);
 
+    float globalX = localX + pos.x;
+
     //Make sure the pos is actually on the platform
     if(xIsOnPlatform(localX) == false)
     {
-        fprintf(stderr, "Local x coordinate is not on platform in Platform::getGlobalPos()");
+        fprintf(stderr, "Local x coordinate is not on platform in Platform::getGlobalPos()\n");
     }
 
     //Loop through the lines to find the correct position
     for(auto it : lines)
     {
-        if(localX >= it.getPosition(0).x && localX <= it.getPosition(1).x)
+        if(globalX >= it.getPosition(0).x && globalX <= it.getPosition(1).x)
         {
-            result.x = localX;
-            result.y = it.calculateYValue(localX);
+            result.x = globalX;
+            result.y = it.calculateYValue(globalX);
         }
     }
-
-    return result + pos;
+    
+    return result;
 }
 
 void Platform::setPosition(Vec2f pos)

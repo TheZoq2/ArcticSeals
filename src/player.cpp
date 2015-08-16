@@ -1,7 +1,7 @@
 #include "player.h"
 
 Player::Player(Vec2f size)
-    : PhysicsEntity(size)
+    : HumanEntity(size)
 {
 }
 Player* Player::clone()
@@ -11,9 +11,12 @@ Player* Player::clone()
 
 void Player::update(float time)
 {
-    PhysicsEntity::update(time);
+    HumanEntity::update(time);
 
-    const int maxSpeed = 60;
+    HumanEntity::movementAmount = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+
+    /*const int maxSpeed = 180;
+    const float maxAirAcceleration = 1000;
 
     if(groundState == GroundState::ON_GROUND)
     {
@@ -21,7 +24,22 @@ void Player::update(float time)
 
         if(sf::Joystick::isButtonPressed(0, 0))
         {
-            jump(300);
+            jump(600);
         }
     }
+    else
+    {
+        float addedVel = (maxAirAcceleration*time * 2 * sf::Joystick::getAxisPosition(0, sf::Joystick::X) / 100.0f) ;
+
+        velocity.x += addedVel;
+
+        if(velocity.x > maxSpeed)
+        {
+            velocity.x = maxSpeed;
+        }
+        else if(velocity.x < -maxSpeed)
+        {
+            velocity.x = -maxSpeed;
+        }
+    }*/
 }

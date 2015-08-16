@@ -14,9 +14,9 @@ public:
     virtual void draw(sf::RenderWindow* window);
     virtual void update(float time);
 
-    virtual void jump(float speed);
-    
     virtual void setPosition(Vec2f pos);
+
+    virtual void jump(float speed);
 protected:
     enum GroundState
     {
@@ -29,7 +29,6 @@ protected:
 
     Vec2f velocity;
 private:
-
     uint32_t platformID; // The platform where the entity is currently 'standing'
     float platformX; //The current xPosition on the platform
 

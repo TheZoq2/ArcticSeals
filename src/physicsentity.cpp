@@ -7,7 +7,7 @@ PhysicsEntity::PhysicsEntity(Vec2f size)
     this->shape.setSize(size);
     shape.setOrigin(size.x / 2, size.y / 2);
 
-    this->gravity = 9.82 * 30;
+    this->gravity = 9.82 * 90;
 }
 
 PhysicsEntity* PhysicsEntity::clone()
@@ -69,7 +69,7 @@ void PhysicsEntity::update(float time)
             
             //Calculate feet position
             Vec2f feetPos = newPos;
-            feetPos.x = newPos.x + size.x/2;
+            feetPos.x = newPos.x;
             feetPos.y = newPos.y + size.y / 2;
 
             //Move y-axis

@@ -11,27 +11,32 @@ void Sword::changeState(SwingState newState)
     {
         case(READY):
         {
-            targetAngle = 70;
+            targetAngle = -M_PI / 12;
             targetOffset = Vec2f(0,0);
             break;
         }
         case(PREPARING):
         {
-            targetAngle = -10;
+            targetAngle = -2 * M_PI / 3;
             targetOffset = Vec2f(10,20);
             break;
         }
         case(SWING):
         {
-            targetAngle = 110;
+            targetAngle = M_PI / 3;
             targetOffset = Vec2f(15,-5);
             break;
         }
         case(RETURNING):
         {
-            targetAngle = 70;
+            targetAngle = -M_PI / 12;
             targetOffset = Vec2f(0,0);
             break;
         }
     }
+}
+
+float Sword::getSwingChangeAmount()
+{
+    return 5;
 }

@@ -15,6 +15,12 @@ void Player::update(float time)
 
     HumanEntity::movementAmount = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 
+    //Deadzone
+    if(std::abs(movementAmount) < 5)
+    {
+        movementAmount = 0;
+    }
+
     if(sf::Joystick::isButtonPressed(0, 4))
     {
         HumanEntity::roll(-1);
@@ -22,5 +28,10 @@ void Player::update(float time)
     else if(sf::Joystick::isButtonPressed(0, 5))
     {
         HumanEntity::roll(1);
+    }
+
+    if(sf::Joystick::isButtonPressed(0, 2))
+    {
+        sword.swing(MeleeWeapon::SwingType::LIGHT);
     }
 }

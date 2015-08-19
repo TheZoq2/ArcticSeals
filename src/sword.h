@@ -11,6 +11,7 @@ public:
     Sword(float length) ;
 
     void changeState(SwingState newState);
+    float getSwingChangeAmount();
 protected:
 
 };

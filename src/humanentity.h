@@ -2,6 +2,7 @@
 #define H_HUMANENTITY
 
 #include "physicsentity.h"
+#include "sword.h"
 
 class HumanEntity : public PhysicsEntity
 {
@@ -10,6 +11,7 @@ public:
     virtual HumanEntity* clone();
 
     virtual void update(float time);
+    virtual void draw(sf::RenderWindow* window);
 
 protected:
     enum MoveState
@@ -30,9 +32,13 @@ protected:
 
     sf::Clock rollClock; //TODO: Move to 'global'?
     sf::Time rollStart;
+    
     int rollDirection;
 
     MoveState moveState;
+    int movementDirection;
+
+    Sword sword;
 private:
 };
 #endif

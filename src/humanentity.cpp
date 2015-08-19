@@ -1,7 +1,8 @@
 #include "humanentity.h"
 
 HumanEntity::HumanEntity(Vec2f size)
-    : PhysicsEntity(size)
+    : PhysicsEntity(size),
+    sword(75)
 {
     moveState = NORMAL;
 
@@ -10,6 +11,9 @@ HumanEntity::HumanEntity(Vec2f size)
     rollMilliseconds = 1000;
     rollMultiplyer = 1.5;
     rollBaseMultiplyer = 0.5;
+    
+    
+    movementDirection = 1;
 }
 HumanEntity* HumanEntity::clone()
 {
@@ -64,6 +68,32 @@ void HumanEntity::update(float time)
             }
         }
     }
+
+    //Calculating the last movement direction
+    if(sword.isSwingReady())
+    {
+        if(velocity.x > 0)
+        {
+            movementDirection = 1;
+        }
+        else if(velocity.x < 0)
+        {
+            movementDirection = -1;
+        }
+    }
+
+    sword.setPosition(pos);
+    sword.setDirection(movementDirection);
+    sword.update(time);
+}
+
+void HumanEntity::draw(sf::RenderWindow* window)
+{
+    PhysicsEntity::draw(window);
+    
+    Line* line = sword.getLine();
+
+    line->draw(window);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

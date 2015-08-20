@@ -19,13 +19,8 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
 
-# Define sources and executable
-set(EXECUTABLE_NAME "myproject")
-add_executable(${EXECUTABLE_NAME} 
-    #Include for directory support on windows
-    #depend/dirent.h
-    main.cpp 
-    game.cpp
+set(LIB_NAME "SharedCode")
+add_library(${LIB_NAME}
     spriteentity.cpp
     sprite.cpp
     world.cpp
@@ -48,6 +43,15 @@ add_executable(${EXECUTABLE_NAME}
     humanentity.cpp
     sword.cpp
     meleeweapon.cpp
+)
+
+# Define sources and executable
+set(EXECUTABLE_NAME "myproject")
+add_executable(${EXECUTABLE_NAME} 
+    #Include for directory support on windows
+    #depend/dirent.h
+    main.cpp 
+    game.cpp
     )
 # Define sources and executable
 set(EDITOR_NAME "editor")
@@ -56,28 +60,15 @@ add_executable(${EDITOR_NAME}
     #depend/dirent.h
     editormain.cpp 
     editor.cpp
-    spriteentity.cpp
-    sprite.cpp
-    world.cpp
-    entity.cpp
-    mouseeventhandler.cpp
-    entitygroup.cpp
-    physicsentity.cpp
-    zui/uicomponent.cpp
-    zui/window.cpp
-    zui/inputcomponent.cpp
-    zui/button.cpp
-    zui/textbutton.cpp
-    zui/imglistelement.cpp
-    zui/imglist.cpp
-    line.cpp
-    vec2f.cpp
-    platform.cpp
-    player.cpp
     leveleditor.cpp
-    humanentity.cpp
-    sword.cpp
-    meleeweapon.cpp
+    )
+
+set(ANIM_EDITOR_NAME "animEditor")
+set(ANIM_SOURCES
+    #Include for directory support on windows
+    #depend/dirent.h
+    animmain.cpp
+    animeditor.cpp
     )
 
 
@@ -92,6 +83,22 @@ if(SFML_FOUND)
   target_link_libraries(${EDITOR_NAME} ${SFML_LIBRARIES})
 endif()
 
+#Including QT5
+# Find the QtWidgets library
+find_package(Qt5Widgets)
+if(Qt5Widgets_FOUND)
+    add_executable(${ANIM_EDITOR_NAME} ${ANIM_SOURCES})
+
+    include_directories(${Qt5Widgets_INCLUDE_DIRS})
+    target_link_libraries(${ANIM_EDITOR_NAME} ${Qt5Widgets_LIBRARIES})
+    
+    target_link_libraries(${ANIM_EDITOR_NAME} ${LIB_NAME})
+else()
+    message("QT5 not found, anim editor will not be built")
+endif()
+
+target_link_libraries(${EXECUTABLE_NAME} ${LIB_NAME})
+target_link_libraries(${EDITOR_NAME} ${LIB_NAME})
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
 

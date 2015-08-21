@@ -43,6 +43,7 @@ add_library(${LIB_NAME}
     humanentity.cpp
     sword.cpp
     meleeweapon.cpp
+    skeletal/bone.cpp
 )
 
 # Define sources and executable

@@ -5,7 +5,8 @@ void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
     done = false;
-    worldView = window->getDefaultView();
+    //worldView = window->getDefaultView();
+    worldView = sf::View(Vec2f(0,0), Vec2f(1280, 720));
     
     EntityGroup* mainGroup = this->world.getMainGroup();
 
@@ -71,8 +72,7 @@ void Game::loop()
     //Redraw stuff
     window->clear(sf::Color::Black);
     
-
-
+    //Moving platform
     if(moveDir)
     {
         movingPos += 30 * frameTime;

@@ -21,6 +21,10 @@ void Player::update(float time)
         movementAmount = 0;
     }
 
+    if(sf::Joystick::isButtonPressed(0, 0))
+    {
+        jump(600);
+    }
     if(sf::Joystick::isButtonPressed(0, 4))
     {
         HumanEntity::roll(-1);

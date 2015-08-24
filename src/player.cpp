@@ -13,10 +13,10 @@ void Player::update(float time)
 {
     HumanEntity::update(time);
 
-    HumanEntity::movementAmount = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+    HumanEntity::movementAmount = sf::Joystick::getAxisPosition(0, sf::Joystick::X) / 100.0f;
 
     //Deadzone
-    if(std::abs(movementAmount) < 5)
+    if(std::abs(movementAmount) < 0.5)
     {
         movementAmount = 0;
     }

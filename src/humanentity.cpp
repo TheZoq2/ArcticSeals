@@ -30,11 +30,11 @@ void HumanEntity::update(float time)
         {
             if(groundState == GroundState::ON_GROUND)
             {
-                velocity.x = (maxSpeed * 2 * movementAmount / 100.0f); 
+                velocity.x = (maxSpeed * 2 * movementAmount); 
             }
             else
             {
-                float addedVel = (maxAirAcceleration*time * 2 * movementAmount / 100.0f) ;
+                float addedVel = (maxAirAcceleration*time * 2 * movementAmount) ;
 
                 velocity.x += addedVel;
 

@@ -3,10 +3,9 @@
 
 #include "vec2f.h"
 
-class ParticleEffect
+class ParticleEffect : public Entity
 {
 public:
-
     struct Keyframe
     {
         float time; //Time after last keyframe
@@ -15,18 +14,36 @@ public:
         
         Vec2f size;
     };
+
+    void create();
+
+    virtual void draw(sf::RenderWindow* window);
+    virtual void update(float frameTime);
+    
+    virtual void addKeyframe(Keyframe keyframe);
 private:
     struct Particle
     {
+        float timeAlive;
         float lifetime;
 
         Vec2f pos;
         Vec2f speed;
 
         Vec2f size;
-    };
 
-    Vec2f emitterPos;
-    Vec2f 
+        int keyframe;
+        float timeInKeyframe;
+    };
+    float totalTime;
+    std::vector<Keyframe> keyframes;
+    
+    //Emitter parameters
+    int frequency; //Particles created per second
+
+
+    std::vector<Particle> particles;
+    sf::VertexArray particles;
+
 };
 #endif

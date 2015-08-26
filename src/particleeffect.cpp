@@ -1,8 +1,8 @@
 #include "particleeffect.h"
 
-void update(float frameTime)
+void ParticleEffect::update(float frameTime)
 {
-
+    
 }
 
 void ParticleEffect::addKeyframe(Keyframe keyframe)

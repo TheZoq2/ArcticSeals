@@ -28,6 +28,17 @@ void Game::setup()
     player->setPosition(Vec2f(5, -100));
     mainGroup->addEntity(player);
 
+    ParticleEffect::Keyframe keyframe;
+    keyframe.time = 0;
+    keyframe.minSpeed = Vec2f(-100, -100);
+    keyframe.maxSpeed = Vec2f(100, 50);
+    keyframe.size = Vec2f(10, 10);
+    keyframe.acceleration = Vec2f(0,100);
+    ParticleEffect* testParticle = new ParticleEffect(keyframe, 100);
+
+    mainGroup->addEntity(testParticle);
+
+
 }
 
 void Game::loop()

@@ -12,11 +12,16 @@ public:
         float time; //Time after last keyframe
         Vec2f minSpeed;
         Vec2f maxSpeed;
+
+        Vec2f acceleration;
         
         Vec2f size;
     };
 
-    void create();
+    virtual ParticleEffect* clone();
+    
+    ParticleEffect(Keyframe startKeyframe, float frequency);
+    //void create();
 
     virtual void draw(sf::RenderWindow* window);
     virtual void update(float frameTime);
@@ -34,17 +39,20 @@ private:
         Vec2f speed;
 
         Vec2f size;
+        Vec2f acceleration;
 
         int keyframe;
         float timeInKeyframe;
     };
+    void addVertex();
+
     float totalTime;
     std::vector<Keyframe> keyframes;
     
     //Emitter parameters
     float totalLifetime;
     float frequency; //Particles created per second
-    float millisPerParticle; //The time in miliseconds between particle spawns
+    float secondsPerParticle; //The time in miliseconds between particle spawns
 
     float lastSpawned;
 

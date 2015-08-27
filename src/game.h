@@ -20,6 +20,7 @@
 #include "physicsentity.h"
 #include "player.h"
 #include "ground.h"
+#include "particleeffect.h"
 
 class Game
 {

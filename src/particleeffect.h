@@ -10,8 +10,6 @@ public:
     struct Keyframe
     {
         float time; //Time after last keyframe
-        Vec2f minSpeed;
-        Vec2f maxSpeed;
 
         Vec2f acceleration;
         
@@ -29,6 +27,9 @@ public:
     virtual void addKeyframe(Keyframe keyframe);
 
     virtual void setFrequency(float frequency);
+
+    virtual void setStartSpeed(Vec2f minStartSpeed, Vec2f maxStartSpeed);
+    virtual void setMinLifetime(float minLifetime);
 private:
     struct Particle
     {
@@ -46,11 +47,10 @@ private:
     };
     void addVertex();
 
-    float totalTime;
     std::vector<Keyframe> keyframes;
     
     //Emitter parameters
-    float totalLifetime;
+    float currentTime;
     float frequency; //Particles created per second
     float secondsPerParticle; //The time in miliseconds between particle spawns
 
@@ -59,5 +59,10 @@ private:
     std::vector<Particle> particles;
     std::vector<sf::Vertex> vertecies;
 
+    Vec2f minStartSpeed;
+    Vec2f maxStartSpeed;
+    float maxLifetime; //Set by the total lifetime of all keyframes
+    float minLifetime;
+    bool lifetimeSpecified;
 };
 #endif

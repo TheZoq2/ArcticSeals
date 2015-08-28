@@ -29,12 +29,12 @@ void Game::setup()
     mainGroup->addEntity(player);
 
     ParticleEffect::Keyframe keyframe;
-    keyframe.time = 0;
-    keyframe.minSpeed = Vec2f(-100, -100);
-    keyframe.maxSpeed = Vec2f(100, 50);
+    keyframe.time = 1.5;
     keyframe.size = Vec2f(10, 10);
-    keyframe.acceleration = Vec2f(0,100);
+    keyframe.acceleration = Vec2f(0,300);
+
     ParticleEffect* testParticle = new ParticleEffect(keyframe, 100);
+    testParticle->setStartSpeed(Vec2f(-60,-200), Vec2f(60,200));
 
     mainGroup->addEntity(testParticle);
 

@@ -6,12 +6,9 @@ ParticleEffect::ParticleEffect(ParticleEffect::Keyframe keyframe, float frequenc
     addKeyframe(keyframe);
     setFrequency(frequency);
 
-    vertecies.push_back(sf::Vertex(Vec2f(0,0), sf::Vector2f(0,0)));
-    vertecies.push_back(sf::Vertex(Vec2f(keyframes.front().size.x,0), sf::Vector2f(1,0)));
-    vertecies.push_back(sf::Vertex(keyframes.front().size, sf::Vector2f(1,1)));
-    vertecies.push_back(sf::Vertex(Vec2f(0,keyframes.front().size.y), sf::Vector2f(0,1)));
-
     minLifetime = 0;
+    currentTime = 0;
+    lastSpawned = 0;
 }
 
 ParticleEffect* ParticleEffect::clone()
@@ -38,13 +35,13 @@ void ParticleEffect::update(float frameTime)
         newParticle.size = keyframes[0].size;
         newParticle.acceleration = keyframes[0].acceleration;
         newParticle.lifetime = minLifetime + (maxLifetime - minLifetime) * ((rand() % 1000) / 1000.0f);
-
+        
         particles.push_back(newParticle);
 
         vertecies.push_back(sf::Vertex(Vec2f(0,0), sf::Vector2f(0,0)));
-        vertecies.push_back(sf::Vertex(Vec2f(keyframes[0].size.x,0), sf::Vector2f(1,0)));
-        vertecies.push_back(sf::Vertex(keyframes[0].size, sf::Vector2f(1,1)));
-        vertecies.push_back(sf::Vertex(Vec2f(0,keyframes[0].size.y), sf::Vector2f(0,1)));
+        vertecies.push_back(sf::Vertex(Vec2f(keyframes[0].size.x,0), sf::Vector2f(texture->getSize().x,0)));
+        vertecies.push_back(sf::Vertex(keyframes[0].size, (sf::Vector2f) texture->getSize()));
+        vertecies.push_back(sf::Vertex(Vec2f(0,keyframes[0].size.y), sf::Vector2f(0,texture->getSize().y)));
     }
     
     std::vector<sf::Vertex>::iterator vertIterator = vertecies.begin();
@@ -57,11 +54,12 @@ void ParticleEffect::update(float frameTime)
         particle.speed += particle.acceleration * frameTime;
         particle.pos += particle.speed * frameTime;
 
+        Vec2f sizeOffset = particle.size / 2.0f;
         //Recalculating the vertecies
-        vertIterator->position = particle.pos;
-        (vertIterator + 1)->position = particle.pos + Vec2f(particle.size.x, 0);
-        (vertIterator + 2)->position = particle.pos + Vec2f(particle.size.x, particle.size.y);
-        (vertIterator + 3)->position = particle.pos + Vec2f(0, particle.size.y);
+        vertIterator->position = particle.pos - sizeOffset;
+        (vertIterator + 1)->position = particle.pos + Vec2f(particle.size.x, 0) - sizeOffset;
+        (vertIterator + 2)->position = particle.pos + Vec2f(particle.size.x, particle.size.y) - sizeOffset;
+        (vertIterator + 3)->position = particle.pos + Vec2f(0, particle.size.y) - sizeOffset;
         
         //Increase the current vertex
         vertIterator += 4;
@@ -72,18 +70,18 @@ void ParticleEffect::update(float frameTime)
         //Checking if the particle has expired
         if(particle->timeAlive > particle->lifetime)
         {
-            particle = particles.erase(particle);
-            vertIterator = vertecies.erase(vertIterator, (vertIterator + 3));
-        }
-        if(particle == particles.end())
-        {
-            break;
+            particle = particles.erase(particle) - 1;
+            vertIterator = vertecies.erase(vertIterator, (vertIterator + 3)) - 1;
         }
     }
 }
 void ParticleEffect::draw(sf::RenderWindow* window)
 {
-    window->draw(vertecies.data(), vertecies.size(), sf::Quads);
+    sf::RenderStates renderState;
+    renderState.texture = texture.get();
+
+    window->draw(vertecies.data(), vertecies.size(), sf::Quads, renderState);
+
 }
 
 void ParticleEffect::addKeyframe(Keyframe keyframe)
@@ -113,4 +111,8 @@ void ParticleEffect::setMinLifetime(float minLifetime)
     }
 
     this->minLifetime = minLifetime;
+}
+void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture)
+{
+    this->texture = texture;
 }

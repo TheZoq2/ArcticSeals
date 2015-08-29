@@ -61,8 +61,10 @@ private:
 
         int keyframe;
         float timeInKeyframe;
+    
+        std::vector<sf::Vertex> vertecies;
     };
-    void addVertecies();
+    void addParticle();
 
     std::vector<Keyframe> keyframes;
     
@@ -74,6 +76,9 @@ private:
     float lastSpawned;
 
     std::vector<Particle> particles;
+
+    //Vector containing all the vertecies for all the particles currently being 
+    //drawn. This is cleared and rebuilt evey time the update function is run 
     std::vector<sf::Vertex> vertecies;
 
     Vec2f minStartSpeed;

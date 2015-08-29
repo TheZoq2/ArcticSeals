@@ -12,6 +12,10 @@ Vec2f::Vec2f(const sf::Vector2f& other)
     : sf::Vector2f(other)
 {
 }
+Vec2f::Vec2f(const sf::Vector2u& other)
+    : sf::Vector2f(other)
+{
+}
 float Vec2f::length()
 {
     return sqrt(pow(x, 2) + pow(y, 2));
@@ -42,4 +46,25 @@ Vec2f& Vec2f::operator=(const sf::Vector2f& other)
     std::swap(x, tmp.x);
     std::swap(y, tmp.y);
     return *this;
+}
+Vec2f& Vec2f::operator=(const sf::Vector2u& other)
+{
+    Vec2f tmp(other);
+
+    std::swap(x, tmp.x);
+    std::swap(y, tmp.y);
+    return *this;
+}
+
+Vec2f& Vec2f::operator*=(Vec2f other)
+{
+    this->x *= other.x;
+    this->y *= other.y;
+
+    return *this;
+}
+Vec2f& operator*(Vec2f lhs, Vec2f rhs)
+{
+    lhs *= rhs;
+    return lhs;
 }

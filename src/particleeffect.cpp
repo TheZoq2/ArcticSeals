@@ -134,3 +134,17 @@ void ParticleEffect::addParticle()
     particles.back().vertecies.push_back(sf::Vertex(keyframes[0].size, (sf::Vector2f) texture->getSize()));
     particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,keyframes[0].size.y), sf::Vector2f(0,texture->getSize().y)));
 }
+void ParticleEffect::setParticleKeyframe(Particle* particle, int keyframeIndex)
+{
+    Keyframe keyframe = keyframes[keyframeIndex];
+
+    particle->keyframe = keyframeIndex;
+    particle->timeInKeyframe = 0;
+
+    //Recalculating the texture coordinates
+    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * keyframe.texCoordStart;
+    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * Vec2f(keyframe.texCoordEnd.x, keyframe.texCoordStart.y);
+    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * keyframe.texCoordStart;
+    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * keyframe.texCoordStart;
+}
+

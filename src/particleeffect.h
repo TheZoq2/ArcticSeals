@@ -31,7 +31,6 @@ public:
         Vec2f texCoordStart;
         Vec2f texCoordEnd;
     };
-
     virtual ParticleEffect* clone();
     
     ParticleEffect(Keyframe startKeyframe, float frequency);
@@ -65,6 +64,9 @@ private:
         std::vector<sf::Vertex> vertecies;
     };
     void addParticle();
+    //Sets the values of a keyframe which can't be interpolated between frames
+    //(like texture coordinates) to the value of the specified keyframe.
+    void setParticleKeyframe(Particle* particle, int keyframeIndex);
 
     std::vector<Keyframe> keyframes;
     

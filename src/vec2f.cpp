@@ -56,14 +56,14 @@ Vec2f& Vec2f::operator=(const sf::Vector2u& other)
     return *this;
 }
 
-Vec2f& Vec2f::operator*=(Vec2f other)
+Vec2f& Vec2f::operator*=(const Vec2f& other)
 {
     this->x *= other.x;
     this->y *= other.y;
 
     return *this;
 }
-Vec2f& operator*(Vec2f lhs, Vec2f rhs)
+Vec2f& operator*(Vec2f lhs, const Vec2f& rhs)
 {
     lhs *= rhs;
     return lhs;

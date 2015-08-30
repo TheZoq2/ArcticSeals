@@ -19,8 +19,8 @@ public:
     Vec2f& operator=(const sf::Vector2f& other);
     Vec2f& operator=(const sf::Vector2u& other);
 
-    Vec2f& operator*=(Vec2f other);
-    friend Vec2f& operator*(Vec2f lhs,Vec2f rhs);
+    Vec2f& operator*=(const Vec2f& other);
+    friend Vec2f& operator*(Vec2f lhs, const Vec2f& rhs);
 
     operator sf::Vector2i();
 };

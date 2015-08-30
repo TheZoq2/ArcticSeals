@@ -9,6 +9,8 @@ ParticleEffect::ParticleEffect(ParticleEffect::Keyframe keyframe, float frequenc
     minLifetime = 0;
     currentTime = 0;
     lastSpawned = 0;
+    minTimeMod = 1;
+    maxTimeMod = 1;
 }
 
 ParticleEffect* ParticleEffect::clone()
@@ -110,6 +112,11 @@ void ParticleEffect::setMinLifetime(float minLifetime)
 void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture)
 {
     this->texture = texture;
+}
+void ParticleEffect::setTimeMods(float minTimeMod, float maxTimeMod)
+{
+    this->minTimeMod = minTimeMod;
+    this->maxTimeMod = maxTimeMod;
 }
 
 

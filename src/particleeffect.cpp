@@ -18,6 +18,19 @@ ParticleEffect* ParticleEffect::clone()
     return new ParticleEffect(*this);
 }
 
+void ParticleEffect::finalizeParticle()
+{
+    finalKeyframes.clear(); //Clear all old keyframes just to be sure
+
+    //Sort the keyframes based on time
+    std::sort(keyframes.begin(), keyframes.end(), [](Keyframe x, Keyframe y){return x.time < y.time;});
+
+    //Loop through the keyframes and create final keyframes for all of them
+    for(auto it : keyframes)
+    {
+        
+    }
+}
 void ParticleEffect::update(float frameTime)
 {
     currentTime += frameTime;
@@ -84,8 +97,6 @@ void ParticleEffect::draw(sf::RenderWindow* window)
 void ParticleEffect::addKeyframe(Keyframe keyframe)
 {
     keyframes.push_back(keyframe);
-
-    maxLifetime += keyframe.time;
 }
 
 void ParticleEffect::setFrequency(float frequency)

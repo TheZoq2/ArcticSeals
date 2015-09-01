@@ -27,11 +27,15 @@ public:
         KeyframeVal<Vec2f> texCoordStart;
         KeyframeVal<Vec2f> texCoordEnd;
     };
+
     virtual ParticleEffect* clone();
     
     ParticleEffect(Keyframe startKeyframe, float frequency);
-    //void create();
 
+    //This method converts the specified keyframes into keyframes that contain values for all
+    //variables in every frame. This needs to be done before the particle is drawn or updated
+    //and changing any variables after this might not work
+    virtual void finalizeParticle();
     virtual void draw(sf::RenderWindow* window);
     virtual void update(float frameTime);
     
@@ -65,12 +69,23 @@ private:
     
         std::vector<sf::Vertex> vertecies;
     };
+    struct FinalKeyframe
+    {
+        float time;
+        Vec2f acceleration;
+        Vec2f size;
+        
+        Vec2f texCoordStart;
+        Vec2f texCoordEnd;
+    };
+
     void addParticle();
     //Sets the values of a keyframe which can't be interpolated between frames
     //(like texture coordinates) to the value of the specified keyframe.
     void setParticleKeyframe(Particle* particle, int keyframeIndex);
 
     std::vector<Keyframe> keyframes;
+    std::vector<FinalKeyframe> finalKeyframes;
     
     //Emitter parameters
     float currentTime;
@@ -89,7 +104,6 @@ private:
     Vec2f maxStartSpeed;
     float maxLifetime; //Set by the total lifetime of all keyframes
     float minLifetime;
-    bool lifetimeSpecified;
     float minTimeMod;
     float maxTimeMod;
 

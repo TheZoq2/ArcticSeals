@@ -23,10 +23,13 @@ public:
     void addPoint(float x, float y);
 private:
     void generateLines();
+    void generatePathNodes();
 
     std::vector<Vec2f> points;
     std::vector<Line> lines; //Generated each time points is updated
 
     Vec2f pos;
+
+    std::vector<Vec2f> pathNodes;
 };
 #endif

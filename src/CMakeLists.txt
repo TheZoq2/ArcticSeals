@@ -45,7 +45,7 @@ add_library(${LIB_NAME}
     meleeweapon.cpp
     skeletal/bone.cpp
     particleeffect.cpp
-    keyframeval.cpp
+    #keyframeval.cpp
 )
 
 # Define sources and executable

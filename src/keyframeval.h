@@ -5,13 +5,29 @@ template <class T>
 class KeyframeVal
 {
 public:
-    KeyframeVal();
+    KeyframeVal()
+    {
+        this->changed = false;
+    }
 
-    T& operator=(T other);
+    T operator=(T other)
+    {
+        this->changed = true;
+        this->value = other;
+    
+        return *this;
+    }
 
-    T val();
+    T val()
+    {
+        return value;
+    }
 
-    bool isChanged();
+    bool isChanged()
+    {
+        return changed;
+    }
+
 private:
     T value;
 

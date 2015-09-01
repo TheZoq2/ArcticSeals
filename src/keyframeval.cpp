@@ -14,6 +14,7 @@ T& KeyframeVal<T>::operator=(T other)
 
     return *this;
 }
+
 template <class T>
 T KeyframeVal<T>::val()
 {

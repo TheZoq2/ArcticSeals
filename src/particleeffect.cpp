@@ -130,16 +130,16 @@ void ParticleEffect::addParticle()
     newParticle.pos = Entity::pos;
     newParticle.speed.x = minStartSpeed.x + (maxStartSpeed.x - minStartSpeed.x) * ((rand() % 1000) / 1000.0f);
     newParticle.speed.y = minStartSpeed.y + (maxStartSpeed.y - minStartSpeed.y) * ((rand() % 1000) / 1000.0f);
-    newParticle.size = keyframes[0].size;
-    newParticle.acceleration = keyframes[0].acceleration;
+    newParticle.size = keyframes[0].size.val();
+    newParticle.acceleration = keyframes[0].acceleration.val();
     newParticle.lifetime = minLifetime + (maxLifetime - minLifetime) * ((rand() % 1000) / 1000.0f);
     
     particles.push_back(newParticle);
 
     particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,0), sf::Vector2f(0,0)));
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(keyframes[0].size.x,0), sf::Vector2f(texture->getSize().x,0)));
-    particles.back().vertecies.push_back(sf::Vertex(keyframes[0].size, (sf::Vector2f) texture->getSize()));
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,keyframes[0].size.y), sf::Vector2f(0,texture->getSize().y)));
+    particles.back().vertecies.push_back(sf::Vertex(Vec2f(keyframes[0].size.val().x,0), sf::Vector2f(texture->getSize().x,0)));
+    particles.back().vertecies.push_back(sf::Vertex(keyframes[0].size.val(), (sf::Vector2f) texture->getSize()));
+    particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,keyframes[0].size.val().y), sf::Vector2f(0,texture->getSize().y)));
 }
 void ParticleEffect::setParticleKeyframe(Particle* particle, int keyframeIndex)
 {
@@ -148,10 +148,13 @@ void ParticleEffect::setParticleKeyframe(Particle* particle, int keyframeIndex)
     particle->keyframe = keyframeIndex;
     particle->timeInKeyframe = 0;
 
-    //Recalculating the texture coordinates
-    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * keyframe.texCoordStart;
-    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * Vec2f(keyframe.texCoordEnd.x, keyframe.texCoordStart.y);
-    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * keyframe.texCoordStart;
-    particle->vertecies[0].texCoords = (Vec2f) texture->getSize() * keyframe.texCoordStart;
+    if(keyframe.texCoordEnd.isChanged())
+    {
+        //Recalculating the texture coordinates
+        particle->vertecies[0].texCoords = texture->getSize() * keyframe.texCoordStart.val();
+        particle->vertecies[1].texCoords = texture->getSize() * Vec2f(keyframe.texCoordEnd.val().x, keyframe.texCoordStart.val().y);
+        particle->vertecies[2].texCoords = texture->getSize() * keyframe.texCoordStart.val();
+        particle->vertecies[3].texCoords = texture->getSize() * keyframe.texCoordStart.val();
+    }
 }
 

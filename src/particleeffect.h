@@ -16,7 +16,7 @@ public:
         {
         }
 
-        KeyframeVal<float> time; //Time after last keyframe
+        float time; //Time after last keyframe
 
         KeyframeVal<Vec2f> acceleration;
 
@@ -56,7 +56,9 @@ private:
         Vec2f speed;
 
         Vec2f size;
+        Vec2f targetSize;
         Vec2f acceleration;
+        Vec2f targetAcceleration;
 
         int keyframe;
         float timeInKeyframe;

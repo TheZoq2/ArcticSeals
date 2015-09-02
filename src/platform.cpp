@@ -111,3 +111,7 @@ void Platform::generateLines()
         lines.push_back(Line(points.at(i) + pos, points.at(i + 1) + pos));
     }
 }
+void Platform::generatePathNodes()
+{
+
+}

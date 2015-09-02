@@ -60,7 +60,9 @@ private:
         Vec2f speed;
 
         Vec2f size;
+        Vec2f targetSize;
         Vec2f acceleration;
+        Vec2f targetAcceleration;
 
         int keyframe;
         float timeInKeyframe;

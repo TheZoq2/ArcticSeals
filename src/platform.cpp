@@ -1,5 +1,7 @@
 #include "platform.h"
 
+const float Platform::PATH_NODE_DISTANCE = 50;
+
 void Platform::create(Vec2f pos)
 {
     this->pos = pos;
@@ -9,6 +11,17 @@ void Platform::draw(sf::RenderWindow* window)
     for(auto it : lines)
     {
         it.draw(window);
+    }
+
+    sf::CircleShape nodeShape(10);
+    nodeShape.setFillColor(sf::Color(0,0,0,0));
+    nodeShape.setOutlineColor(sf::Color(255,255,255,255));
+    nodeShape.setOutlineThickness(2);
+    nodeShape.setOrigin(10,10);
+    for(auto it : pathNodes)
+    {
+        nodeShape.setPosition(it);
+        window->draw(nodeShape);
     }
 }
 
@@ -28,6 +41,7 @@ void Platform::addPoint(Vec2f point)
     points.insert(insertPos, point);
 
     generateLines();
+    generatePathNodes();
 }
 void Platform::addPoint(float x, float y)
 {
@@ -89,6 +103,7 @@ void Platform::setPosition(Vec2f pos)
     this->pos = pos;
 
     generateLines();
+    generatePathNodes();
 }
 
 
@@ -113,5 +128,13 @@ void Platform::generateLines()
 }
 void Platform::generatePathNodes()
 {
+    pathNodes.clear();
 
+    //Create path nodes that are adequetly placed along the platform
+    for(float nodePos = points[0].x; nodePos < points.back().x; nodePos += PATH_NODE_DISTANCE)
+    {
+        pathNodes.push_back(getGlobalPos(nodePos));
+    }
+    //Put one node on the edge of the platform which might not be reached otherwise
+    pathNodes.push_back(getGlobalPos(points.back().x));
 }

@@ -22,6 +22,8 @@ public:
     void addPoint(Vec2f point);
     void addPoint(float x, float y);
 private:
+    static const float PATH_NODE_DISTANCE;
+
     void generateLines();
     void generatePathNodes();
 

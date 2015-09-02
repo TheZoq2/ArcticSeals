@@ -36,8 +36,9 @@ public:
     bool platformExists(uint32_t id);
 
     PlatformCollisionResult getPlatformCollision(Vec2f originPos, Line* line); 
-
     Entity* getFirstCollision(Vec2f point);
+    std::vector<Vec2f> getPathNodes();
+
 private:
     uint32_t nextPlatformID;
 

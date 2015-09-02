@@ -18,6 +18,7 @@ public:
     float getLocalX(float globalX);
     bool xIsOnPlatform(float localX);
     Vec2f getGlobalPos(float localX);
+    std::vector<Vec2f> getPathNodes();
     
     void addPoint(Vec2f point);
     void addPoint(float x, float y);

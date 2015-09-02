@@ -97,6 +97,10 @@ Vec2f Platform::getGlobalPos(float localX)
     
     return result;
 }
+std::vector<Vec2f> Platform::getPathNodes()
+{
+    return pathNodes;
+}
 
 void Platform::setPosition(Vec2f pos)
 {

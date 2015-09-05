@@ -5,6 +5,7 @@
 
 #include "vec2f.h"
 #include "line.h"
+#include "pathnode.h"
 
 class Platform
 {
@@ -18,7 +19,7 @@ public:
     float getLocalX(float globalX);
     bool xIsOnPlatform(float localX);
     Vec2f getGlobalPos(float localX);
-    std::vector<Vec2f> getPathNodes();
+    std::vector<PathNode> getPathNodes();
     
     void addPoint(Vec2f point);
     void addPoint(float x, float y);
@@ -33,6 +34,6 @@ private:
 
     Vec2f pos;
 
-    std::vector<Vec2f> pathNodes;
+    std::vector<PathNode> pathNodes;
 };
 #endif

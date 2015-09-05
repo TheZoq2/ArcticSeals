@@ -3,6 +3,8 @@
 
 #include "vec2f.h"
 
+class Platform;
+
 class PathNode
 {
 public:
@@ -10,10 +12,10 @@ public:
     {
         LOCAL,
         JUMP
-    }
+    };
     struct Link
     {
-        Link(LinkType type, PathNode* otherNode)
+        Link(LinkType type, PathNode* otherNode, Platform* platform)
         {
             this->type = type;
             this->otherNode = otherNode;
@@ -22,12 +24,16 @@ public:
         PathNode* otherNode;
     };
 
-    PathNode(Vec2f position);
+    PathNode(Vec2f position, Platform* parent);
 
     void addLink(PathNode* other, LinkType type);
+
+    Vec2f getPosition();
 private:
     Vec2f position;
 
     std::vector<Link> links;
+
+    Platform* parent;
 };
 #endif

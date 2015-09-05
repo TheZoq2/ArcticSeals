@@ -7,4 +7,5 @@ Pathfinder::Pathfinder(EntityGroup* group)
 
 void Pathfinder::generatePaths()
 {
+    
 }

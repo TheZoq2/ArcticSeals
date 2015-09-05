@@ -46,6 +46,7 @@ add_library(${LIB_NAME}
     skeletal/bone.cpp
     #particleeffect.cpp
     #keyframeval.cpp
+    pathnode.cpp
 )
 
 # Define sources and executable

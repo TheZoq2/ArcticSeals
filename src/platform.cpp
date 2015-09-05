@@ -20,7 +20,7 @@ void Platform::draw(sf::RenderWindow* window)
     nodeShape.setOrigin(10,10);
     for(auto it : pathNodes)
     {
-        nodeShape.setPosition(it);
+        nodeShape.setPosition(it.getPosition());
         window->draw(nodeShape);
     }
 }
@@ -97,7 +97,7 @@ Vec2f Platform::getGlobalPos(float localX)
     
     return result;
 }
-std::vector<Vec2f> Platform::getPathNodes()
+std::vector<PathNode> Platform::getPathNodes()
 {
     return pathNodes;
 }
@@ -137,8 +137,16 @@ void Platform::generatePathNodes()
     //Create path nodes that are adequetly placed along the platform
     for(float nodePos = points[0].x; nodePos < points.back().x; nodePos += PATH_NODE_DISTANCE)
     {
-        pathNodes.push_back(getGlobalPos(nodePos));
+        pathNodes.push_back(PathNode(getGlobalPos(nodePos), this));
     }
     //Put one node on the edge of the platform which might not be reached otherwise
-    pathNodes.push_back(getGlobalPos(points.back().x));
+    pathNodes.push_back(PathNode(getGlobalPos(points.back().x), this));
+
+    if(pathNodes.size() > 0)
+    {
+        for(auto it = pathNodes.begin() + 1; it != pathNodes.end(); ++it)
+        {
+            it->addLink(&*(it-1), PathNode::LOCAL);
+        }
+    }
 }

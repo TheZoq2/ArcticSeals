@@ -19,7 +19,8 @@ void Game::setup()
     movingPlatform.addPoint(0,0);
     movingPlatform.addPoint(100,0);
     movingPlatform.addPoint(200,0);
-    movingPlatform.setPosition(Vec2f(700, 100));
+    movingPlatform.addPoint(300,25);
+    movingPlatform.setPosition(Vec2f(700, -50));
 
     mainGroup->addPlatform(groundPlatform);
     mainGroup->addPlatform(&movingPlatform);
@@ -87,29 +88,6 @@ void Game::loop()
     //Redraw stuff
     window->clear(sf::Color::Black);
     
-    //Moving platform
-    if(moveDir)
-    {
-        movingPos += 30 * frameTime;
-
-        if(movingPos > 300)
-        {
-            moveDir = false;
-        }
-    }
-    else
-    {
-        movingPos -= 30 * frameTime;
-
-        if(movingPos < -200)
-        {
-            moveDir = true;
-        }
-
-    }
-
-    movingPlatform.setPosition(Vec2f(100, movingPos));
-
     window->setView(worldView);
     world.update(frameTime);
     world.draw(window, Vec2f(player->getPosition()));

@@ -27,13 +27,12 @@ private:
     static const float PATH_NODE_DISTANCE;
 
     void generateLines();
-    void generatePathNodes();
 
     std::vector<Vec2f> points;
     std::vector<Line> lines; //Generated each time points is updated
 
     Vec2f pos;
 
-    std::vector<PathNode> pathNodes;
+    //std::vector<PathNode> pathNodes;
 };
 #endif

@@ -1,16 +1,21 @@
 #ifndef H_PATHFINDER
 #define H_PATHFINDER
 
+#include <list>
+
 #include "entitygroup.h"
+#include "pathnode.h"
 
 class Pathfinder
 {
 public:
     Pathfinder(EntityGroup* group);
 private:
-    void generatePaths();
+    static const float MAX_NODE_DISTANCE;
+    void generateLinks();
 
     EntityGroup* entityGroup;
 
+    std::vector<PathNode> nodes;
 };
 #endif

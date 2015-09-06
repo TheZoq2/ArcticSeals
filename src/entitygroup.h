@@ -19,6 +19,11 @@ public:
         uint32_t platformID;
         Line::IntersectResult intResult;
     };
+    struct IDPlatform
+    {
+        uint32_t id;
+        Platform* platform;
+    };
 
     EntityGroup();
 
@@ -31,22 +36,16 @@ public:
 
     void onEntityDepthChange(Entity* entity);
 
-    //std::vector<IDPlatform>* getPlatforms();
+    std::vector<IDPlatform> getPlatforms();
     Platform* getPlatformByID(uint32_t id);
     bool platformExists(uint32_t id);
 
+
     PlatformCollisionResult getPlatformCollision(Vec2f originPos, Line* line); 
     Entity* getFirstCollision(Vec2f point);
-    std::vector<Vec2f> getPathNodes();
 
 private:
     uint32_t nextPlatformID;
-
-    struct IDPlatform
-    {
-        uint32_t id;
-        Platform* platform;
-    };
 
     //Insert an entity in the correct location in the entity vector based on depth
     void insertEntity(Entity* entity); 

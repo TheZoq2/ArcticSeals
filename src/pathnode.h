@@ -15,13 +15,20 @@ public:
     };
     struct Link
     {
-        Link(LinkType type, PathNode* otherNode, Platform* platform)
+        Link(LinkType type, PathNode* otherNode, float jumpPower)
         {
             this->type = type;
             this->otherNode = otherNode;
+            this->jumpPower = jumpPower;
+        }
+        Link(LinkType type, PathNode* otherNode)
+            : Link(type, otherNode, 0)
+        {
         }
         LinkType type;
         PathNode* otherNode;
+
+        float jumpPower;
     };
 
     PathNode(Vec2f position, Platform* parent);
@@ -29,11 +36,12 @@ public:
     void addLink(PathNode* other, LinkType type);
 
     Vec2f getPosition();
+    Platform* getPlatform();
 private:
     Vec2f position;
 
     std::vector<Link> links;
 
-    Platform* parent;
+    Platform* platform;
 };
 #endif

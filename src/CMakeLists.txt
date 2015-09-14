@@ -47,6 +47,7 @@ add_library(${LIB_NAME}
     #particleeffect.cpp
     #keyframeval.cpp
     pathnode.cpp
+    pathfinder.cpp
 )
 
 # Define sources and executable

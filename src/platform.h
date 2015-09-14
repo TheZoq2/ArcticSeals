@@ -21,6 +21,8 @@ public:
     Vec2f getGlobalPos(float localX);
     std::vector<PathNode> getPathNodes();
     
+    void generatePathNodes();
+    
     void addPoint(Vec2f point);
     void addPoint(float x, float y);
 private:
@@ -30,9 +32,8 @@ private:
 
     std::vector<Vec2f> points;
     std::vector<Line> lines; //Generated each time points is updated
+    std::vector<PathNode> pathNodes;
 
     Vec2f pos;
-
-    //std::vector<PathNode> pathNodes;
 };
 #endif

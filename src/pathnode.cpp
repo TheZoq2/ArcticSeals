@@ -15,3 +15,7 @@ Vec2f PathNode::getPosition()
 {
     return position;
 }
+Platform* PathNode::getPlatform()
+{
+    return platform;
+}

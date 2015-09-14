@@ -32,17 +32,7 @@ void Game::setup()
     sf::Texture* particleTexture = new sf::Texture();
     particleTexture->loadFromFile("../media/img/particleTest.png");
 
-    //ParticleEffect::Keyframe keyframe;
-    //keyframe.time = 1.5;
-    //keyframe.size = Vec2f(10, 10);
-    //keyframe.acceleration = Vec2f(0,300);
-
-    //ParticleEffect* testParticle = new ParticleEffect(keyframe, 100);
-    //testParticle->setStartSpeed(Vec2f(-60,-200), Vec2f(60,200));
-    //testParticle->setTexture(std::shared_ptr<sf::Texture>(particleTexture));
-
-    //mainGroup->addEntity(testParticle);
-
+    Pathfinder pathfinder(mainGroup);
 
 }
 

@@ -21,6 +21,7 @@
 #include "player.h"
 #include "ground.h"
 #include "particleeffect.h"
+#include "pathfinder.h"
 
 class Game
 {

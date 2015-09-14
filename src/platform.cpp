@@ -96,10 +96,6 @@ Vec2f Platform::getGlobalPos(float localX)
     
     return result;
 }
-std::vector<PathNode> Platform::getPathNodes()
-{
-    return pathNodes;
-}
 
 void Platform::setPosition(Vec2f pos)
 {
@@ -110,32 +106,6 @@ void Platform::setPosition(Vec2f pos)
 
 std::vector<PathNode> Platform::getPathNodes()
 {
-    std::vector<PathNode> pathNodes;
-
-    //Create path nodes that are adequetly placed along the platform
-    for(float nodePos = points[0].x; nodePos < points.back().x; nodePos += PATH_NODE_DISTANCE)
-    {
-        pathNodes.push_back(PathNode(getGlobalPos(nodePos), this));
-    }
-    //Put one node on the edge of the platform which might not be reached otherwise
-    pathNodes.push_back(PathNode(getGlobalPos(points.back().x), this));
-
-    //Linking the nodes on the same platform together
-    if(pathNodes.size() > 0)
-    {
-        for(auto it = pathNodes.begin() + 0; it != pathNodes.end(); ++it)
-        {
-            if(it != pathNodes.begin())
-            {
-                it->addLink(&*(it-1), PathNode::LOCAL);
-            }
-            if(it != pathNodes.end() - 1)
-            {
-                it->addLink(&*(it-1), PathNode::LOCAL);
-            }
-        }
-    }
-
     return pathNodes;
 }
 
@@ -156,5 +126,29 @@ void Platform::generateLines()
     for(unsigned int i = 0; i < points.size() - 1; i++)
     {
         lines.push_back(Line(points.at(i) + pos, points.at(i + 1) + pos));
+    }
+}
+
+void Platform::generatePathNodes()
+{
+    //Create path nodes that are adequetly placed along the platform
+    for(float nodePos = points[0].x; nodePos < points.back().x; nodePos += PATH_NODE_DISTANCE)
+    {
+        pathNodes.push_back(PathNode(getGlobalPos(nodePos), this));
+    }
+    //Put one node on the edge of the platform which might not be reached otherwise
+    pathNodes.push_back(PathNode(getGlobalPos(points.back().x), this));
+
+    //Linking the nodes on the same platform together
+    for(auto it = pathNodes.begin() + 0; it != pathNodes.end(); ++it)
+    {
+        if(it != pathNodes.begin())
+        {
+            it->addLink(&*(it-1), PathNode::LOCAL);
+        }
+        if(it != pathNodes.end() - 1)
+        {
+            it->addLink(&*(it-1), PathNode::LOCAL);
+        }
     }
 }

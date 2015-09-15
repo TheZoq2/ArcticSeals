@@ -37,6 +37,7 @@ public:
 
     Vec2f getPosition();
     Platform* getPlatform();
+    std::vector<Link> getLinks();
 private:
     Vec2f position;
 

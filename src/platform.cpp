@@ -18,8 +18,21 @@ void Platform::draw(sf::RenderWindow* window)
     nodeShape.setOutlineColor(sf::Color(255,255,255,255));
     nodeShape.setOutlineThickness(2);
     nodeShape.setOrigin(10,10);
+
     for(auto it : pathNodes)
     {
+        //Debug drawing links
+        for(auto link : it.getLinks())
+        {
+            sf::Vertex line[] = 
+            {
+                it.getPosition(),
+                link.otherNode->getPosition()
+            };
+
+            window->draw(line, 2, sf::Lines);
+        }
+
         nodeShape.setPosition(it.getPosition());
         window->draw(nodeShape);
     }

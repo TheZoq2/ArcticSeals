@@ -19,3 +19,7 @@ Platform* PathNode::getPlatform()
 {
     return platform;
 }
+std::vector<PathNode::Link> PathNode::getLinks()
+{
+    return links;
+}

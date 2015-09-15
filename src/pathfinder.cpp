@@ -30,7 +30,7 @@ void Pathfinder::generateLinks()
     //Generating links between all the platforms
     for(auto it = nodes.begin(); it != nodes.end(); ++it)
     {
-        for(auto node = it; it != nodes.end(); ++it)
+        for(auto node = it; node != nodes.end(); ++node)
         {
             //Make sure the two nodes aren't on the same platform
             if(node->getPlatform() != it->getPlatform())
@@ -42,6 +42,7 @@ void Pathfinder::generateLinks()
                 {
                     //TODO: If the pathfinding is too slow:
                     //Checking if you can jump to or from this node or just fall onto it
+                    std::cout << "adding link " << distance << std::endl;
                     
                     it->addLink(&*node, PathNode::LinkType::JUMP);
                     node->addLink(&*it, PathNode::LinkType::JUMP);

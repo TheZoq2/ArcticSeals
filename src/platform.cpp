@@ -15,7 +15,8 @@ void Platform::draw(sf::RenderWindow* window)
 
     sf::CircleShape nodeShape(10);
     nodeShape.setFillColor(sf::Color(0,0,0,0));
-    nodeShape.setOutlineColor(sf::Color(255,255,255,255));
+    nodeShape.setOutlineColor(sf::Color(255,255,255,255));;
+
     nodeShape.setOutlineThickness(2);
     nodeShape.setOrigin(10,10);
 

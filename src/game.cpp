@@ -14,7 +14,6 @@ void Game::setup()
     groundPlatform->addPoint(Vec2f(0,0));
     groundPlatform->addPoint(Vec2f(300,100));
     groundPlatform->addPoint(Vec2f(700,100));
-    groundPlatform->addPoint(Vec2f(- 700,100));
 
     movingPlatform.addPoint(0,0);
     movingPlatform.addPoint(100,0);

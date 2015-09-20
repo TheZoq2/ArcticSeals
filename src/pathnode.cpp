@@ -13,7 +13,7 @@ void PathNode::addLink(PathNode* other, LinkType type)
 
 Vec2f PathNode::getPosition()
 {
-    return position;
+    return this->position;
 }
 Platform* PathNode::getPlatform()
 {

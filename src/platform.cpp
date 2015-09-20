@@ -25,14 +25,17 @@ void Platform::draw(sf::RenderWindow* window)
         //Debug drawing links
         for(auto link : it.getLinks())
         {
-            sf::Vertex line[] = 
+            if(link.type == PathNode::LinkType::JUMP)
             {
-                it.getPosition(),
-                link.otherNode->getPosition()
-            };
-
-            window->draw(line, 2, sf::Lines);
+                sf::Vertex line[] = {
+                    sf::Vertex(it.getPosition()),
+                    sf::Vertex(link.otherNode->getPosition())
+                };
+                
+                window->draw(line, 2, sf::LinesStrip);
+            }
         }
+       
 
         nodeShape.setPosition(it.getPosition());
         window->draw(nodeShape);

@@ -35,7 +35,7 @@ void Pathfinder::generateLinks()
             //Make sure the two nodes aren't on the same platform
             if(node->getPlatform() != it->getPlatform())
             {
-                float distance = ((Vec2f) (node->getPosition() - it->getPosition())).length();
+                float distance = static_cast<Vec2f>((node->getPosition() - it->getPosition())).length();
 
                 //If this node should be jumpable to
                 if(distance < MAX_NODE_DISTANCE)

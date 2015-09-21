@@ -51,5 +51,6 @@ void Pathfinder::generateLinks()
         }
     }
 
+    int a = 0;
 }
 

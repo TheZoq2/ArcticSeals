@@ -17,41 +17,38 @@ void Pathfinder::generateLinks()
 {
     nodes.clear();
 
-    //Going through the platforms and getting all the path nodes
-    for(auto& it : entityGroup->getPlatforms())
+    //Go through the all the platforms in the entity group
+    std::vector<EntityGroup::IDPlatform> platforms = entityGroup->getPlatforms();
+    for(auto it : platforms)
     {
         it.platform->generatePathNodes();
-
-        for(std::size_t i = 0; i < it.platform->getPathNodes().size(); ++i)
+        std::vector<PathNode>* pathNodes = it.platform->getPathNodes();
+        //Iterate over the path nodes in that platform
+        for(auto node = pathNodes->begin(); node != pathNodes->end(); ++node)
         {
-            nodes.push_back(&it.platform->getPathNodes()[i]);
+            //Add the pointer to the node to the list of nodes
+            nodes.push_back(&*node);
         }
     }
 
-    //Generating links between all the platforms
+    //Iterate over all the nodes in the list
     for(auto it = nodes.begin(); it != nodes.end(); ++it)
     {
+        //Iterate over the rest of the nodes to check them against it
         for(auto node = it; node != nodes.end(); ++node)
         {
-            //Make sure the two nodes aren't on the same platform
+            //Checking if they are on the different platform
             if((*node)->getPlatform() != (*it)->getPlatform())
             {
-                float distance = static_cast<Vec2f>(((*node)->getPosition() - (*it)->getPosition())).length();
+                float distance = static_cast<Vec2f>((*node)->getPosition() - (*it)->getPosition()).length();
 
-                //If this node should be jumpable to
                 if(distance < MAX_NODE_DISTANCE)
                 {
-                    //TODO: If the pathfinding is too slow:
-                    //Checking if you can jump to or from this node or just fall onto it
-                    std::cout << "adding link " << distance << std::endl;
-                    
-                    (*it)->addLink(*node, PathNode::LinkType::JUMP);
-                    (*node)->addLink(*it, PathNode::LinkType::JUMP);
+                   (*node)->addLink(*it, PathNode::JUMP); 
+                   (*it)->addLink(*node, PathNode::JUMP); 
                 }
             }
         }
     }
-
-    //std::cout << "Done generating nodes" << std::endl;
 }
 

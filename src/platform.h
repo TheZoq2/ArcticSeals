@@ -19,7 +19,7 @@ public:
     float getLocalX(float globalX);
     bool xIsOnPlatform(float localX);
     Vec2f getGlobalPos(float localX);
-    std::vector<PathNode> getPathNodes();
+    std::vector<PathNode>* getPathNodes();
     
     void generatePathNodes();
     

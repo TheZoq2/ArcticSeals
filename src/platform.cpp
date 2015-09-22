@@ -124,9 +124,9 @@ void Platform::setPosition(Vec2f pos)
     generateLines();
 }
 
-std::vector<PathNode> Platform::getPathNodes()
+std::vector<PathNode>* Platform::getPathNodes()
 {
-    return pathNodes;
+    return &pathNodes;
 }
 
 //////////////////////////////////////////////////////////////////////////////

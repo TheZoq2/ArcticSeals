@@ -14,15 +14,24 @@ void Game::setup()
     groundPlatform->addPoint(Vec2f(0,0));
     groundPlatform->addPoint(Vec2f(300,100));
     groundPlatform->addPoint(Vec2f(700,100));
+    groundPlatform->addPoint(Vec2f(-700,100));
 
     movingPlatform.addPoint(0,0);
     movingPlatform.addPoint(100,0);
     movingPlatform.addPoint(200,0);
     movingPlatform.addPoint(300,25);
     movingPlatform.setPosition(Vec2f(700, -50));
+    movingPlatform.addPoint(0,0);
+
+    Platform* platform3 = new Platform();
+    platform3->addPoint(100,0);
+    platform3->addPoint(200,0);
+    platform3->addPoint(300,25);
+    platform3->setPosition(Vec2f(-300, -100));
 
     mainGroup->addPlatform(groundPlatform);
     mainGroup->addPlatform(&movingPlatform);
+    mainGroup->addPlatform(platform3);
 
     player = new Player(Vec2f(30,100));
     player->setPosition(Vec2f(5, -100));
@@ -32,7 +41,6 @@ void Game::setup()
     particleTexture->loadFromFile("../media/img/particleTest.png");
 
     Pathfinder pathfinder(mainGroup);
-
 }
 
 void Game::loop()

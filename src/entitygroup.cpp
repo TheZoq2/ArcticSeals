@@ -1,5 +1,7 @@
 #include "entitygroup.h"
 
+using namespace zen;
+
 EntityGroup::EntityGroup()
 {
     nextPlatformID = 0;

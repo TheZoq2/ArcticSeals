@@ -1,5 +1,7 @@
 #include "keyframeval.h"
 
+using namespace zen;
+
 template <class T>
 KeyframeVal<T>::KeyframeVal()
 {

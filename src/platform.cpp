@@ -1,5 +1,7 @@
 #include "platform.h"
 
+using namespace zen;
+
 const float Platform::PATH_NODE_DISTANCE = 50;
 
 void Platform::create(Vec2f pos)

@@ -1,5 +1,7 @@
 #include "particleeffect.h"
 
+using namespace zen;
+
 ParticleEffect::ParticleEffect(ParticleEffect::Keyframe keyframe, float frequency)
 {
     //keyframes.push_back(keyframe);

@@ -1,6 +1,6 @@
 #include "physicsentity.h"
 
-PhysicsEntity::PhysicsEntity(Vec2f size)
+zen::PhysicsEntity::PhysicsEntity(Vec2f size)
 {
     this->groundState = GroundState::FALLING;
     this->size = size;
@@ -10,12 +10,12 @@ PhysicsEntity::PhysicsEntity(Vec2f size)
     this->gravity = 9.82 * 90;
 }
 
-PhysicsEntity* PhysicsEntity::clone()
+zen::PhysicsEntity* zen::PhysicsEntity::clone()
 {
     return new PhysicsEntity(*this);
 }
 
-void PhysicsEntity::update(float time)
+void zen::PhysicsEntity::update(float time)
 {
     Vec2f newPos = pos;
 
@@ -105,12 +105,12 @@ void PhysicsEntity::update(float time)
     //Update the position
     setPosition(newPos);
 }
-void PhysicsEntity::draw(sf::RenderWindow* window)
+void zen::PhysicsEntity::draw(sf::RenderWindow* window)
 {
     window->draw(shape);
 }
 
-void PhysicsEntity::jump(float speed)
+void zen::PhysicsEntity::jump(float speed)
 {
     if(groundState == GroundState::ON_GROUND)
     {
@@ -120,7 +120,7 @@ void PhysicsEntity::jump(float speed)
     }
 }
 
-void PhysicsEntity::setPosition(Vec2f pos)
+void zen::PhysicsEntity::setPosition(Vec2f pos)
 {
     Entity::setPosition(pos);
 

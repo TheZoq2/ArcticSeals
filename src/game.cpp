@@ -8,9 +8,9 @@ void Game::setup()
     //worldView = window->getDefaultView();
     worldView = sf::View(Vec2f(0,0), Vec2f(1280, 720));
     
-    EntityGroup* mainGroup = this->world.getMainGroup();
+    zen::EntityGroup* mainGroup = this->world.getMainGroup();
 
-    Platform* groundPlatform = new Platform();
+    zen::Platform* groundPlatform = new zen::Platform();
     groundPlatform->addPoint(Vec2f(0,0));
     groundPlatform->addPoint(Vec2f(300,100));
     groundPlatform->addPoint(Vec2f(700,100));
@@ -23,7 +23,7 @@ void Game::setup()
     movingPlatform.setPosition(Vec2f(700, -50));
     movingPlatform.addPoint(0,0);
 
-    Platform* platform3 = new Platform();
+    zen::Platform* platform3 = new zen::Platform();
     platform3->addPoint(100,0);
     platform3->addPoint(200,0);
     platform3->addPoint(300,25);
@@ -33,14 +33,14 @@ void Game::setup()
     mainGroup->addPlatform(&movingPlatform);
     mainGroup->addPlatform(platform3);
 
-    player = new Player(Vec2f(30,100));
+    player = new zen::Player(Vec2f(30,100));
     player->setPosition(Vec2f(5, -100));
     mainGroup->addEntity(player);
 
     sf::Texture* particleTexture = new sf::Texture();
     particleTexture->loadFromFile("../media/img/particleTest.png");
 
-    Pathfinder pathfinder(mainGroup);
+    zen::Pathfinder pathfinder(mainGroup);
 }
 
 void Game::loop()
@@ -115,48 +115,3 @@ bool Game::isDone()
     return this->done;
 }
 
-EntityGroup* Game::generateForestBackground()
-{
-    EntityGroup* group = new EntityGroup();
-
-    std::vector<std::string> images;
-    images.push_back("../media/img/fir1.png");
-    images.push_back("../media/img/fir2.png");
-    //images.push_back("../media/img/fir3.png");
-
-    std::vector< std::shared_ptr< sf::Texture > > textures;
-
-    for(unsigned int i = 0; i < images.size(); i++)
-    {
-        textures.push_back(std::make_shared<sf::Texture>());
-        textures.back()->loadFromFile(images.at(i));
-    }
-    
-    const int size = 4000;
-    const int objectDistance = 200;
-    const float maxOffset = objectDistance / 4;
-    const float minScale = 0.5;
-    const float maxScale = 1.5;
-
-    for(int i = 1; i < size / objectDistance; i++)
-    {
-        float posX = i * objectDistance + ((maxOffset * 2) * (rand() % 1000) / 1000.0) / 2;
-        float posY = 100;
-
-        float scale = minScale + (maxScale - minScale) * (rand() % 1000) / 1000.0;
-
-        //Create a sprite entity 
-        SpriteEntity* entity = new SpriteEntity();
-
-        entity->create(textures.at(rand() % textures.size()));
-
-        entity->setOrigin(Vec2f(0.5, 1));
-        entity->setPosition(Vec2f(posX, posY));
-        entity->setScale(Vec2f(scale, scale));
-        entity->setDepth(rand() % 5);
-
-        group->addEntity(entity);
-    }
-
-    return group;
-}

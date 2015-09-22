@@ -1,6 +1,6 @@
 #include "humanentity.h"
 
-HumanEntity::HumanEntity(Vec2f size)
+zen::HumanEntity::HumanEntity(Vec2f size)
     : PhysicsEntity(size),
     sword(75)
 {
@@ -15,12 +15,12 @@ HumanEntity::HumanEntity(Vec2f size)
     
     movementDirection = 1;
 }
-HumanEntity* HumanEntity::clone()
+zen::HumanEntity* zen::HumanEntity::clone()
 {
     return new HumanEntity(*this);
 }
 
-void HumanEntity::update(float time)
+void zen::HumanEntity::update(float time)
 {
     PhysicsEntity::update(time);
 
@@ -82,7 +82,7 @@ void HumanEntity::update(float time)
     sword.update(time);
 }
 
-void HumanEntity::draw(sf::RenderWindow* window)
+void zen::HumanEntity::draw(sf::RenderWindow* window)
 {
     PhysicsEntity::draw(window);
     
@@ -94,7 +94,7 @@ void HumanEntity::draw(sf::RenderWindow* window)
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
-void HumanEntity::roll(int direction)
+void zen::HumanEntity::roll(int direction)
 {
     if(moveState == MoveState::NORMAL && groundState == GroundState::ON_GROUND)
     {

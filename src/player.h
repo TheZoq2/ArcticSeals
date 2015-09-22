@@ -3,13 +3,16 @@
 
 #include "humanentity.h"
 
-class Player : public HumanEntity
+namespace zen
 {
-public:
-    Player(Vec2f size);
-    virtual Player* clone();
+    class Player : public HumanEntity
+    {
+    public:
+        Player(Vec2f size);
+        virtual Player* clone();
 
-    virtual void update(float time);
-private:
-};
+        virtual void update(float time);
+    private:
+    };
+}
 #endif

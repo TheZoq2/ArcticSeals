@@ -19,7 +19,6 @@
 #include "vec2f.h"
 #include "physicsentity.h"
 #include "player.h"
-#include "ground.h"
 #include "particleeffect.h"
 #include "pathfinder.h"
 
@@ -37,7 +36,7 @@ private:
 
     sf::RenderWindow* window;
 
-    World world;
+    zen::World world;
 
     sf::Texture texture;
     sf::Texture texture2;
@@ -47,19 +46,17 @@ private:
     sf::View uiView;
     sf::View worldView;
 
-    EntityGroup* generateForestBackground();
-
     float cameraX;
 
     sf::Clock gameClock;
     sf::Time frameTime;
     sf::Time lastFrame;
 
-    Platform movingPlatform;
+    zen::Platform movingPlatform;
     float movingPos;
     bool moveDir;
 
-    Player* player;
+    zen::Player* player;
 };
 
 #endif

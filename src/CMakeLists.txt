@@ -39,7 +39,6 @@ add_library(${LIB_NAME}
     vec2f.cpp
     platform.cpp
     player.cpp
-    ground.cpp
     humanentity.cpp
     sword.cpp
     meleeweapon.cpp

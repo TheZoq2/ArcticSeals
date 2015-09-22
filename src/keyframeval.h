@@ -1,36 +1,40 @@
 #ifndef H_KEYFRAME_VALUE
 #define H_KEYFRAME_VALUE
 
-template <class T>
-class KeyframeVal
+namespace zen
 {
-public:
-    KeyframeVal()
+    template <class T>
+    class KeyframeVal
     {
-        this->changed = false;
-    }
+    public:
+        KeyframeVal()
+        {
+            this->changed = false;
+        }
 
-    T operator=(T other)
-    {
-        this->changed = true;
-        this->value = other;
-    
-        return *this;
-    }
+        T operator=(T other)
+        {
+            this->changed = true;
+            this->value = other;
+        
+            return *this;
+        }
 
-    T val()
-    {
-        return value;
-    }
+        T val()
+        {
+            return value;
+        }
 
-    bool isChanged()
-    {
-        return changed;
-    }
+        bool isChanged()
+        {
+            return changed;
+        }
 
-private:
-    T value;
+    private:
+        T value;
 
-    bool changed; //if this value should be changed this keyframe
-};
+        bool changed; //if this value should be changed this keyframe
+    };
+
+}
 #endif

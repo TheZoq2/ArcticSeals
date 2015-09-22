@@ -16,6 +16,6 @@ private:
 
     EntityGroup* entityGroup;
 
-    std::vector<PathNode> nodes;
+    std::vector<PathNode*> nodes;
 };
 #endif

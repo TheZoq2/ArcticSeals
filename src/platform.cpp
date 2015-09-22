@@ -20,6 +20,7 @@ void Platform::draw(sf::RenderWindow* window)
     nodeShape.setOutlineThickness(2);
     nodeShape.setOrigin(10,10);
 
+    //std::cout << "new drawing" << std::endl;
     for(auto it : pathNodes)
     {
         //Debug drawing links
@@ -33,12 +34,14 @@ void Platform::draw(sf::RenderWindow* window)
                 };
                 
                 window->draw(line, 2, sf::LinesStrip);
+                //std::cout << "drawing link" << std::endl;
             }
         }
        
 
         nodeShape.setPosition(it.getPosition());
         window->draw(nodeShape);
+        //std::cout << it.getLinks().size() << std::endl;
     }
 }
 

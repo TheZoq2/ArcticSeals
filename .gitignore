@@ -34,3 +34,5 @@ debug/*
 # Vim
 *.sw*
 
+#python for ycm
+*.pyc

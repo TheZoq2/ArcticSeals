@@ -1,5 +1,7 @@
 #include "bone.h"
 
+using namespace zen;
+
 Bone::Bone()
 {
     parent = NULL;

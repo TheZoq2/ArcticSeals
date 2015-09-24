@@ -1,5 +1,7 @@
 #include "platform.h"
 
+//#define DEBUG_DRAW
+
 const float Platform::PATH_NODE_DISTANCE = 50;
 
 void Platform::create(Vec2f pos)
@@ -13,6 +15,7 @@ void Platform::draw(sf::RenderWindow* window)
         it.draw(window);
     }
 
+#ifdef DEBUG_DRAW
     sf::CircleShape nodeShape(10);
     nodeShape.setFillColor(sf::Color(0,0,0,0));
     nodeShape.setOutlineColor(sf::Color(255,255,255,255));;
@@ -34,15 +37,14 @@ void Platform::draw(sf::RenderWindow* window)
                 };
                 
                 window->draw(line, 2, sf::LinesStrip);
-                //std::cout << "drawing link" << std::endl;
             }
         }
        
 
         nodeShape.setPosition(it.getPosition());
         window->draw(nodeShape);
-        //std::cout << it.getLinks().size() << std::endl;
     }
+#endif
 }
 
 void Platform::addPoint(Vec2f point)

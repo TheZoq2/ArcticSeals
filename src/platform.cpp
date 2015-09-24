@@ -1,6 +1,7 @@
 #include "platform.h"
 
 //#define DEBUG_DRAW
+using namespace zen;
 
 const float Platform::PATH_NODE_DISTANCE = 50;
 

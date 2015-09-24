@@ -1,14 +1,14 @@
 #include "world.h"
 
-World::World()
+zen::World::World()
 {
     gravity = 9.82;
 }
-World::~World()
+zen::World::~World()
 {
 }
 
-void World::addEntityGroup(EntityGroup* group, float paralaxAmount)
+void zen::World::addEntityGroup(EntityGroup* group, float paralaxAmount)
 {
     Layer layer; //The new layer to add;
     layer.eGroup = group;
@@ -17,7 +17,7 @@ void World::addEntityGroup(EntityGroup* group, float paralaxAmount)
     layers.push_back(layer);
 }
 
-void World::draw(sf::RenderWindow* window, Vec2f cameraPos)
+void zen::World::draw(sf::RenderWindow* window, Vec2f cameraPos)
 {
     sf::View view = window->getView();
 
@@ -43,7 +43,7 @@ void World::draw(sf::RenderWindow* window, Vec2f cameraPos)
 
     mainGroup.draw(window);
 }
-void World::update(float frameTime)
+void zen::World::update(float frameTime)
 {
     this->mainGroup.update(frameTime);
 
@@ -54,11 +54,11 @@ void World::update(float frameTime)
 }
 
 
-float World::getGravity()
+float zen::World::getGravity()
 {
     return gravity;
 }
-EntityGroup* World::getMainGroup()
+zen::EntityGroup* zen::World::getMainGroup()
 {
     return &mainGroup;
 }

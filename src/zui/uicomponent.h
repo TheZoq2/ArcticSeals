@@ -13,6 +13,8 @@
 #include "../vec2f.h"
 #include "../mouseeventhandler.h"
 
+using namespace zen;
+
 namespace zui
 {
 class UIValueListener

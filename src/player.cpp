@@ -1,15 +1,15 @@
 #include "player.h"
 
-Player::Player(Vec2f size)
+zen::Player::Player(Vec2f size)
     : HumanEntity(size)
 {
 }
-Player* Player::clone()
+zen::Player* zen::Player::clone()
 {
     return new Player(*this);
 }
 
-void Player::update(float time)
+void zen::Player::update(float time)
 {
     HumanEntity::update(time);
 

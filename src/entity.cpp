@@ -1,15 +1,17 @@
 #include "entity.h"
 
-Entity::Entity()
+using namespace zen;
+
+zen::Entity::Entity()
 {
     this->depth = 0; //Setting the default depth
 }
 
-void Entity::setPosition(Vec2f pos)
+void zen::Entity::setPosition(Vec2f pos)
 {
     this->pos = pos;
 }
-void Entity::setDepth(int depth)
+void zen::Entity::setDepth(int depth)
 {
     this->depth = depth;
 
@@ -19,21 +21,21 @@ void Entity::setDepth(int depth)
         group->onEntityDepthChange(this);
     }
 }
-void Entity::setGroup(EntityGroup* group)
+void zen::Entity::setGroup(EntityGroup* group)
 {
     this->group = group;
 }
 
-int Entity::getDepth()
+int zen::Entity::getDepth()
 {
     return this->depth;
 }
-Vec2f Entity::getPosition()
+Vec2f zen::Entity::getPosition()
 {
     return pos;
 }
 
-bool Entity::pointIsOnEntity(Vec2f point)
+bool zen::Entity::pointIsOnEntity(Vec2f point)
 {
     return false;
 }

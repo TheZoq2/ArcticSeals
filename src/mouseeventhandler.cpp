@@ -1,5 +1,7 @@
 #include "mouseeventhandler.h"
 
+using namespace zen;
+
 void MouseEventHandler::setup(sf::RenderWindow* window)
 {
     this->window = window;

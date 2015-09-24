@@ -1,5 +1,7 @@
 #include "vec2f.h"
 
+using namespace zen;
+
 Vec2f::Vec2f()
     : sf::Vector2f(0,0)
 {

@@ -12,35 +12,38 @@
 #include "entitygroup.h"
 #include "vec2f.h"
 
-class World
+namespace zen
 {
-public:
-    World();
-    ~World();
-
-    //void addEntity(Entity* entity);
-    void addEntityGroup(EntityGroup* group, float paralaxAmount);
-
-    void draw(sf::RenderWindow* window, Vec2f cameraPos);
-    void update(float frameTime);
-
-    void addPlatformLine(Line* line);
-
-    float getGravity();
-    std::vector<Line*>* getPlatformLines();
-
-    EntityGroup* getMainGroup();
-private:
-    struct Layer
+    class World
     {
-        EntityGroup* eGroup;
-        float paralaxAmount;
+    public:
+        World();
+        ~World();
+
+        //void addEntity(Entity* entity);
+        void addEntityGroup(EntityGroup* group, float paralaxAmount);
+
+        void draw(sf::RenderWindow* window, Vec2f cameraPos);
+        void update(float frameTime);
+
+        void addPlatformLine(Line* line);
+
+        float getGravity();
+        std::vector<Line*>* getPlatformLines();
+
+        EntityGroup* getMainGroup();
+    private:
+        struct Layer
+        {
+            EntityGroup* eGroup;
+            float paralaxAmount;
+        };
+
+        //std::vector<Entity*> entities;
+        std::vector<Layer> layers;
+        EntityGroup mainGroup;
+
+        float gravity;
     };
-
-    //std::vector<Entity*> entities;
-    std::vector<Layer> layers;
-    EntityGroup mainGroup;
-
-    float gravity;
-};
+}
 #endif

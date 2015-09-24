@@ -1,5 +1,7 @@
 #include "sword.h"
 
+using namespace zen;
+
 Sword::Sword(float length)
     : MeleeWeapon(length)
 {

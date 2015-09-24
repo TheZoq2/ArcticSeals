@@ -1,5 +1,7 @@
 #include "line.h"
 
+using namespace zen;
+
 Line::Line()
 {
     vertical = false;

@@ -1,5 +1,7 @@
 #include "pathnode.h"
 
+using namespace zen;
+
 PathNode::PathNode(Vec2f position, Platform* platform)
 {
     this->position = position;

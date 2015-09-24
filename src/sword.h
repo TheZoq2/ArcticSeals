@@ -5,14 +5,17 @@
 
 #include "meleeweapon.h"
 
-class Sword : public MeleeWeapon
+namespace zen
 {
-public:
-    Sword(float length) ;
+    class Sword : public MeleeWeapon
+    {
+    public:
+        Sword(float length) ;
 
-    void changeState(SwingState newState);
-    float getSwingChangeAmount();
-protected:
+        void changeState(SwingState newState);
+        float getSwingChangeAmount();
+    protected:
 
-};
+    };
+}
 #endif

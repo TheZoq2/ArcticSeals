@@ -53,10 +53,10 @@ private:
 
     sf::View worldView;
 
-    Entity* ghostEntity;
+    zen::Entity* ghostEntity;
     std::string newEntityName;
 
-    EntityGroup editedGroup;
+    zen::EntityGroup editedGroup;
 
     //UI stuff
     const static std::string SELECT_BUTTON_NAME;

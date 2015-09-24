@@ -239,7 +239,7 @@ void LevelEditor::createGhostEntity(Vec2f worldPos)
         std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
         texture->loadFromFile(newEntityName);
 
-        SpriteEntity* newEntity = new SpriteEntity();
+        zen::SpriteEntity* newEntity = new zen::SpriteEntity();
         newEntity->create(texture);
         newEntity->setOrigin(Vec2f(0.5, 0.5));
 

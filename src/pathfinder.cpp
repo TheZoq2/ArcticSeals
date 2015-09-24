@@ -1,8 +1,8 @@
 #include "pathfinder.h"
 
-const float Pathfinder::MAX_NODE_DISTANCE = 400;
+const float zen::Pathfinder::MAX_NODE_DISTANCE = 400;
 
-Pathfinder::Pathfinder(EntityGroup* group)
+zen::Pathfinder::Pathfinder(EntityGroup* group)
 {
     this->entityGroup = group;
 
@@ -13,7 +13,7 @@ Pathfinder::Pathfinder(EntityGroup* group)
 //                      Private methods
 /////////////////////////////////////////////////////////////////////
 
-void Pathfinder::generateLinks()
+void zen::Pathfinder::generateLinks()
 {
     nodes.clear();
 

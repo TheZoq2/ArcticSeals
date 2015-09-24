@@ -1,5 +1,7 @@
 #include "meleeweapon.h"
 
+using namespace zen;
+
 MeleeWeapon::MeleeWeapon(float length)
 {
     this->length = length;

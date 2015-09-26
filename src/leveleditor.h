@@ -11,7 +11,7 @@
 #include "zui/uicomponent.h"
 #include "zui/inputcomponent.h"
 #include "entity.h"
-#include "spriteentity.h"
+//#include "spriteentity.h"
 #include "entitygroup.h"
 
 

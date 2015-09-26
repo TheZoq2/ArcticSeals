@@ -33,9 +33,9 @@ void Game::setup()
     mainGroup->addPlatform(&movingPlatform);
     mainGroup->addPlatform(platform3);
 
-    player = new zen::Player(Vec2f(30,100));
-    player->setPosition(Vec2f(5, -100));
-    mainGroup->addEntity(player);
+    //player = new zen::Player(Vec2f(30,100));
+    //player->setPosition(Vec2f(5, -100));
+    //mainGroup->addEntity(player);
 
     sf::Texture* particleTexture = new sf::Texture();
     particleTexture->loadFromFile("../media/img/particleTest.png");
@@ -87,7 +87,7 @@ void Game::loop()
     
     window->setView(worldView);
     world.update(frameTime);
-    world.draw(window, Vec2f(player->getPosition()));
+    world.draw(window, Vec2f(0, 0));
 
     //sf::View view = window->getView();
 

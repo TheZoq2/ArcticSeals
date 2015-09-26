@@ -10,15 +10,12 @@
 //#include "depend/dirent.h"
 
 #include "world.h"
-#include "spriteentity.h"
 #include "zui/window.h"
 #include "zui/textbutton.h"
 #include "zui/imglist.h"
 #include "mouseeventhandler.h"
 #include "line.h"
 #include "vec2f.h"
-#include "physicsentity.h"
-#include "player.h"
 #include "particleeffect.h"
 #include "pathfinder.h"
 
@@ -56,7 +53,7 @@ private:
     float movingPos;
     bool moveDir;
 
-    zen::Player* player;
+    //zen::Player* player;
 };
 
 #endif

@@ -153,7 +153,7 @@ void LevelEditor::onMouseMove(MouseData mouseData, sf::RenderWindow* window)
         {
             if(this->ghostEntity != NULL)
             {
-                this->ghostEntity->setPosition(worldPos);
+                //this->ghostEntity->setPosition(worldPos);
             }
         }
     }
@@ -234,6 +234,7 @@ void LevelEditor::generateEntityList()
 
 void LevelEditor::createGhostEntity(Vec2f worldPos)
 {
+    /*
     if(newEntityName != "")
     {
         std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
@@ -248,6 +249,7 @@ void LevelEditor::createGhostEntity(Vec2f worldPos)
 
         std::cout << texture.use_count() << std::endl;
     }
+    */
 }
 
 void LevelEditor::changeMode(LevelEditor::EditingMode newMode)

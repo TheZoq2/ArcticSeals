@@ -21,13 +21,11 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-
 
 set(LIB_NAME "SharedCode")
 add_library(${LIB_NAME}
-    spriteentity.cpp
     sprite.cpp
     world.cpp
     entity.cpp
     mouseeventhandler.cpp
     entitygroup.cpp
-    physicsentity.cpp
     zui/uicomponent.cpp
     zui/window.cpp
     zui/inputcomponent.cpp
@@ -38,8 +36,6 @@ add_library(${LIB_NAME}
     line.cpp
     vec2f.cpp
     platform.cpp
-    player.cpp
-    humanentity.cpp
     sword.cpp
     meleeweapon.cpp
     skeletal/bone.cpp

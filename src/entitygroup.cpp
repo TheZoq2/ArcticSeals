@@ -142,21 +142,3 @@ EntityGroup::PlatformCollisionResult EntityGroup::getPlatformCollision(Vec2f ori
 
     return result;
 }
-
-Entity* EntityGroup::getFirstCollision(Vec2f point)
-{
-    Entity* result = NULL;
-
-    //Because entities are stored in draw order, we can search from the back
-    //and return the firt entity that we find that collides with the point
-    for(auto it = entities.end(); it != entities.begin(); it--)
-    {
-        if(it->get()->pointIsOnEntity(point))
-        {
-            result = it->get();
-            break;
-        }
-    }
-
-    return result;
-}

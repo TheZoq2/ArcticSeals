@@ -27,14 +27,19 @@ namespace zen
         virtual void draw(sf::RenderWindow* window) = 0;
         virtual void update(float time){};
     
-        virtual void setPosition(Vec2f pos);
         virtual void setDepth(int depth);
         virtual void setGroup(EntityGroup* group);
     
         int getDepth();
-        Vec2f getPosition();
     
-        virtual bool pointIsOnEntity(Vec2f point);
+        template<class T>
+        void addComponent(std::unique_ptr<T> component)
+        {
+            //Ensure that the object passed is an instance of component
+            static_assert(std::is_base_of<Component, T>::value, "Added component needs to be subclass of Component");
+        
+            components.insert(std::make_pair(typeid(T), component));
+        }
     protected:
         Vec2f pos;
     
@@ -45,7 +50,8 @@ namespace zen
     private:
         int depth;
     
-        std::vector< std::unique_ptr<int> > test;
+        std::map<std::type_info, std::unique_ptr<Component> > components;
     };
 }
+
 #endif

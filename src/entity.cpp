@@ -2,10 +2,12 @@
 
 using namespace zen;
 
+/*
 zen::Entity::Entity()
 {
     this->depth = 0; //Setting the default depth
 }
+*/
 
 void zen::Entity::setPosition(Vec2f pos)
 {

@@ -53,6 +53,7 @@ namespace zen
         void insertEntity(Entity* entity); 
 
         std::vector< std::unique_ptr< Entity > > entities;
+        std::vector< std::unique_ptr< int > > test;
         std::vector<IDPlatform> platforms;
     };
 }

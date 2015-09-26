@@ -2,6 +2,8 @@
 #define H_ENTITY
 
 #include <typeinfo>
+#include <map>
+#include <vector>
 
 #include <SFML/System.hpp>
 #include "entitygroup.h"
@@ -12,6 +14,7 @@
 namespace zen
 {
     class EntityGroup;
+    class Component;
     
     class Entity
     {
@@ -39,10 +42,10 @@ namespace zen
         //This group gets notified of any changes to the depth of the entity.
         EntityGroup* group; 
 
-        std::map<int, Component* > components;
     private:
         int depth;
     
+        std::vector< std::unique_ptr<int> > test;
     };
 }
 #endif

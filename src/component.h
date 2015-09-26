@@ -5,6 +5,7 @@
 
 namespace zen
 {
+    class Entity;
     /*
      *
      * A component stores a specific kind of data for an entity
@@ -16,6 +17,7 @@ namespace zen
         Component();
 
         void setOwner(Entity* owner);
+
     private:
         Entity* owner;
     };

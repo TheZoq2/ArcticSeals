@@ -14,6 +14,10 @@ namespace zen
     class Component
     {
     public:
+        //Set to true if an entity should be restricted to only one instance of
+        //this component
+        static bool IS_UNIQUE;
+
         Component();
 
         void setOwner(Entity* owner);

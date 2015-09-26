@@ -40,8 +40,15 @@ namespace zen
         
             components.insert(std::make_pair(typeid(T), component));
         }
+
+        //Return all components of a given type provided an entity can own more
+        //than one of the component
+        template<class T>
+        std::vector<T*> getComponents()
+        {
+            return components[typeid(T)];
+        }
     protected:
-        Vec2f pos;
     
         //This is the group that the entity is part of. If it is part of a group.
         //This group gets notified of any changes to the depth of the entity.
@@ -50,7 +57,7 @@ namespace zen
     private:
         int depth;
     
-        std::map<std::type_info, std::unique_ptr<Component> > components;
+        std::map<std::type_info, std::vector<std::unique_ptr<Component>>> components;
     };
 }
 

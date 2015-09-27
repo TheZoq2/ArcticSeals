@@ -8,10 +8,10 @@
 #include <SFML/System.hpp>
 
 #include "entitygroup.h"
-
 #include "vec2f.h"
-#include "components/component.h"
-#include "components/transformComponent.h"
+
+#include "components/Component.h"
+#include "components/TransformComponent.h"
 
 #include "exceptions/missingcomponentexception.h"
 
@@ -19,7 +19,6 @@ namespace zen
 {
     class EntityGroup;
     class Component;
-    class TransformComponent;
     
     class Entity
     {
@@ -73,7 +72,7 @@ namespace zen
         
         //Unique PTR because components depend on entities and entities on components. One needs to
         //be a pointer.
-        std::unique_ptr<TransformComponent> transformComponent;
+        std::unique_ptr<TransformComponent> transform;
     };
 }
 

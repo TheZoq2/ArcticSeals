@@ -1,4 +1,4 @@
-#include "transformComponent.h"
+#include "TransformComponent.h"
 
 using namespace zen;
 

@@ -1,7 +1,7 @@
 #ifndef H_TRANSFORM_COMPONENT
 #define H_TRANSFORM_COMPONENT
 
-#include "component.h"
+#include "Component.h"
 
 namespace zen
 {

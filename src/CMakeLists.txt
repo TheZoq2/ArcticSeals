@@ -43,9 +43,9 @@ add_library(${LIB_NAME}
     #keyframeval.cpp
     pathnode.cpp
     pathfinder.cpp
-    components/component.cpp
-    components/transformComponent.cpp
-    components/SpriteComponent.cpp
+    components/Component.cpp
+    components/TransformComponent.cpp
+    components/DrawableComponent.cpp
 )
 
 # Define sources and executable

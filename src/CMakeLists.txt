@@ -43,7 +43,7 @@ add_library(${LIB_NAME}
     #keyframeval.cpp
     pathnode.cpp
     pathfinder.cpp
-    exceptions/missingcomponentexception.cpp
+    components/transformComponent.cpp
 )
 
 # Define sources and executable

@@ -6,15 +6,20 @@
 #include <vector>
 
 #include <SFML/System.hpp>
+
 #include "entitygroup.h"
 
 #include "vec2f.h"
-#include "component.h"
+#include "components/component.h"
+#include "components/transformComponent.h"
+
+#include "exceptions/missingcomponentexception.h"
 
 namespace zen
 {
     class EntityGroup;
     class Component;
+    class TransformComponent;
     
     class Entity
     {
@@ -46,6 +51,13 @@ namespace zen
         template<class T>
         std::vector<T*> getComponents()
         {
+            //Ensure that the object passed is an instance of component
+            static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");
+
+            if(components.find(typeid(T)) == components.end())
+            {
+                throw MissingComponentException(typeid(T));
+            }
             return components[typeid(T)];
         }
     protected:
@@ -58,6 +70,10 @@ namespace zen
         int depth;
     
         std::map<std::type_info, std::vector<std::unique_ptr<Component>>> components;
+        
+        //Unique PTR because components depend on entities and entities on components. One needs to
+        //be a pointer.
+        std::unique_ptr<TransformComponent> transformComponent;
     };
 }
 

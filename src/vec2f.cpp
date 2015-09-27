@@ -65,7 +65,7 @@ Vec2f& Vec2f::operator*=(const Vec2f& other)
 
     return *this;
 }
-Vec2f& operator*(Vec2f lhs, const Vec2f& rhs)
+Vec2f operator*(Vec2f lhs, const Vec2f& rhs)
 {
     lhs *= rhs;
     return lhs;

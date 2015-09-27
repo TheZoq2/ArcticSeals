@@ -1,7 +1,7 @@
 #ifndef H_COMPONENT
 #define H_COMPONENT
 
-#include "../entity.h"
+#include "../vec2f.h"
 
 namespace zen
 {

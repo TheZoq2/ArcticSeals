@@ -88,17 +88,17 @@ endif()
 
 #Including QT5
 # Find the QtWidgets library
-find_package(Qt5Widgets)
-if(Qt5Widgets_FOUND)
-    add_executable(${ANIM_EDITOR_NAME} ${ANIM_SOURCES})
-
-    include_directories(${Qt5Widgets_INCLUDE_DIRS})
-    target_link_libraries(${ANIM_EDITOR_NAME} ${Qt5Widgets_LIBRARIES})
-    
-    target_link_libraries(${ANIM_EDITOR_NAME} ${LIB_NAME})
-else()
-    message("QT5 not found, anim editor will not be built")
-endif()
+#find_package(Qt5Widgets)
+#if(Qt5Widgets_FOUND)
+#    add_executable(${ANIM_EDITOR_NAME} ${ANIM_SOURCES})
+#
+#    include_directories(${Qt5Widgets_INCLUDE_DIRS})
+#    target_link_libraries(${ANIM_EDITOR_NAME} ${Qt5Widgets_LIBRARIES})
+#    
+#    target_link_libraries(${ANIM_EDITOR_NAME} ${LIB_NAME})
+#else()
+#    message("QT5 not found, anim editor will not be built")
+#endif()
 
 target_link_libraries(${EXECUTABLE_NAME} ${LIB_NAME})
 target_link_libraries(${EDITOR_NAME} ${LIB_NAME})

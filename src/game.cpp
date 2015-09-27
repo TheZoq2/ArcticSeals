@@ -1,6 +1,5 @@
 #include "game.h"
 
-
 void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");

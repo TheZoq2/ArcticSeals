@@ -13,6 +13,8 @@ namespace zen
     {
     public:
         SpriteComponent(std::shared_ptr<sf::Texture> texture);
+
+        virtual void draw(sf::RenderTarget* target);
     private:
         std::shared_ptr<sf::Texture> texture;
         

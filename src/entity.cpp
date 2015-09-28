@@ -1,10 +1,22 @@
 #include "entity.h"
 
+#include "components/SpriteComponent.h"
+
 using namespace zen;
 
 zen::Entity::Entity()
 {
     this->depth = 0; //Setting the default depth
+
+    //Initialise the transform component
+    this->transform = std::unique_ptr<TransformComponent>(new TransformComponent);
+}
+
+void Entity::draw(sf::RenderTarget* target)
+{
+    DrawableComponent* drawable = getComponents<DrawableComponent>();
+    
+    drawable->draw(target);
 }
 
 void zen::Entity::setDepth(int depth)
@@ -26,4 +38,3 @@ int zen::Entity::getDepth()
 {
     return this->depth;
 }
-

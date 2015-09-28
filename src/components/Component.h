@@ -11,7 +11,7 @@ namespace zen
     {
     public:
         
-        void setOwner(Entity* owner);
+        virtual void setOwner(Entity* owner);
     private:
         Entity* owner;
     };

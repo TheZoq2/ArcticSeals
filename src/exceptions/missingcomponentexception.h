@@ -2,7 +2,7 @@
 #define H_MISSING_COMPONENT_EXCEPTION
 
 #include <exception>
-#include <typeinfo>
+#include <typeindex>
 #include <string>
 
 namespace zen
@@ -10,21 +10,21 @@ namespace zen
     class MissingComponentException : public std::exception
     {
         public:
-            MissingComponentException(std::type_info type)
+            MissingComponentException(std::type_index type)
+                : type(type)
             {
-                this->typeName = type.name();
             }
 
             virtual const char* what() const throw() override
             {
                 std::string msg;
                 msg.append("Entity did not contain requested component ");
-                msg.append(typeName);
+                msg.append(type.name());
 
                 return msg.data();
             }
         private:
-            std::string typeName;
+            std::type_index type;
     };
 }
 #endif

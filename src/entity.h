@@ -2,6 +2,7 @@
 #define H_ENTITY
 
 #include <typeinfo>
+#include <typeindex>
 #include <map>
 #include <vector>
 
@@ -28,7 +29,7 @@ namespace zen
     
         virtual Entity* clone() = 0;
         
-        virtual void draw(sf::RenderWindow* window) = 0;
+        virtual void draw(sf::RenderTarget* window);
         virtual void update(float time){};
     
         virtual void setDepth(int depth);
@@ -48,7 +49,7 @@ namespace zen
         //Return all components of a given type provided an entity can own more
         //than one of the component
         template<class T>
-        std::vector<T*> getComponents()
+        T* getComponents()
         {
             //Ensure that the object passed is an instance of component
             static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");
@@ -57,7 +58,8 @@ namespace zen
             {
                 throw MissingComponentException(typeid(T));
             }
-            return components[typeid(T)];
+
+            return dynamic_cast<T*>(components[typeid(T)].get());
         }
     protected:
     
@@ -68,7 +70,7 @@ namespace zen
     private:
         int depth;
     
-        std::map<std::type_info, std::vector<std::unique_ptr<Component>>> components;
+        std::map<std::type_index, std::unique_ptr<Component>> components;
         
         //Unique PTR because components depend on entities and entities on components. One needs to
         //be a pointer.

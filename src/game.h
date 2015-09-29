@@ -19,6 +19,8 @@
 #include "particleeffect.h"
 #include "pathfinder.h"
 
+#include "components/SpriteComponent.h"
+
 class Game
 {
 public:
@@ -53,7 +55,7 @@ private:
     float movingPos;
     bool moveDir;
 
-    //zen::Player* player;
+    zen::Entity testEntity;
 };
 
 #endif

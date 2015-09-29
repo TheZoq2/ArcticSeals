@@ -194,7 +194,6 @@ void LevelEditor::onMouseButtonChange(sf::Mouse::Button button, Vec2f position, 
             {
                 if(button == sf::Mouse::Left && pressed == true && mouseIsOnUI == false)
                 {
-                    editedGroup.addEntity(ghostEntity->clone());
                 }
                 break;
             }

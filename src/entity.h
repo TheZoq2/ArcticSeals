@@ -24,10 +24,10 @@ namespace zen
     class Entity
     {
     public:
+        //TODO: Rule of three
+        
         Entity();
         //virtual ~Entity();
-    
-        virtual Entity* clone() = 0;
         
         virtual void draw(sf::RenderTarget* window);
         virtual void update(float time){};
@@ -43,13 +43,13 @@ namespace zen
             //Ensure that the object passed is an instance of component
             static_assert(std::is_base_of<Component, T>::value, "Added component needs to be subclass of Component");
         
-            components.insert(std::make_pair(typeid(T), component));
+            components.insert(std::make_pair(std::type_index(typeid(T)), std::move(component)));
         }
 
         //Return all components of a given type provided an entity can own more
         //than one of the component
         template<class T>
-        T* getComponents()
+        T* getComponent()
         {
             //Ensure that the object passed is an instance of component
             static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");

@@ -17,7 +17,7 @@ configure_file(
   )
 include_directories("${PROJECT_BINARY_DIR}")
 
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
 
 set(LIB_NAME "SharedCode")
 add_library(${LIB_NAME}
@@ -46,6 +46,9 @@ add_library(${LIB_NAME}
     components/Component.cpp
     components/TransformComponent.cpp
     components/DrawableComponent.cpp
+    components/SpriteComponent.cpp
+    systems/System.cpp
+    systems/DrawingSystem.cpp
 )
 
 # Define sources and executable

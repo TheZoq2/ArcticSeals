@@ -40,6 +40,13 @@ void Game::setup()
     particleTexture->loadFromFile("../media/img/particleTest.png");
 
     zen::Pathfinder pathfinder(mainGroup);
+
+    
+    std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
+    testTexture->loadFromFile("../media/img/particleTest.png");
+    testEntity.addComponent<zen::DrawableComponent>(
+            std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
+        );
 }
 
 void Game::loop()
@@ -90,6 +97,7 @@ void Game::loop()
 
     //sf::View view = window->getView();
 
+    testEntity.draw(window);
 
     window->setView(uiView);
     uiView.setCenter(uiView.getSize().x / 2, uiView.getSize().y / 2);

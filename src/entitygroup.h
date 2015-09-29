@@ -8,6 +8,7 @@
 
 #include "entity.h"
 #include "platform.h"
+#include "systems/System.h"
 
 namespace zen
 {
@@ -55,6 +56,8 @@ namespace zen
         std::vector< std::unique_ptr< Entity > > entities;
         std::vector< std::unique_ptr< int > > test;
         std::vector<IDPlatform> platforms;
+
+        std::vector<std::unique_ptr<System>> systems;
     };
 }
 #endif

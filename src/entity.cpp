@@ -14,9 +14,6 @@ zen::Entity::Entity()
 
 void Entity::draw(sf::RenderTarget* target)
 {
-    DrawableComponent* drawable = getComponents<DrawableComponent>();
-    
-    drawable->draw(target);
 }
 
 void zen::Entity::setDepth(int depth)

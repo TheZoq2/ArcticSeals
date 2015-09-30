@@ -13,3 +13,4 @@ void DrawingSystem::run(zen::Entity* entity)
 
     drawable->draw(target);
 }
+

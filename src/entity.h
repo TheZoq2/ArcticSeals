@@ -56,7 +56,7 @@ namespace zen
 
             if(components.find(typeid(T)) == components.end())
             {
-                throw MissingComponentException(typeid(T));
+                //throw MissingComponentException(typeid(T));
             }
 
             return dynamic_cast<T*>(components[typeid(T)].get());

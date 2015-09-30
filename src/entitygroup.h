@@ -9,10 +9,12 @@
 #include "entity.h"
 #include "platform.h"
 #include "systems/System.h"
+//#include "exceptions/MissingSystemException.h"
 
 namespace zen
 {
     class Entity;
+    class System;
 
     class EntityGroup
     {
@@ -46,7 +48,30 @@ namespace zen
 
         PlatformCollisionResult getPlatformCollision(Vec2f originPos, Line* line); 
         Entity* getFirstCollision(Vec2f point);
+    
+        template<class T>
+        void addSystem(std::unique_ptr<T> system)
+        {
+            //Ensure that the system is actually a system
+            static_assert(std::is_base_of<System, T>::value, "A system must be a system");
 
+            systems.insert(typeid(T), system);
+        }
+
+        template<class T>
+        System* getSystem()
+        {
+            //Ensure that the object passed is an instance of component
+            static_assert(std::is_base_of<System, T>::value, "System class need to be subclass of System");
+
+            if(systems.find(typeid(T)) == systems.end())
+            {
+                //TODO: Add exceptions
+                //throw MissingSystemException(typeid(T));
+            }
+
+            return systems[typeid(T)];
+        }
     private:
         uint32_t nextPlatformID;
 
@@ -57,7 +82,8 @@ namespace zen
         std::vector< std::unique_ptr< int > > test;
         std::vector<IDPlatform> platforms;
 
-        std::vector<std::unique_ptr<System>> systems;
+        //std::vector<std::unique_ptr<System>> systems;
+        std::map<std::type_info, std::unique_ptr<System>> systems;
     };
 }
 #endif

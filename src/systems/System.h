@@ -1,10 +1,12 @@
 #ifndef H_SYSTEM
 #define H_SYSTEM
 
-#include "../entity.h"
+#include "../entitygroup.h"
 
 namespace zen
 {
+    class Entity;
+
     class System
     {
     public:

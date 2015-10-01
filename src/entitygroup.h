@@ -9,7 +9,7 @@
 #include "entity.h"
 #include "platform.h"
 #include "systems/System.h"
-//#include "exceptions/MissingSystemException.h"
+#include "exceptions/MissingSystemException.h"
 
 namespace zen
 {
@@ -70,7 +70,7 @@ namespace zen
                 //throw MissingSystemException(typeid(T));
             }
 
-            return systems[typeid(T)];
+            return dynamic_cast<T>(systems[typeid(T)]);
         }
     private:
         uint32_t nextPlatformID;

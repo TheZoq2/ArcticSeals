@@ -35,3 +35,8 @@ int zen::Entity::getDepth()
 {
     return this->depth;
 }
+
+void Entity::addSystem(System* system)
+{
+    this->systems.push_back(system);
+}

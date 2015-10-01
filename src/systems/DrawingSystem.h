@@ -9,7 +9,7 @@ namespace zen
     class DrawingSystem : public System
     {
     public:
-        DrawingSystem(sf::RenderTarget* target);
+        DrawingSystem(EntityGroup* owner, sf::RenderTarget* target);
 
         virtual void run(Entity* entity) override;
     private:

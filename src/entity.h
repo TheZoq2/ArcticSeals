@@ -20,6 +20,7 @@ namespace zen
 {
     class EntityGroup;
     class Component;
+    class System;
     
     class Entity
     {
@@ -36,6 +37,8 @@ namespace zen
         virtual void setGroup(EntityGroup* group);
     
         int getDepth();
+
+        void addSystem(System* system);
     
         template<class T>
         void addComponent(std::unique_ptr<T> component)
@@ -75,6 +78,8 @@ namespace zen
         //Unique PTR because components depend on entities and entities on components. One needs to
         //be a pointer.
         std::unique_ptr<TransformComponent> transform;
+
+        std::vector<System*> systems;
     };
 }
 

@@ -53,9 +53,9 @@ namespace zen
         void addSystem(std::unique_ptr<T> system)
         {
             //Ensure that the system is actually a system
-            static_assert(std::is_base_of<System, T>::value, "A system must be a system");
+            static_assert(std::is_base_of<System, T>::value, "System needs to be a subclass of the System class");
 
-            systems.insert(typeid(T), system);
+            systems.insert(std::make_pair(std::type_index(typeid(T)), std::move(system)));
         }
 
         template<class T>
@@ -70,7 +70,7 @@ namespace zen
                 //throw MissingSystemException(typeid(T));
             }
 
-            return dynamic_cast<T>(systems[typeid(T)]);
+            return dynamic_cast<T*>(systems[typeid(T)].get());
         }
     private:
         uint32_t nextPlatformID;
@@ -83,7 +83,7 @@ namespace zen
         std::vector<IDPlatform> platforms;
 
         //std::vector<std::unique_ptr<System>> systems;
-        std::map<std::type_info, std::unique_ptr<System>> systems;
+        std::map<std::type_index, std::unique_ptr<System>> systems;
     };
 }
 #endif

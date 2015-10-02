@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "systems/DrawingSystem.h"
+
 void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
@@ -32,6 +34,8 @@ void Game::setup()
     mainGroup->addPlatform(&movingPlatform);
     mainGroup->addPlatform(platform3);
 
+    mainGroup->addSystem(std::unique_ptr<DrawingSystem>(new  DrawingSystem(window)));
+
     //player = new zen::Player(Vec2f(30,100));
     //player->setPosition(Vec2f(5, -100));
     //mainGroup->addEntity(player);
@@ -47,6 +51,7 @@ void Game::setup()
     testEntity.addComponent<zen::DrawableComponent>(
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
         );
+    testEntity.addSystem(mainGroup->getSystem<DrawingSystem>());
 }
 
 void Game::loop()

@@ -2,8 +2,7 @@
 
 using namespace zen;
 
-System::System(EntityGroup* owner)
+System::System()
 {
-    this->owner = owner;
 }
 

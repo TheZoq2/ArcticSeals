@@ -2,8 +2,8 @@
 
 using namespace zen;
 
-DrawingSystem::DrawingSystem(EntityGroup* owner, sf::RenderTarget* target)
-    : System(owner)
+DrawingSystem::DrawingSystem(sf::RenderTarget* target)
+    : System()
 {
     this->target = target;
 }

@@ -11,7 +11,7 @@ namespace zen
     class System
     {
     public:
-        System(EntityGroup* owner);
+        System();
 
         virtual void run(Entity* entity) = 0;
     private:

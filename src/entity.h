@@ -8,13 +8,14 @@
 
 #include <SFML/System.hpp>
 
+#include "exceptions/MissingComponentException.h"
+#include "exceptions/MissingSystemException.h"
+
 #include "entitygroup.h"
 #include "vec2f.h"
 
 #include "components/Component.h"
 #include "components/TransformComponent.h"
-
-#include "exceptions/missingcomponentexception.h"
 
 namespace zen
 {
@@ -49,7 +50,7 @@ namespace zen
         //Return all components of a given type provided an entity can own more
         //than one of the component
         template<class T>
-        T* getComponent();
+        T* getComponent() throw();
 
         //Relay messages from one component to other components that are subscribed to it
         template<typename T>
@@ -98,14 +99,14 @@ namespace zen
 
 
     template<class T>
-    T* Entity::getComponent()
+    T* Entity::getComponent() throw()
     {
         //Ensure that the object passed is an instance of component
         static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");
 
         if(components.find(typeid(T)) == components.end())
         {
-            //throw MissingComponentException(typeid(T));
+            throw MissingComponentException(std::type_index(typeid(T)));
         }
 
         return dynamic_cast<T*>(components[typeid(T)].get());

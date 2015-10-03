@@ -110,6 +110,7 @@ void Game::loop()
     //testEntity.draw(window);
 
     world.getMainGroup()->update(frameTime);
+    world.getMainGroup()->draw(window);
 
     window->setView(uiView);
     uiView.setCenter(uiView.getSize().x / 2, uiView.getSize().y / 2);

@@ -9,7 +9,7 @@ void Platform::create(Vec2f pos)
 {
     this->pos = pos;
 }
-void Platform::draw(sf::RenderWindow* window)
+void Platform::draw(sf::RenderTarget* window)
 {
     for(auto it : lines)
     {

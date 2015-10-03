@@ -89,7 +89,7 @@ Line::IntersectResult Line::getIntersect(Line* other)
     return result;
 }
 
-void Line::draw(sf::RenderWindow* window)
+void Line::draw(sf::RenderTarget* window)
 {
     sf::Vertex line[] = 
     {

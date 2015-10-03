@@ -38,6 +38,8 @@ namespace zen
 
         void update(float frameTime);
 
+        void draw(sf::RenderTarget* target);
+
         void onEntityDepthChange(Entity* entity);
 
         std::vector<IDPlatform> getPlatforms();

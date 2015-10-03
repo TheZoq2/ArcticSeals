@@ -47,6 +47,8 @@ add_library(${LIB_NAME}
     components/TransformComponent.cpp
     components/DrawableComponent.cpp
     components/SpriteComponent.cpp
+    components/PhysicsComponent.cpp
+    components/ShapeComponent.cpp
     systems/System.cpp
     systems/DrawingSystem.cpp
 )

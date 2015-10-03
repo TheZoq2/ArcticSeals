@@ -13,7 +13,7 @@ namespace zen
     {
     public:
         void create(Vec2f pos);
-        void draw(sf::RenderWindow* window);
+        void draw(sf::RenderTarget* window);
 
         void setPosition(Vec2f pos);
 

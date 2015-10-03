@@ -20,7 +20,7 @@ namespace zen
         Line(Vec2f pos0, Vec2f pos1);
 
         void create(Vec2f pos0, Vec2f pos1);
-        void draw(sf::RenderWindow* window);
+        void draw(sf::RenderTarget* window);
 
         Vec2f getPosition(uint8_t index);
 

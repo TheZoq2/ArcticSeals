@@ -36,7 +36,6 @@ namespace zen
         void addEntity(Entity* entity);
         void addPlatform(Platform* platform);
 
-        void draw(sf::RenderWindow* window);
         void update(float frameTime);
 
         void onEntityDepthChange(Entity* entity);

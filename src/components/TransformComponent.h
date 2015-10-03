@@ -8,6 +8,14 @@ namespace zen
     class TransformComponent : public Component
     {
     public:
+        //A list of all the messages that can be sent by this component
+        enum Messages
+        {
+            POSITION_CHANGED,
+            SCALE_CHANGED,
+            ANGLE_CHANGED
+        };
+
         void setPosition(Vec2f position);
         void setPosition(float x, float y);
         void setScale(Vec2f scale);

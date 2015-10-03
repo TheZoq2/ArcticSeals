@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "systems/DrawingSystem.h"
+#include "systems/randomMover.h"
 
 void Game::setup()
 {
@@ -35,6 +36,7 @@ void Game::setup()
     mainGroup->addPlatform(platform3);
 
     mainGroup->addSystem(std::unique_ptr<DrawingSystem>(new  DrawingSystem(window)));
+    mainGroup->addSystem(std::unique_ptr<RandomMover>(new  RandomMover()));
 
     //player = new zen::Player(Vec2f(30,100));
     //player->setPosition(Vec2f(5, -100));
@@ -46,12 +48,16 @@ void Game::setup()
     zen::Pathfinder pathfinder(mainGroup);
 
     
+    Entity* testEntity = new Entity();
     std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
     testTexture->loadFromFile("../media/img/particleTest.png");
-    testEntity.addComponent<zen::DrawableComponent>(
+    testEntity->addComponent<zen::DrawableComponent>(
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
         );
-    testEntity.addSystem(mainGroup->getSystem<DrawingSystem>());
+    testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
+    testEntity->addSystem(mainGroup->getSystem<RandomMover>());
+
+    mainGroup->addEntity(testEntity);
 }
 
 void Game::loop()
@@ -98,11 +104,12 @@ void Game::loop()
     
     window->setView(worldView);
     world.update(frameTime);
-    world.draw(window, Vec2f(0, 0));
 
     //sf::View view = window->getView();
 
-    testEntity.draw(window);
+    //testEntity.draw(window);
+
+    world.getMainGroup()->update(frameTime);
 
     window->setView(uiView);
     uiView.setCenter(uiView.getSize().x / 2, uiView.getSize().y / 2);

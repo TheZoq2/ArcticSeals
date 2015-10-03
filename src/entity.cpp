@@ -10,10 +10,15 @@ zen::Entity::Entity()
 
     //Initialise the transform component
     this->transform = std::unique_ptr<TransformComponent>(new TransformComponent);
+    this->transform->setOwner(this);
 }
 
-void Entity::draw(sf::RenderTarget* target)
+void Entity::update(float time)
 {
+    for(auto it : systems)
+    {
+        it->run(this, time);
+    }
 }
 
 void zen::Entity::setDepth(int depth)
@@ -34,6 +39,10 @@ void zen::Entity::setGroup(EntityGroup* group)
 int zen::Entity::getDepth()
 {
     return this->depth;
+}
+TransformComponent* Entity::getTransformComponent()
+{
+    return this->transform.get();
 }
 
 void Entity::addSystem(System* system)

@@ -13,7 +13,7 @@ namespace zen
     public:
         System();
 
-        virtual void run(Entity* entity) = 0;
+        virtual void run(Entity* entity, float time) = 0;
     private:
         EntityGroup* owner;
     };

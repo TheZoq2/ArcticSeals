@@ -66,18 +66,6 @@ void EntityGroup::update(float frameTime)
         it->update(frameTime);
     }
 }
-void EntityGroup::draw(sf::RenderWindow* window)
-{
-    for(auto& it : entities)
-    {
-        it->draw(window);
-    }
-
-    for(auto it : platforms)
-    {
-        it.platform->draw(window);
-    }
-}
 
 std::vector<EntityGroup::IDPlatform> EntityGroup::getPlatforms()
 {

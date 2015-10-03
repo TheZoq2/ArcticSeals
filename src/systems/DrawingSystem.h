@@ -11,7 +11,7 @@ namespace zen
     public:
         DrawingSystem(sf::RenderTarget* target);
 
-        virtual void run(Entity* entity) override;
+        virtual void run(Entity* entity, float time) override;
     private:
         sf::RenderTarget* target;
     };

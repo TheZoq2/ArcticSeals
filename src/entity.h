@@ -30,40 +30,30 @@ namespace zen
         Entity();
         //virtual ~Entity();
         
-        virtual void draw(sf::RenderTarget* window);
-        virtual void update(float time){};
+        virtual void update(float time);
     
         virtual void setDepth(int depth);
         virtual void setGroup(EntityGroup* group);
     
         int getDepth();
+        TransformComponent* getTransformComponent();
 
         void addSystem(System* system);
+
+        template<typename ComponentType>
+        void addComponentSubscriber(Component* subscriber);
     
         template<class T>
-        void addComponent(std::unique_ptr<T> component)
-        {
-            //Ensure that the object passed is an instance of component
-            static_assert(std::is_base_of<Component, T>::value, "Added component needs to be subclass of Component");
-        
-            components.insert(std::make_pair(std::type_index(typeid(T)), std::move(component)));
-        }
+        void addComponent(std::unique_ptr<T> component);
 
         //Return all components of a given type provided an entity can own more
         //than one of the component
         template<class T>
-        T* getComponent()
-        {
-            //Ensure that the object passed is an instance of component
-            static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");
+        T* getComponent();
 
-            if(components.find(typeid(T)) == components.end())
-            {
-                //throw MissingComponentException(typeid(T));
-            }
-
-            return dynamic_cast<T*>(components[typeid(T)].get());
-        }
+        //Relay messages from one component to other components that are subscribed to it
+        template<typename T>
+        void handleComponentMessage(T* component, int message);
     protected:
     
         //This is the group that the entity is part of. If it is part of a group.
@@ -75,12 +65,70 @@ namespace zen
     
         std::map<std::type_index, std::unique_ptr<Component>> components;
         
+        //Component message subscriptions
+        std::map<std::type_index, std::vector<Component*>> componentSubscribers;
+
         //Unique PTR because components depend on entities and entities on components. One needs to
         //be a pointer.
         std::unique_ptr<TransformComponent> transform;
 
         std::vector<System*> systems;
     };
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //                      Template function declarations
+    //////////////////////////////////////////////////////////////////////////////////////////
+    template<typename SubscriberClass>
+    void Entity::addComponentSubscriber(Component* subscriber)
+    {
+        static_assert(std::is_base_of<Component, SubscriberClass>::value, "A component can only subscribe to messages from other components");
+
+        //Add the component to the vector of components subscribing to this specific class
+        componentSubscribers[std::type_index(typeid(SubscriberClass))].push_back(subscriber);
+    }
+
+    template<class T>
+    void Entity::addComponent(std::unique_ptr<T> component)
+    {
+        //Ensure that the object passed is an instance of component
+        static_assert(std::is_base_of<Component, T>::value, "Added component needs to be subclass of Component");
+        component->setOwner(this);
+        components.insert(std::make_pair(std::type_index(typeid(T)), std::move(component)));
+    }
+
+
+    template<class T>
+    T* Entity::getComponent()
+    {
+        //Ensure that the object passed is an instance of component
+        static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");
+
+        if(components.find(typeid(T)) == components.end())
+        {
+            //throw MissingComponentException(typeid(T));
+        }
+
+        return dynamic_cast<T*>(components[typeid(T)].get());
+    }
+
+
+    template<typename T>
+    void Entity::handleComponentMessage(T* component, int message)
+    {
+        static_assert(std::is_base_of<Component, T>::value, "Message sender need to be subclass of component");
+
+        //If there are any subscribers to this component type
+        if(componentSubscribers.find(std::type_index(typeid(T))) != componentSubscribers.end())
+        {
+            std::vector<Component*> subscribers = componentSubscribers[std::type_index(typeid(T))];
+
+            //Send the message to the subscribers
+            for(auto& it : subscribers)
+            {
+                it->receiveComponentMessage(component, message);
+            }
+        }
+    }
 }
 
 #endif

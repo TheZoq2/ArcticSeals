@@ -60,15 +60,6 @@ add_executable(${EXECUTABLE_NAME}
     game.cpp
     )
 # Define sources and executable
-set(EDITOR_NAME "editor")
-add_executable(${EDITOR_NAME} 
-    #Include for directory support on windows
-    #depend/dirent.h
-    editormain.cpp 
-    editor.cpp
-    leveleditor.cpp
-    )
-
 set(ANIM_EDITOR_NAME "animEditor")
 set(ANIM_SOURCES
     #Include for directory support on windows
@@ -86,7 +77,6 @@ find_package(SFML 2 REQUIRED system window graphics network audio)
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
   target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
-  target_link_libraries(${EDITOR_NAME} ${SFML_LIBRARIES})
 endif()
 
 #Including QT5
@@ -104,7 +94,6 @@ endif()
 #endif()
 
 target_link_libraries(${EXECUTABLE_NAME} ${LIB_NAME})
-target_link_libraries(${EDITOR_NAME} ${LIB_NAME})
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
 

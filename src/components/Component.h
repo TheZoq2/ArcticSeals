@@ -12,8 +12,12 @@ namespace zen
     public:
         
         virtual void setOwner(Entity* owner);
-    private:
+
+        virtual void receiveComponentMessage(Component* other, int message){};
+
+    protected:
         Entity* owner;
+    private:
     };
 }
 

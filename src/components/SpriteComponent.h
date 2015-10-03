@@ -12,7 +12,10 @@ namespace zen
     public:
         SpriteComponent(std::shared_ptr<sf::Texture> texture);
 
-        void draw(sf::RenderTarget* target) override;
+        virtual void setOwner(Entity* owner) override;
+        virtual void draw(sf::RenderTarget* target) override;
+
+        virtual void receiveComponentMessage(Component* other, int message) override;
     private:
         std::shared_ptr<sf::Texture> texture;
         sf::Sprite sprite;

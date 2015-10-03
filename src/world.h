@@ -23,7 +23,6 @@ namespace zen
         //void addEntity(Entity* entity);
         void addEntityGroup(EntityGroup* group, float paralaxAmount);
 
-        void draw(sf::RenderWindow* window, Vec2f cameraPos);
         void update(float frameTime);
 
         void addPlatformLine(Line* line);

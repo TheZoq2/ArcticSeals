@@ -54,8 +54,6 @@ private:
     zen::Platform movingPlatform;
     float movingPos;
     bool moveDir;
-
-    zen::Entity testEntity;
 };
 
 #endif

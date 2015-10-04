@@ -40,6 +40,7 @@ namespace zen
         TransformComponent* getTransformComponent();
 
         void addSystem(System* system);
+        void removeSystem(System* system);
 
         template<typename ComponentType>
         void addComponentSubscriber(Component* subscriber);

@@ -11,6 +11,8 @@ namespace zen
     {
     public:
         virtual void draw(sf::RenderTarget* target) = 0;
+
+        virtual Vec2f getSize();
     private:
     };
 }

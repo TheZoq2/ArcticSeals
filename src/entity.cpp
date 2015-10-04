@@ -49,3 +49,15 @@ void Entity::addSystem(System* system)
 {
     this->systems.push_back(system);
 }
+void Entity::removeSystem(System* system)
+{
+    for(auto it = systems.begin(); it != systems.end(); ++it)
+    {
+        if(*it == system)
+        {
+            it = systems.erase(it) - 1; //-1 because the loop will increment it by one
+        }
+    }
+}
+
+

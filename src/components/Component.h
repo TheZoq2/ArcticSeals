@@ -10,6 +10,13 @@ namespace zen
     class Component
     {
     public:
+        enum MessageTypes
+        {
+            ADDED = -1
+        };
+
+        //TODO Add virtual destructor
+        //virtual ~Component() = 0;
         
         virtual void setOwner(Entity* owner);
 

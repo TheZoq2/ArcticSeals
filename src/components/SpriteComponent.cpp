@@ -17,7 +17,15 @@ void SpriteComponent::setOwner(Entity* owner)
     DrawableComponent::setOwner(owner);
     
     //Subscribe to any messages we need
-    owner->addComponentSubscriber<TransformComponent>(this);
+    TransformComponent* transComp =  owner->addComponentSubscriber<TransformComponent>(this);
+
+    //if a transform component was already part of the entity 
+    if(transComp != nullptr)
+    {
+        setPosition(transComp->getPosition());
+        setScale(transComp->getScale());
+        setRotation(transComp->getAngle());
+    }
 }
 void SpriteComponent::draw(sf::RenderTarget* target)
 {
@@ -34,19 +42,40 @@ void SpriteComponent::receiveComponentMessage(Component* other, int message)
         {
             case(TransformComponent::POSITION_CHANGED):
             {
-                sprite.setPosition(transformComponent->getPosition());
+                setPosition(transformComponent->getPosition());
                 break;
             }
             case(TransformComponent::SCALE_CHANGED):
             {
-                sprite.setScale(transformComponent->getScale());
+                setScale(transformComponent->getScale());
                 break;
             }
             case(TransformComponent::ANGLE_CHANGED):
             {
-                sprite.setRotation(transformComponent->getAngle());
+                setRotation(transformComponent->getAngle());
                 break;
             }
         }
     }
+}
+
+/////////////////////////////////////////////////////////////
+//                  Private methods
+/////////////////////////////////////////////////////////////
+void SpriteComponent::setPosition(Vec2f pos)
+{
+    sprite.setPosition(pos);
+}
+void SpriteComponent::setScale(Vec2f scale)
+{
+    sprite.setScale(scale);
+    
+    if(owner != nullptr)
+    {
+        owner->handleComponentMessage(this, DrawableComponent::Message::SHAPE_CHANGED);
+    }
+}
+void SpriteComponent::setRotation(float angle)
+{
+    sprite.setRotation(angle);
 }

@@ -16,7 +16,11 @@ namespace zen
         virtual void draw(sf::RenderTarget* target) override;
 
         virtual void receiveComponentMessage(Component* other, int message) override;
-    private:
+    protected:
+        virtual inline void setPosition(Vec2f pos);
+        virtual inline void setScale(Vec2f scale);
+        virtual inline void setRotation(float angle);
+
         std::shared_ptr<sf::Texture> texture;
         sf::Sprite sprite;
     };

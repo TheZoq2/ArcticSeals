@@ -43,7 +43,7 @@ namespace zen
         void removeSystem(System* system);
 
         template<typename ComponentType>
-        void addComponentSubscriber(Component* subscriber);
+        ComponentType* addComponentSubscriber(Component* subscriber);
     
         template<class T>
         void addComponent(std::unique_ptr<T> component);
@@ -77,16 +77,29 @@ namespace zen
         std::vector<System*> systems;
     };
 
-    //////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
     //                      Template function declarations
-    //////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
     template<typename SubscriberClass>
-    void Entity::addComponentSubscriber(Component* subscriber)
+    SubscriberClass* Entity::addComponentSubscriber(Component* subscriber)
     {
         static_assert(std::is_base_of<Component, SubscriberClass>::value, "A component can only subscribe to messages from other components");
 
         //Add the component to the vector of components subscribing to this specific class
         componentSubscribers[std::type_index(typeid(SubscriberClass))].push_back(subscriber);
+
+        //Return a component of the correct type if such a component exists
+        SubscriberClass* result = nullptr;
+        try
+        {
+            std::cout << "Found missing component" << std::endl;
+            result = getComponent<SubscriberClass>();
+        }
+        catch (MissingComponentException e)
+        {
+        }
+
+        return result;
     }
 
     template<class T>

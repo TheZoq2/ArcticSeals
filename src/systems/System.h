@@ -14,7 +14,9 @@ namespace zen
         System();
 
         virtual void run(Entity* entity, float time) = 0;
-    private:
+
+        virtual void setOwner(EntityGroup* owner);
+    protected:
         EntityGroup* owner;
     };
 }

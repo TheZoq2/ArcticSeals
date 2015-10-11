@@ -6,3 +6,7 @@ System::System()
 {
 }
 
+void System::setOwner(EntityGroup* owner) 
+{
+    this->owner = owner;
+}

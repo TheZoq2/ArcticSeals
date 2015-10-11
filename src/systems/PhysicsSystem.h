@@ -9,7 +9,9 @@ namespace zen
     {
     public:
 
+        void run(Entity* entity, float time) override;
     private:
+
     };
 }
 #endif

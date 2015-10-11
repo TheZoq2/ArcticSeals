@@ -11,21 +11,22 @@ namespace zen
     public:
         enum FallState
         {
-            rising,
-            falling,
-            onPlatform
+            RISING,
+            FALLING,
+            ON_PLATFORM
         };
 
         void setVelocity(Vec2f velocity);
         void setVelocity(float x, float y);
         void setAcceleration(Vec2f acceleration);
         void setAcceleration(float x, float y);
-        void setPlatform(Platform* platform, float localX);
+        void setPlatform(uint32_t platform, float localX);
+        void setPlatformX(float localX);
         void setState(FallState state);
 
         Vec2f getVelocity();
         Vec2f getAcceleration();
-        Platform* getPlatform();
+        uint32_t getPlatform();
         float getPlatformX();
         FallState getState();
     private:
@@ -33,7 +34,7 @@ namespace zen
         Vec2f acceleration;
 
         float platformLocalX;
-        Platform* currentPlatform = nullptr;
+        uint32_t currentPlatform = 0;
 
         FallState state;
     };

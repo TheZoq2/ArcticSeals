@@ -3,6 +3,7 @@
 #include "systems/DrawingSystem.h"
 #include "systems/randomMover.h"
 
+
 void Game::setup()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Test");
@@ -56,6 +57,8 @@ void Game::setup()
         );
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
     testEntity->addSystem(mainGroup->getSystem<RandomMover>());
+
+    testEntity->getTransformComponent()->setScale(1, 1);
 
     mainGroup->addEntity(testEntity);
 }

@@ -56,6 +56,7 @@ namespace zen
             //Ensure that the system is actually a system
             static_assert(std::is_base_of<System, T>::value, "System needs to be a subclass of the System class");
 
+            system->setOwner(this);
             systems.insert(std::make_pair(std::type_index(typeid(T)), std::move(system)));
         }
 

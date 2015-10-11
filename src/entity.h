@@ -51,7 +51,7 @@ namespace zen
         //Return all components of a given type provided an entity can own more
         //than one of the component
         template<class T>
-        T* getComponent() throw();
+        T* getComponent();
 
         //Relay messages from one component to other components that are subscribed to it
         template<typename T>
@@ -95,7 +95,7 @@ namespace zen
             std::cout << "Found missing component" << std::endl;
             result = getComponent<SubscriberClass>();
         }
-        catch (MissingComponentException e)
+        catch (const MissingComponentException& e)
         {
         }
 
@@ -113,12 +113,12 @@ namespace zen
 
 
     template<class T>
-    T* Entity::getComponent() throw()
+    T* Entity::getComponent()
     {
         //Ensure that the object passed is an instance of component
         static_assert(std::is_base_of<Component, T>::value, "Component class need to be subclass of Component");
 
-        if(components.find(typeid(T)) == components.end())
+        if(components.count(typeid(T)) == 0)
         {
             throw MissingComponentException(std::type_index(typeid(T)));
         }

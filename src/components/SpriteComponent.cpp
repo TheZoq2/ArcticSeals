@@ -59,12 +59,20 @@ void SpriteComponent::receiveComponentMessage(Component* other, int message)
     }
 }
 
+Vec2f SpriteComponent::getSize()
+{
+    Vec2f size;
+    size.x = sprite.getScale().x * texture->getSize().x;
+    size.y = sprite.getScale().y * texture->getSize().y;
+    return size;
+}
+
 /////////////////////////////////////////////////////////////
 //                  Private methods
 /////////////////////////////////////////////////////////////
 void SpriteComponent::setPosition(Vec2f pos)
 {
-    sprite.setPosition(pos);
+    this->sprite.setPosition(pos);
 }
 void SpriteComponent::setScale(Vec2f scale)
 {

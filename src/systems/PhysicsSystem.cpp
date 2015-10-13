@@ -3,8 +3,9 @@
 #include "../components/TransformComponent.h"
 #include "../components/PhysicsComponent.h"
 #include "../components/ShapeComponent.h"
+#include "../entitygroup.h"
 
-const float GRAVITY = 9.82 * 90; //TODO: Move to good place
+const float GRAVITY = 9.82; //TODO: Move to good place
 
 using namespace zen;
 
@@ -43,6 +44,10 @@ void PhysicsSystem::run(Entity* entity, float time)
                     physComp->setState(PhysicsComponent::FallState::FALLING);
                 }
             }
+            else
+            {
+                physComp->setState(PhysicsComponent::FallState::FALLING);
+            }
             break;
         }
         case(PhysicsComponent::FallState::RISING):
@@ -60,12 +65,41 @@ void PhysicsSystem::run(Entity* entity, float time)
         }
         case(PhysicsComponent::FallState::FALLING):
         {
+            newPos.x += newVel.x * time;
+
+            //Calculate the location of the "feet"
+            Vec2f feetPos = newPos;
+            feetPos.y = newPos.y + shapeComp->getShape().y / 2;
+
+            Vec2f fallingFeetPos = feetPos;
+            fallingFeetPos.y = newVel.y * time;
+            
+            //Calculate a line to use when checking intersections with the ground
+            Line fallingLine(feetPos, fallingFeetPos);
+
+            EntityGroup::PlatformCollisionResult collision = owner->getPlatformCollision(feetPos, &fallingLine);
+
+            if(collision.intResult.intersected == true)
+            {
+                //Change state and save what platform we collided with
+                physComp->setState(PhysicsComponent::FallState::ON_PLATFORM);
+                physComp->setPlatform(collision.platformID, 
+                        owner->getPlatformByID(collision.platformID)->getLocalX(collision.intResult.pos.x));
+                //TODO: Make prettier
+                
+                newPos.y = collision.intResult.pos.y - shapeComp->getShape().y / 2;
+            }
+            else
+            {
+                newPos.y += newVel.y * time;
+                newVel.y += GRAVITY * time;
+            }
 
             break;
         }
-        default:
-            
     }
 
-    //TODO: Recalculate position with shape
+    //Store the new position and velocity
+    transform->setPosition(newPos);
+    physComp->setVelocity(newVel);
 }

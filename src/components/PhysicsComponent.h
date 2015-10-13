@@ -16,6 +16,8 @@ namespace zen
             ON_PLATFORM
         };
 
+        PhysicsComponent();
+
         void setVelocity(Vec2f velocity);
         void setVelocity(float x, float y);
         void setAcceleration(Vec2f acceleration);
@@ -36,7 +38,7 @@ namespace zen
         float platformLocalX;
         uint32_t currentPlatform = 0;
 
-        FallState state;
+        FallState state = FALLING;
     };
 }
 #endif

@@ -12,10 +12,12 @@ namespace zen
     public:
         SpriteComponent(std::shared_ptr<sf::Texture> texture);
 
-        virtual void setOwner(Entity* owner) override;
-        virtual void draw(sf::RenderTarget* target) override;
+        void setOwner(Entity* owner) override;
+        void draw(sf::RenderTarget* target) override;
 
-        virtual void receiveComponentMessage(Component* other, int message) override;
+        void receiveComponentMessage(Component* other, int message) override;
+
+        Vec2f getSize() override;
     protected:
         virtual inline void setPosition(Vec2f pos);
         virtual inline void setScale(Vec2f scale);

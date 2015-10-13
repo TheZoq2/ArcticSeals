@@ -2,7 +2,11 @@
 
 using namespace zen;
 
-
+PhysicsComponent::PhysicsComponent():
+    velocity(0,0),
+    acceleration(0,0)
+{
+}
 //Setters
 void PhysicsComponent::setVelocity(float x, float y)
 {
@@ -20,9 +24,9 @@ void PhysicsComponent::setAcceleration(Vec2f acceleration)
 {
     this->acceleration = acceleration;
 }
-void PhysicsComponent::setPlatform(Platform* platform, float localX)
+void PhysicsComponent::setPlatform(uint32_t platformID, float localX)
 {
-    this->currentPlatform = platform;
+    this->currentPlatform = platformID;
     this->platformLocalX = localX;
 }
 void PhysicsComponent::setState(FallState state)
@@ -40,7 +44,7 @@ Vec2f PhysicsComponent::getAcceleration()
 {
     return acceleration;
 }
-Platform* PhysicsComponent::getPlatform()
+uint32_t PhysicsComponent::getPlatform()
 {
     return currentPlatform;
 }

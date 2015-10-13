@@ -51,6 +51,7 @@ add_library(${LIB_NAME}
     components/ShapeComponent.cpp
     systems/System.cpp
     systems/DrawingSystem.cpp
+    systems/PhysicsSystem.cpp
 )
 
 # Define sources and executable

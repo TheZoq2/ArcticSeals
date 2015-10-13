@@ -2,6 +2,9 @@
 
 #include "systems/DrawingSystem.h"
 #include "systems/randomMover.h"
+#include "systems/PhysicsSystem.h"
+#include "components/PhysicsComponent.h"
+#include "components/ShapeComponent.h"
 
 
 void Game::setup()
@@ -38,6 +41,7 @@ void Game::setup()
 
     mainGroup->addSystem(std::unique_ptr<DrawingSystem>(new  DrawingSystem(window)));
     mainGroup->addSystem(std::unique_ptr<RandomMover>(new  RandomMover()));
+    mainGroup->addSystem(std::unique_ptr<PhysicsSystem>(new  PhysicsSystem()));
 
     //player = new zen::Player(Vec2f(30,100));
     //player->setPosition(Vec2f(5, -100));
@@ -55,10 +59,14 @@ void Game::setup()
     testEntity->addComponent<zen::DrawableComponent>(
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
         );
+    testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
+    testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
+
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
-    testEntity->addSystem(mainGroup->getSystem<RandomMover>());
+    testEntity->addSystem(mainGroup->getSystem<PhysicsSystem>());
 
     testEntity->getTransformComponent()->setScale(1, 1);
+    testEntity->getTransformComponent()->setPosition(10, -300);
 
     mainGroup->addEntity(testEntity);
 }

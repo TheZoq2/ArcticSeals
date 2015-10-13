@@ -59,5 +59,3 @@ void Entity::removeSystem(System* system)
         }
     }
 }
-
-

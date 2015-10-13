@@ -92,7 +92,6 @@ namespace zen
         SubscriberClass* result = nullptr;
         try
         {
-            std::cout << "Found missing component" << std::endl;
             result = getComponent<SubscriberClass>();
         }
         catch (const MissingComponentException& e)

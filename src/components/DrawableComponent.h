@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Component.h"
-
 namespace zen
 {
     class DrawableComponent : public Component

@@ -56,3 +56,15 @@ PhysicsComponent::FallState PhysicsComponent::getState()
 {
     return state;
 }
+
+//Movement functions TODO: Move out of physics component
+void PhysicsComponent::jump() 
+{
+    if(state == FallState::ON_PLATFORM)
+    {
+        velocity.y -= 100;
+        std::cout << velocity.y << std::endl;
+        state = FallState::RISING;
+    }
+}
+

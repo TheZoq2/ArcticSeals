@@ -31,6 +31,10 @@ namespace zen
         uint32_t getPlatform();
         float getPlatformX();
         FallState getState();
+
+        //TODO: Move out of physics
+        void jump();
+        void walk(int direction);
     private:
         Vec2f velocity;
         Vec2f acceleration;

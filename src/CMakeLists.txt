@@ -52,6 +52,7 @@ add_library(${LIB_NAME}
     systems/System.cpp
     systems/DrawingSystem.cpp
     systems/PhysicsSystem.cpp
+    systems/KeyboardSystem.cpp
 )
 
 # Define sources and executable

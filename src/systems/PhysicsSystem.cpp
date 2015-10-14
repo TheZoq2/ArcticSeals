@@ -5,7 +5,7 @@
 #include "../components/ShapeComponent.h"
 #include "../entitygroup.h"
 
-const float GRAVITY = 9.82; //TODO: Move to good place
+const float GRAVITY = 9.82 * 30; //TODO: Move to good place
 
 using namespace zen;
 

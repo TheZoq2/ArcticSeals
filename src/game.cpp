@@ -27,14 +27,14 @@ void Game::setup()
     movingPlatform.addPoint(100,0);
     movingPlatform.addPoint(200,0);
     movingPlatform.addPoint(300,25);
-    movingPlatform.setPosition(Vec2f(700, -50));
+    movingPlatform.setPosition(Vec2f(300, -50));
     movingPlatform.addPoint(0,0);
 
     zen::Platform* platform3 = new zen::Platform();
     platform3->addPoint(100,0);
     platform3->addPoint(200,0);
     platform3->addPoint(300,25);
-    platform3->setPosition(Vec2f(-300, -100));
+    platform3->setPosition(Vec2f(0, 0));
 
     mainGroup->addPlatform(groundPlatform);
     mainGroup->addPlatform(&movingPlatform);
@@ -58,10 +58,10 @@ void Game::setup()
     Entity* testEntity = new Entity();
     std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
     testTexture->loadFromFile("../media/img/particleTest.png");
+    testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
     testEntity->addComponent<zen::DrawableComponent>(
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
         );
-    testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
 
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());

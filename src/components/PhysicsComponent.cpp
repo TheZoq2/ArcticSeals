@@ -33,6 +33,14 @@ void PhysicsComponent::setState(FallState state)
 {
     this->state = state;
 }
+void PhysicsComponent::setPlatformX(float localX) 
+{
+    this->platformLocalX = localX;
+}
+float PhysicsComponent::getMaxSpeed()
+{
+    return maxSpeed;
+}
 
 
 //Getters
@@ -62,9 +70,18 @@ void PhysicsComponent::jump()
 {
     if(state == FallState::ON_PLATFORM)
     {
-        velocity.y -= 100;
-        std::cout << velocity.y << std::endl;
+        velocity.y -= 400;
         state = FallState::RISING;
     }
 }
-
+void PhysicsComponent::walk(int direction)
+{
+    if(state == FallState::ON_PLATFORM)
+    {
+        velocity.x = direction * maxSpeed;
+    }
+    else
+    {
+        acceleration.x = direction * 3;
+    }
+}

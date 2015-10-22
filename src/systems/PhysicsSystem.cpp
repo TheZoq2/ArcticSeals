@@ -1,11 +1,11 @@
 #include "PhysicsSystem.h"
 
 #include "../components/TransformComponent.h"
-#include "../components/PhysicsComponent.h"
 #include "../components/ShapeComponent.h"
 #include "../entitygroup.h"
 
 const float GRAVITY = 9.82 * 30; //TODO: Move to good place
+const float MAX_VELOCITY = 100;
 
 using namespace zen;
 
@@ -33,6 +33,8 @@ void PhysicsSystem::run(Entity* entity, float time)
 
                 //Calculate the new position
                 platformLocalX += physComp->getVelocity().x * time;
+
+                physComp->setPlatformX(platformLocalX);
                 
                 //Make sure the new position is on the platform
                 if(platform->xIsOnPlatform(platformLocalX))
@@ -52,6 +54,10 @@ void PhysicsSystem::run(Entity* entity, float time)
         }
         case(PhysicsComponent::FallState::RISING):
         {
+            newVel += physComp->getAcceleration();
+
+            newVel = clampVelocity(newVel, physComp);
+
             //Update position and velocity
             newPos += physComp->getVelocity() * time;
             newVel.y += GRAVITY * time;
@@ -65,6 +71,9 @@ void PhysicsSystem::run(Entity* entity, float time)
         }
         case(PhysicsComponent::FallState::FALLING):
         {
+            newVel += physComp->getAcceleration();
+            newVel = clampVelocity(newVel, physComp);
+
             newPos.x += newVel.x * time;
 
             //Calculate the location of the "feet"
@@ -72,7 +81,7 @@ void PhysicsSystem::run(Entity* entity, float time)
             feetPos.y = newPos.y + shapeComp->getShape().y / 2;
 
             Vec2f fallingFeetPos = feetPos;
-            fallingFeetPos.y = newVel.y * time;
+            fallingFeetPos.y += newVel.y * time;
             
             //Calculate a line to use when checking intersections with the ground
             Line fallingLine(feetPos, fallingFeetPos);
@@ -88,6 +97,7 @@ void PhysicsSystem::run(Entity* entity, float time)
                 //TODO: Make prettier
                 
                 newPos.y = collision.intResult.pos.y - shapeComp->getShape().y / 2;
+                newVel = Vec2f(0,0);
             }
             else
             {
@@ -102,4 +112,21 @@ void PhysicsSystem::run(Entity* entity, float time)
     //Store the new position and velocity
     transform->setPosition(newPos);
     physComp->setVelocity(newVel);
+}
+
+Vec2f PhysicsSystem::clampVelocity(Vec2f currentVel, PhysicsComponent* component) 
+{
+    Vec2f newVel = currentVel;
+    float maxSpeed = component->getMaxSpeed();
+
+    if(newVel.x > maxSpeed)
+    {
+        newVel.x = maxSpeed;
+    }
+    if(newVel.x < -maxSpeed)
+    {
+        newVel.x = -maxSpeed;
+    }
+
+    return newVel;
 }

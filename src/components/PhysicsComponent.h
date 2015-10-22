@@ -31,6 +31,7 @@ namespace zen
         uint32_t getPlatform();
         float getPlatformX();
         FallState getState();
+        float getMaxSpeed();
 
         //TODO: Move out of physics
         void jump();
@@ -41,6 +42,7 @@ namespace zen
 
         float platformLocalX;
         uint32_t currentPlatform = 0;
+        float maxSpeed = 100;
 
         FallState state = FALLING;
     };

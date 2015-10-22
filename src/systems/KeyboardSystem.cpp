@@ -12,4 +12,17 @@ void KeyboardSystem::run(Entity* entity, float time)
     {
         physComp->jump();
     }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+    {
+        physComp->walk(1);
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) )
+    {
+        physComp->walk(-1);
+    }
+    else
+    {
+        physComp->walk(0);
+    }
 }

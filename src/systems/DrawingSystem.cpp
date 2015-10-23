@@ -10,8 +10,12 @@ DrawingSystem::DrawingSystem(sf::RenderTarget* target)
 
 void DrawingSystem::run(zen::Entity* entity, float time)
 {
-    DrawableComponent* drawable = entity->getComponent<DrawableComponent>();
+    //DrawableComponent* drawable = entity->getComponent<DrawableComponent>();
+    std::vector<DrawableComponent*> drawables = entity->getComponents<DrawableComponent>();
 
-    drawable->draw(target);
+    for(auto& drawable : drawables)
+    {
+        drawable->draw(target);
+    }
 }
 

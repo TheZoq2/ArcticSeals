@@ -57,10 +57,15 @@ void Game::setup()
     
     Entity* testEntity = new Entity();
     std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
+    std::shared_ptr<sf::Texture> testTexture2 = std::shared_ptr<sf::Texture>(new sf::Texture());
     testTexture->loadFromFile("../media/img/particleTest.png");
+    testTexture2->loadFromFile("../media/img/rockblob.png");
     testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
     testEntity->addComponent<zen::DrawableComponent>(
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
+        );
+    testEntity->addComponent<zen::DrawableComponent>(
+            std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture2))
         );
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
 

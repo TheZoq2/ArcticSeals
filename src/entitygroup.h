@@ -34,7 +34,7 @@ namespace zen
 
         //TODO: Make sure entity is only added once
         void addEntity(Entity* entity);
-        void addPlatform(Platform* platform);
+        int addPlatform(Platform* platform);
 
         void update(float frameTime);
 

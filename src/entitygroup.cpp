@@ -11,7 +11,7 @@ void EntityGroup::addEntity(Entity* entity)
     entity->setGroup(this);
     this->insertEntity(entity);
 }
-void EntityGroup::addPlatform(Platform* platform)
+int EntityGroup::addPlatform(Platform* platform)
 {
 
     IDPlatform newPlatform;
@@ -21,6 +21,8 @@ void EntityGroup::addPlatform(Platform* platform)
     this->platforms.push_back(newPlatform);
 
     nextPlatformID++;
+
+    return nextPlatformID - 1; //TODO: Possibly thange to nextPlatform++
 }
 
 void EntityGroup::insertEntity(Entity* entity)

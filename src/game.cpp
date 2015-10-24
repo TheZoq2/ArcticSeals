@@ -4,9 +4,10 @@
 #include "systems/randomMover.h"
 #include "systems/PhysicsSystem.h"
 #include "systems/KeyboardSystem.h"
+#include "systems/PlatformSystem.h"
 #include "components/PhysicsComponent.h"
 #include "components/ShapeComponent.h"
-
+#include "components/PlatformComponent.h"
 
 void Game::setup()
 {
@@ -44,6 +45,7 @@ void Game::setup()
     mainGroup->addSystem(std::unique_ptr<RandomMover>(new  RandomMover()));
     mainGroup->addSystem(std::unique_ptr<PhysicsSystem>(new  PhysicsSystem()));
     mainGroup->addSystem(std::unique_ptr<KeyboardSystem>(new KeyboardSystem()));
+    mainGroup->addSystem(std::unique_ptr<PlatformSystem>(new PlatformSystem()));
 
     //player = new zen::Player(Vec2f(30,100));
     //player->setPosition(Vec2f(5, -100));
@@ -54,18 +56,30 @@ void Game::setup()
 
     zen::Pathfinder pathfinder(mainGroup);
 
+    Entity* testPlatformEntity = new Entity();
+    std::shared_ptr<sf::Texture> platformTexture = std::shared_ptr<sf::Texture>(new sf::Texture);
+    platformTexture->loadFromFile("../media/img/rockblob.png");
+    testPlatformEntity->addComponent<zen::DrawableComponent>(
+            std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(platformTexture))
+        );
+    Platform* testPlatform = new Platform();
+    testPlatform->addPoint(0,0);
+    testPlatform->addPoint(0,100);
+    testPlatformEntity->addComponent<zen::PlatformComponent>(
+                std::unique_ptr<zen::PlatformComponent>(new zen::PlatformComponent(testPlatform))
+            );
+    testPlatformEntity->getTransformComponent()->setPosition(0,-100);
+    testPlatformEntity->addSystem(mainGroup->getSystem<zen::DrawingSystem>());
+    testPlatformEntity->addSystem(mainGroup->getSystem<zen::PlatformSystem>());
+    mainGroup->addEntity(testPlatformEntity);
+
     
     Entity* testEntity = new Entity();
     std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
-    std::shared_ptr<sf::Texture> testTexture2 = std::shared_ptr<sf::Texture>(new sf::Texture());
     testTexture->loadFromFile("../media/img/particleTest.png");
-    testTexture2->loadFromFile("../media/img/rockblob.png");
     testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
     testEntity->addComponent<zen::DrawableComponent>(
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
-        );
-    testEntity->addComponent<zen::DrawableComponent>(
-            std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture2))
         );
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
 

@@ -49,10 +49,12 @@ add_library(${LIB_NAME}
     components/SpriteComponent.cpp
     components/PhysicsComponent.cpp
     components/ShapeComponent.cpp
+    components/PlatformComponent.cpp
     systems/System.cpp
     systems/DrawingSystem.cpp
     systems/PhysicsSystem.cpp
     systems/KeyboardSystem.cpp
+    systems/PlatformSystem.cpp
 )
 
 # Define sources and executable

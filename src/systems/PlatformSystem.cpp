@@ -15,7 +15,6 @@ void PlatformSystem::run(Entity* entity, float time)
         {
             if(owner->getPlatformByID(it->getGroupID()) == nullptr)
             {
-                std::cout << "Got a platform" << std::endl;
                 int newId = owner->addPlatform(it->getPlatform());
                 it->setGroupID(newId);
             }

@@ -64,7 +64,7 @@ void Game::setup()
         );
     Platform* testPlatform = new Platform();
     testPlatform->addPoint(0,0);
-    testPlatform->addPoint(0,100);
+    testPlatform->addPoint(200,100);
     testPlatformEntity->addComponent<zen::PlatformComponent>(
                 std::unique_ptr<zen::PlatformComponent>(new zen::PlatformComponent(testPlatform))
             );

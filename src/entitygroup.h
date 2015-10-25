@@ -19,6 +19,8 @@ namespace zen
     class EntityGroup
     {
     public:
+        static const uint32_t NO_PLATFORM = (uint32_t) -1;
+
         struct PlatformCollisionResult
         {
             uint32_t platformID;

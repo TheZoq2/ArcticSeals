@@ -4,6 +4,7 @@
 #include "../platform.h"
 #include "../vec2f.h"
 #include "Component.h"
+#include "../entitygroup.h"
 
 /*
  *  Component for keepign track of a collision platform.
@@ -33,7 +34,7 @@ namespace zen
         void receiveComponentMessage(Component* other, int message) override;
     private:
         Platform* platform = nullptr;
-        uint32_t groupID = 0; //The id of the platform in the group
+        uint32_t groupID = EntityGroup::NO_PLATFORM; //The id of the platform in the group
 
         Vec2f offset = Vec2f(0,0);
     };

@@ -8,6 +8,7 @@
 #include "components/PhysicsComponent.h"
 #include "components/ShapeComponent.h"
 #include "components/PlatformComponent.h"
+#include "components/ShaderComponent.h"
 
 void Game::setup()
 {
@@ -73,6 +74,9 @@ void Game::setup()
     testPlatformEntity->addSystem(mainGroup->getSystem<zen::PlatformSystem>());
     mainGroup->addEntity(testPlatformEntity);
 
+    std::shared_ptr<sf::Shader> testShader;
+    //testShader->loadFromFile("../media/shaders/test.vert", "../media/shaders/test.frag");
+    testShader->loadFromFile("../media/shaders/test.vert", "../media/shaders/test.frag");
     
     Entity* testEntity = new Entity();
     std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
@@ -82,6 +86,7 @@ void Game::setup()
             std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
         );
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
+    testEntity->addComponent(std::unique_ptr<ShaderComponent>(new zen::ShaderComponent(testShader)));
 
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
     testEntity->addSystem(mainGroup->getSystem<PhysicsSystem>());

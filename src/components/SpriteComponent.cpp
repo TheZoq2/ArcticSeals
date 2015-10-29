@@ -2,6 +2,7 @@
 
 #include "TransformComponent.h"
 #include "../entity.h"
+#include "ShaderComponent.h"
 
 using namespace zen;
 
@@ -29,7 +30,26 @@ void SpriteComponent::setOwner(Entity* owner)
 }
 void SpriteComponent::draw(sf::RenderTarget* target)
 {
-    target->draw(sprite);
+    //Get the to use for drawing if one exists
+    bool hasShader = false;
+    ShaderComponent* shaderComponent = nullptr;
+    try
+    {
+        shaderComponent = owner->getComponent<ShaderComponent>();
+        hasShader = true;
+    }
+    catch(MissingComponentException e)
+    {
+    }
+
+    if(hasShader)
+    {
+        target->draw(sprite, shaderComponent->getShader());
+    }
+    else
+    {
+        target->draw(sprite);
+    }
 }
 
 void SpriteComponent::receiveComponentMessage(Component* other, int message)

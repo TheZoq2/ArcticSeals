@@ -50,6 +50,7 @@ add_library(${LIB_NAME}
     components/PhysicsComponent.cpp
     components/ShapeComponent.cpp
     components/PlatformComponent.cpp
+    components/ShaderComponent.cpp
     systems/System.cpp
     systems/DrawingSystem.cpp
     systems/PhysicsSystem.cpp

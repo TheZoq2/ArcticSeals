@@ -8,7 +8,7 @@
 #include "components/PhysicsComponent.h"
 #include "components/ShapeComponent.h"
 #include "components/PlatformComponent.h"
-#include "components/ShaderComponent.h"
+#include "components/SpriteShaderComponent.h"
 
 void Game::setup()
 {
@@ -74,19 +74,25 @@ void Game::setup()
     testPlatformEntity->addSystem(mainGroup->getSystem<zen::PlatformSystem>());
     mainGroup->addEntity(testPlatformEntity);
 
-    std::shared_ptr<sf::Shader> testShader;
-    //testShader->loadFromFile("../media/shaders/test.vert", "../media/shaders/test.frag");
+    std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
+    testTexture->loadFromFile("../media/img/FallBirch1.png");
+    std::shared_ptr<sf::Texture> testNormal = std::shared_ptr<sf::Texture>(new sf::Texture());
+    testNormal->loadFromFile("../media/img/FallBirch1_normal.png");
+
+    std::shared_ptr<sf::Shader> testShader(new sf::Shader());
     testShader->loadFromFile("../media/shaders/test.vert", "../media/shaders/test.frag");
     
+    std::unique_ptr<SpriteShaderComponent> spriteShaderComponent = std::unique_ptr<SpriteShaderComponent>(
+                new SpriteShaderComponent(testTexture)
+            );
+    spriteShaderComponent->addTexture(std::make_pair("normalTexture", testNormal));
+    
     Entity* testEntity = new Entity();
-    std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
-    testTexture->loadFromFile("../media/img/particleTest.png");
     testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
     testEntity->addComponent<zen::DrawableComponent>(
-            std::unique_ptr<zen::DrawableComponent>(new zen::SpriteComponent(testTexture))
+            std::unique_ptr<zen::DrawableComponent>(std::move(spriteShaderComponent))
         );
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
-    testEntity->addComponent(std::unique_ptr<ShaderComponent>(new zen::ShaderComponent(testShader)));
 
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
     testEntity->addSystem(mainGroup->getSystem<PhysicsSystem>());

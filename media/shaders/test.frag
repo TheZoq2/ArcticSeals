@@ -1,11 +1,33 @@
 uniform sampler2D texture;
+uniform sampler2D normalTexture;
+
+varying vec4 vertexPos;
+
+vec4 lightPos = vec4(0,0,3,0);
+vec4 lightColor = vec4(207.0/255.0, 132.0/255.0, 51.0/255.0, 0.7);
+
+vec4 ambientLight = vec4(0.1,0.1,0.1, 1.0);
+float lightRange = 1.5;
 
 void main()
 {
     // lookup the pixel in the texture
     vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
 
+    //Calculating the light influence
+    vec4 lightToPoint = vertexPos, lightPos;
+    vec4 normalLightToPoint = normalize(lightToPoint);
+    float lightAmount = pow(dot(normalLightToPoint, texture2D(normalTexture, gl_TexCoord[0].xy)),2);
+
+    float lightRangeMod = 1 - length(lightToPoint) / lightRange;
+    clamp(lightRangeMod, 0, 1);
+
+    lightAmount *= lightRangeMod;
+
     // multiply it by the color
-    //gl_FragColor = gl_Color * pixel;
-    gl_FragColor = vec4(1,0,0,1);
+    gl_FragColor = gl_Color * pixel * ambientLight + lightColor * lightAmount;
+    //gl_FragColor = gl_Color * pixel * lightAmount;
+    //gl_FragColor = gl_Color * lightColor * lightAmount;
+    gl_FragColor.a = pixel.a;
+    //gl_FragColor = vec4(1,0,0,1);
 }

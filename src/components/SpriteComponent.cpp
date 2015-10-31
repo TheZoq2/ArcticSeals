@@ -10,6 +10,7 @@ SpriteComponent::SpriteComponent(std::shared_ptr<sf::Texture> texture)
 {
     this->texture = texture;
     this->sprite.setTexture(*texture);
+    updateOffset();
 }
 
 void SpriteComponent::setOwner(Entity* owner)
@@ -87,6 +88,12 @@ Vec2f SpriteComponent::getSize()
     return size;
 }
 
+void SpriteComponent::setOffset(Vec2f offset) 
+{
+    this->offset = offset;
+    updateOffset();
+}
+
 /////////////////////////////////////////////////////////////
 //                  Private methods
 /////////////////////////////////////////////////////////////
@@ -97,13 +104,23 @@ void SpriteComponent::setPosition(Vec2f pos)
 void SpriteComponent::setScale(Vec2f scale)
 {
     sprite.setScale(scale);
+    updateOffset();
     
     if(owner != nullptr)
     {
-        owner->handleComponentMessage(this, DrawableComponent::Message::SHAPE_CHANGED);
+        owner->handleComponentMessage<DrawableComponent>(this, DrawableComponent::Message::SHAPE_CHANGED);
     }
 }
 void SpriteComponent::setRotation(float angle)
 {
     sprite.setRotation(angle);
 }
+
+void SpriteComponent::updateOffset() 
+{
+    float xOrigin = offset.x * texture->getSize().x;
+    float yOrigin = offset.y * texture->getSize().y;
+
+    sprite.setOrigin(xOrigin, yOrigin);
+}
+

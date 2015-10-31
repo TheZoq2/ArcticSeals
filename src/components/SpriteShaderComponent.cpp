@@ -11,9 +11,9 @@ SpriteShaderComponent::SpriteShaderComponent(std::shared_ptr<sf::Texture> textur
 
 void SpriteShaderComponent::draw(sf::RenderTarget* target) 
 {
-    for(auto& it : extraTextures)
+    for(auto it : extraTextures)
     {
-        //shader->setParameter(it.first, *it.second.get());
+        shader->setParameter(it.first, *it.second.get());
     }
 
     target->draw(SpriteComponent::sprite, shader.get());
@@ -29,5 +29,3 @@ void SpriteShaderComponent::addTexture(std::pair<std::string, std::shared_ptr<sf
 {
     extraTextures.push_back(texture);
 }
-
-

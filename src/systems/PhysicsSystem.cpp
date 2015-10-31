@@ -40,6 +40,8 @@ void PhysicsSystem::run(Entity* entity, float time)
                 if(platform->xIsOnPlatform(platformLocalX))
                 {
                     newPos = platform->getGlobalPos(platformLocalX);
+
+                    newPos.y -= shapeComp->getShape().y / 2;
                 }
                 else
                 {

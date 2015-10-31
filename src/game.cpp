@@ -76,6 +76,7 @@ void Game::setup()
 
     std::shared_ptr<sf::Texture> testTexture = std::shared_ptr<sf::Texture>(new sf::Texture());
     testTexture->loadFromFile("../media/img/FallBirch1.png");
+
     std::shared_ptr<sf::Texture> testNormal = std::shared_ptr<sf::Texture>(new sf::Texture());
     testNormal->loadFromFile("../media/img/FallBirch1_normal.png");
 
@@ -85,7 +86,9 @@ void Game::setup()
     std::unique_ptr<SpriteShaderComponent> spriteShaderComponent = std::unique_ptr<SpriteShaderComponent>(
                 new SpriteShaderComponent(testTexture)
             );
+    spriteShaderComponent->setShader(testShader);
     spriteShaderComponent->addTexture(std::make_pair("normalTexture", testNormal));
+    spriteShaderComponent->setOffset(Vec2f(0.5, 0.5));
     
     Entity* testEntity = new Entity();
     testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
@@ -98,7 +101,7 @@ void Game::setup()
     testEntity->addSystem(mainGroup->getSystem<PhysicsSystem>());
     testEntity->addSystem(mainGroup->getSystem<KeyboardSystem>());
 
-    testEntity->getTransformComponent()->setScale(1, 1);
+    testEntity->getTransformComponent()->setScale(0.3, 0.3);
     testEntity->getTransformComponent()->setPosition(10, -300);
 
     mainGroup->addEntity(testEntity);

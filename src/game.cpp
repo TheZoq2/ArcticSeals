@@ -83,9 +83,8 @@ void Game::setup()
     std::shared_ptr<sf::Shader> testShader(new sf::Shader());
     testShader->loadFromFile("../media/shaders/test.vert", "../media/shaders/test.frag");
     
-    std::unique_ptr<SpriteShaderComponent> spriteShaderComponent = std::unique_ptr<SpriteShaderComponent>(
-                new SpriteShaderComponent(testTexture)
-            );
+    std::unique_ptr<SpriteShaderComponent> spriteShaderComponent(new SpriteShaderComponent(testTexture));
+
     spriteShaderComponent->setShader(testShader);
     spriteShaderComponent->addTexture(std::make_pair("normalTexture", testNormal));
     spriteShaderComponent->setOffset(Vec2f(0.5, 0.5));

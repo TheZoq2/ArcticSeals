@@ -2,37 +2,45 @@
 
 using namespace zen;
 
-ParticleEffect::ParticleEffect(ParticleEffect::Keyframe keyframe, float frequency)
+ParticleEffect::ParticleEffect()
+{
+    //Set default functions
+    //Kill the particle immedietly after one second
+    deathFunction = [](float t, int seed)
+    {
+        return t > 1;
+    };
+
+    //Constant acceleration upwards
+    accelerationFunction = [](float t, int seed)
+    {
+        return Vec2f(0,-1);
+    };
+
+    //No rotation
+    angleChangeFunction = [](float t, int seed)
+    {
+        return 0;
+    };
+    
+    //Constant keyframe
+    keyframeFunction = [](float t, int seed)
+    {
+        return 1;
+    };
+}
+ParticleEffect::ParticleEffect(float frequency)
+    : ParticleEffect()
 {
     //keyframes.push_back(keyframe);
-    addKeyframe(keyframe);
     setFrequency(frequency);
-
-    minLifetime = 0;
-    currentTime = 0;
-    lastSpawned = 0;
-    minTimeMod = 1;
-    maxTimeMod = 1;
 }
 
-ParticleEffect* ParticleEffect::clone()
-{
-    return new ParticleEffect(*this);
-}
+//ParticleEffect* ParticleEffect::clone()
+//{
+//    return new ParticleEffect(*this);
+//}
 
-void ParticleEffect::finalizeParticle()
-{
-    finalKeyframes.clear(); //Clear all old keyframes just to be sure
-
-    //Sort the keyframes based on time
-    std::sort(keyframes.begin(), keyframes.end(), [](Keyframe x, Keyframe y){return x.time < y.time;});
-
-    //Loop through the keyframes and create final keyframes for all of them
-    for(auto it : keyframes)
-    {
-        
-    }
-}
 void ParticleEffect::update(float frameTime)
 {
     currentTime += frameTime;
@@ -96,11 +104,6 @@ void ParticleEffect::draw(sf::RenderWindow* window)
 
 }
 
-void ParticleEffect::addKeyframe(Keyframe keyframe)
-{
-    keyframes.push_back(keyframe);
-}
-
 void ParticleEffect::setFrequency(float frequency)
 {
     this->frequency = frequency;
@@ -139,35 +142,18 @@ void ParticleEffect::setTimeMods(float minTimeMod, float maxTimeMod)
 
 void ParticleEffect::addParticle()
 {
+    float seed = rand();
     Particle newParticle;
-    newParticle.pos = Entity::pos;
-    newParticle.speed.x = minStartSpeed.x + (maxStartSpeed.x - minStartSpeed.x) * ((rand() % 1000) / 1000.0f);
-    newParticle.speed.y = minStartSpeed.y + (maxStartSpeed.y - minStartSpeed.y) * ((rand() % 1000) / 1000.0f);
-    newParticle.size = keyframes[0].size.val();
-    newParticle.acceleration = keyframes[0].acceleration.val();
-    newParticle.lifetime = minLifetime + (maxLifetime - minLifetime) * ((rand() % 1000) / 1000.0f);
+    newParticle.seed = seed;
+    newParticle.origin = transform.getPosition();
+    newParticle.offset = offsetFunction(0, seed);
+    newParticle.angle = angleFunction(0, seed);
+    newParticle.size = sizeFunction(0, seed);
     
     particles.push_back(newParticle);
 
     particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,0), sf::Vector2f(0,0)));
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(keyframes[0].size.val().x,0), sf::Vector2f(texture->getSize().x,0)));
-    particles.back().vertecies.push_back(sf::Vertex(keyframes[0].size.val(), (sf::Vector2f) texture->getSize()));
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,keyframes[0].size.val().y), sf::Vector2f(0,texture->getSize().y)));
+    particles.back().vertecies.push_back(sf::Vertex(Vec2f(newParticle.size.x,0), sf::Vector2f(texture->getSize().x,0)));
+    particles.back().vertecies.push_back(sf::Vertex(newParticle.size, (sf::Vector2f) texture->getSize()));
+    particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,newParticle.size.y), sf::Vector2f(0,texture->getSize().y)));
 }
-void ParticleEffect::setParticleKeyframe(Particle* particle, int keyframeIndex)
-{
-    Keyframe keyframe = keyframes[keyframeIndex];
-
-    particle->keyframe = keyframeIndex;
-    particle->timeInKeyframe = 0;
-
-    if(keyframe.texCoordEnd.isChanged())
-    {
-        //Recalculating the texture coordinates
-        particle->vertecies[0].texCoords = texture->getSize() * keyframe.texCoordStart.val();
-        particle->vertecies[1].texCoords = texture->getSize() * Vec2f(keyframe.texCoordEnd.val().x, keyframe.texCoordStart.val().y);
-        particle->vertecies[2].texCoords = texture->getSize() * keyframe.texCoordStart.val();
-        particle->vertecies[3].texCoords = texture->getSize() * keyframe.texCoordStart.val();
-    }
-}
-

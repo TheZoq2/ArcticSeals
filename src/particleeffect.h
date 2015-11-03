@@ -4,44 +4,23 @@
 #include <memory>
 
 #include "vec2f.h"
-#include "entity.h"
 #include "keyframeval.h"
+#include "components/TransformComponent.h"
 
 namespace zen
 {
-    class ParticleEffect : public Entity
+    class ParticleEffect
     {
     public:
-        struct Keyframe
-        {
-            Keyframe()
-            {
-            }
-
-            float time; //Time after last keyframe
-
-            KeyframeVal<Vec2f> acceleration;
-
-            KeyframeVal<Vec2f> size;
-
-            //The start and end pixel coordinates in float values where
-            //{0,0} is the top left and {1,1} is the bottom right of the texture
-            KeyframeVal<Vec2f> texCoordStart;
-            KeyframeVal<Vec2f> texCoordEnd;
-        };
+        ParticleEffect(float frequency);
 
         virtual ParticleEffect* clone();
         
-        ParticleEffect(Keyframe startKeyframe, float frequency);
+        //TODO READD
+        //ParticleEffect(float frequency);
 
-        //This method converts the specified keyframes into keyframes that contain values for all
-        //variables in every frame. This needs to be done before the particle is drawn or updated
-        //and changing any variables after this might not work
-        virtual void finalizeParticle();
         virtual void draw(sf::RenderWindow* window);
         virtual void update(float frameTime);
-        
-        virtual void addKeyframe(Keyframe keyframe);
 
         virtual void setFrequency(float frequency);
 
@@ -53,46 +32,52 @@ namespace zen
         struct Particle
         {
             float timeAlive;
-            float lifetime;
-            //Time alive multiplier which affects death time and keyframe changes but not
-            //movement
-            float timeMod; 
+            int seed; //Random number used to add variation between particles
 
-            Vec2f pos;
-            Vec2f speed;
+            Vec2f origin; //The starting point of this specific particle
+            Vec2f offset;
+            Vec2f size; 
+            float angle;
 
-            Vec2f size;
-            Vec2f targetSize;
-            Vec2f acceleration;
-            Vec2f targetAcceleration;
-
-            int keyframe;
-            float timeInKeyframe;
-        
             std::vector<sf::Vertex> vertecies;
         };
-        struct FinalKeyframe
-        {
-            float time;
-            Vec2f acceleration;
-            Vec2f size;
-            
-            Vec2f texCoordStart;
-            Vec2f texCoordEnd;
-        };
+
+        ParticleEffect();
 
         void addParticle();
-        //Sets the values of a keyframe which can't be interpolated between frames
-        //(like texture coordinates) to the value of the specified keyframe.
-        void setParticleKeyframe(Particle* particle, int keyframeIndex);
 
-        std::vector<Keyframe> keyframes;
-        std::vector<FinalKeyframe> finalKeyframes;
+        /*
+         *  Function that decides when a particle gets removed from the system. The return value
+         *  is the probability of the particle getting removed at the current time
+         *
+         *  returning 0 means a particle with that lifetime will never get removed and 1 guarantees
+         *  removal
+         */
+        std::function<float(float, int)> deathFunction;
+        /*
+         *  Function that decides the acceleration at the current lifetime of a particle
+         */
+        std::function<Vec2f(float, int)> offsetFunction;
+        /*
+         *  Decides the change in angle of the particle at the specified keyframe
+         */
+        std::function<float(float, int)> angleFunction;
+        /*
+         *  Decides the size of the particle over time
+         */
+        std::function<Vec2f(float, int)> sizeFunction;
+        /*
+         *  Decides the current keyframe of the particle at the specified time.
+         *  Return an integer < the amount of keyframes indicating the index of 
+         *  the specified keyframe
+         */
+        std::function<int(float, int)> keyframeFunction;
         
         //Emitter parameters
         float currentTime;
         float frequency; //Particles created per second
         float secondsPerParticle; //The time in miliseconds between particle spawns
+        TransformComponent transform;
 
         float lastSpawned;
 
@@ -101,13 +86,6 @@ namespace zen
         //Vector containing all the vertecies for all the particles currently being 
         //drawn. This is cleared and rebuilt evey time the update function is run 
         std::vector<sf::Vertex> vertecies;
-
-        Vec2f minStartSpeed;
-        Vec2f maxStartSpeed;
-        float maxLifetime; //Set by the total lifetime of all keyframes
-        float minLifetime;
-        float minTimeMod;
-        float maxTimeMod;
 
         std::shared_ptr<sf::Texture> texture;
     };

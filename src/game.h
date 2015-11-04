@@ -18,6 +18,7 @@
 #include "vec2f.h"
 #include "particleeffect.h"
 #include "pathfinder.h"
+#include "particleeffect.h"
 
 #include "components/SpriteComponent.h"
 
@@ -54,6 +55,10 @@ private:
     zen::Platform movingPlatform;
     float movingPos;
     bool moveDir;
+
+    std::unique_ptr<ParticleEffect> particleEffect;
+
+    std::shared_ptr<sf::Shader> testShader;
 };
 
 #endif

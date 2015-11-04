@@ -20,7 +20,7 @@ void main()
     vec4 normalLightToPoint = normalize(lightToPoint);
     float lightAmount = pow(dot(normalLightToPoint, texture2D(normalTexture, gl_TexCoord[0].xy)),5);
 
-    float lightRangeMod = 1 - length(lightToPoint) / lightRange;
+    float lightRangeMod = 1.0 - length(lightToPoint) / lightRange;
     clamp(lightRangeMod, 0, 1);
 
     lightAmount *= lightRangeMod;

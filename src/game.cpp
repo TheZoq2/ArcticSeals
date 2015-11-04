@@ -52,7 +52,7 @@ void Game::setup()
     //player->setPosition(Vec2f(5, -100));
     //mainGroup->addEntity(player);
 
-    sf::Texture* particleTexture = new sf::Texture();
+    std::shared_ptr<sf::Texture> particleTexture(new sf::Texture());
     particleTexture->loadFromFile("../media/img/particleTest.png");
 
     zen::Pathfinder pathfinder(mainGroup);
@@ -80,8 +80,9 @@ void Game::setup()
     std::shared_ptr<sf::Texture> testNormal = std::shared_ptr<sf::Texture>(new sf::Texture());
     testNormal->loadFromFile("../media/img/FallBirch1_normal.png");
 
-    std::shared_ptr<sf::Shader> testShader(new sf::Shader());
+    testShader = std::shared_ptr<sf::Shader>(new sf::Shader());
     testShader->loadFromFile("../media/shaders/test.vert", "../media/shaders/test.frag");
+
     
     std::unique_ptr<SpriteShaderComponent> spriteShaderComponent(new SpriteShaderComponent(testTexture));
 
@@ -104,6 +105,25 @@ void Game::setup()
     testEntity->getTransformComponent()->setPosition(10, -300);
 
     mainGroup->addEntity(testEntity);
+
+    //Test particle effect
+    particleEffect = std::unique_ptr<ParticleEffect>(new ParticleEffect(50));
+    particleEffect->setTexture(particleTexture, Vec2f(16,16), 8);
+    particleEffect->setOffsetFunction(
+            [](float t, int seed)
+            {
+                float angle = M_PI * 2 * ((seed / (float)RAND_MAX));
+                //return Vec2f(500 * t * ((seed / (float)RAND_MAX)- 0.5), 500 * t * ((seed / (float)RAND_MAX)- 0.5));
+                return Vec2f(cos(angle) * 200, sin(angle) * 200) * t;
+            }
+        );
+    particleEffect->setSizeFunction(
+            [](float t, int seed)
+            {
+                return Vec2f(80,80);
+            }
+        );
+
 }
 
 void Game::loop()
@@ -150,6 +170,9 @@ void Game::loop()
     
     window->setView(worldView);
     world.update(frameTime);
+
+    particleEffect->update(frameTime);
+    particleEffect->draw(window);
 
     //sf::View view = window->getView();
 

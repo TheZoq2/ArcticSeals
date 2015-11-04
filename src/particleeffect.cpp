@@ -3,22 +3,25 @@
 using namespace zen;
 
 ParticleEffect::ParticleEffect()
+    :
+    texture(nullptr)
 {
+    float tMax = 3; //TODO Remove
     //Set default functions
     //Kill the particle immedietly after one second
-    deathFunction = [](float t, int seed)
+    deathFunction = [tMax](float t, int seed)
     {
-        return t > 1;
+        return t > tMax;
     };
 
     //Constant acceleration upwards
-    accelerationFunction = [](float t, int seed)
+    offsetFunction = [](float t, int seed)
     {
-        return Vec2f(0,-1);
+        return Vec2f(0,-100 * t);
     };
 
     //No rotation
-    angleChangeFunction = [](float t, int seed)
+    angleFunction = [](float t, int seed)
     {
         return 0;
     };
@@ -27,6 +30,22 @@ ParticleEffect::ParticleEffect()
     keyframeFunction = [](float t, int seed)
     {
         return 1;
+    };
+
+    sizeFunction = [](float t, int seed)
+    {
+        return Vec2f(100,100);
+    };
+    colorFunction = [tMax](float t, int seed)
+    {
+        if(t > tMax / 2)
+        {
+            return sf::Color(255, 255, 255, 255 * (1 - t/tMax));
+        }
+        else
+        {
+            return sf::Color(255, 255, 255, 255 * (t/tMax));
+        }
     };
 }
 ParticleEffect::ParticleEffect(float frequency)
@@ -50,6 +69,8 @@ void ParticleEffect::update(float frameTime)
     int particlesToSpawn = floor(fParticlesToSpawn);
     lastSpawned = currentTime - (fParticlesToSpawn - particlesToSpawn) * secondsPerParticle;
 
+    //std::cout << currentTime << "   " << secondsPerParticle << std::endl;
+
     //Spawn those particles
     for(int i = 0; i < particlesToSpawn; ++i)
     {
@@ -63,19 +84,17 @@ void ParticleEffect::update(float frameTime)
     {
         //Increasing the time this particle has been alive
         particle.timeAlive += frameTime;
+        
+        float timeAlive = particle.timeAlive;
+        int seed = particle.seed;
 
-        //Calculating the new position
-        particle.speed += particle.acceleration * frameTime;
-        particle.pos += particle.speed * frameTime;
+        particle.offset = offsetFunction(timeAlive, seed);
+        particle.size = sizeFunction(timeAlive, seed);
+        particle.angle = angleFunction(timeAlive, seed);
+        particle.color = colorFunction(timeAlive, seed);
 
-        Vec2f sizeOffset = particle.size / 2.0f;
-
-        //Recalculating the vertecies
-        particle.vertecies[0].position = particle.pos - sizeOffset;
-        particle.vertecies[1].position = particle.pos + Vec2f(particle.size.x, 0) - sizeOffset;
-        particle.vertecies[2].position = particle.pos + Vec2f(particle.size.x, particle.size.y) - sizeOffset;
-        particle.vertecies[3].position = particle.pos + Vec2f(0, particle.size.y) - sizeOffset;
-
+        //Recalculating the vertecies of the particle
+        calculateVertecies(particle);
 
         //Adding the current particles vertecies to the list of vertecies to be
         //drawn by the draw function
@@ -89,7 +108,7 @@ void ParticleEffect::update(float frameTime)
     for(std::vector<Particle>::iterator particle = particles.begin(); particle != particles.end(); particle++)
     {
         //Checking if the particle has expired
-        if(particle->timeAlive > particle->lifetime)
+        if(rand() / (float)RAND_MAX <= deathFunction(particle->timeAlive, particle->seed))
         {
             particle = particles.erase(particle) - 1;
         }
@@ -101,40 +120,35 @@ void ParticleEffect::draw(sf::RenderWindow* window)
     renderState.texture = texture.get();
 
     window->draw(vertecies.data(), vertecies.size(), sf::Quads, renderState);
-
 }
 
 void ParticleEffect::setFrequency(float frequency)
 {
     this->frequency = frequency;
 
-    secondsPerParticle = 1 / frequency;
+    this->secondsPerParticle = 1/frequency;
 }
-void ParticleEffect::setStartSpeed(Vec2f minStartSpeed, Vec2f maxStartSpeed)
-{
-    this->minStartSpeed = minStartSpeed;
-    this->maxStartSpeed = maxStartSpeed;
-}
-void ParticleEffect::setMinLifetime(float minLifetime)
-{
-    //Make sure the lifetime of the particle makes sense
-    if(minLifetime > maxLifetime)
-    {
-        std::cerr << "Min lifetime is less than the total time in the keyframes" << std::endl;
-    }
 
-    this->minLifetime = minLifetime;
+void ParticleEffect::setOffsetFunction(std::function<Vec2f(float, int)> offsetFunction)
+{
+    this->offsetFunction = offsetFunction;
 }
-void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture)
+void ParticleEffect::setSizeFunction(std::function<Vec2f(float, float)> sizeFunction)
+{
+    this->sizeFunction = sizeFunction;
+}
+void ParticleEffect::setKeyframeFunction(std::function<int(float, int)> keyframeFunction)
+{
+    this->keyframeFunction = keyframeFunction;
+}
+
+void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tileSize, int tileAmount)
 {
     this->texture = texture;
-}
-void ParticleEffect::setTimeMods(float minTimeMod, float maxTimeMod)
-{
-    this->minTimeMod = minTimeMod;
-    this->maxTimeMod = maxTimeMod;
-}
+    this->tileSize = tileSize;
 
+    calculateTileCoords(tileAmount);
+}
 
 ////////////////////////////////////////////////////////////////////
 //                  Private member methods
@@ -152,8 +166,66 @@ void ParticleEffect::addParticle()
     
     particles.push_back(newParticle);
 
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,0), sf::Vector2f(0,0)));
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(newParticle.size.x,0), sf::Vector2f(texture->getSize().x,0)));
-    particles.back().vertecies.push_back(sf::Vertex(newParticle.size, (sf::Vector2f) texture->getSize()));
-    particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,newParticle.size.y), sf::Vector2f(0,texture->getSize().y)));
+    //Create 4 vertecies
+    for(int i = 0; i < 4; ++i)
+    {
+        particles.back().vertecies.push_back(sf::Vertex(Vec2f(0,0), Vec2f(0,0)));
+    }
+
+    for(auto& it : particles.back().vertecies)
+    {
+        it.color = sf::Color(255,255,0,100);
+    }
+}
+
+void ParticleEffect::calculateVertecies(Particle& particle)
+{
+    Vec2f position = particle.offset + particle.origin;
+    int tileID = particle.tileID;
+
+    float currAngle = M_PI / 4 + particle.angle;
+
+    for(auto& it : particle.vertecies)
+    {
+        it.position.x = position.x + particle.size.x / 2 * cos(currAngle);
+        it.position.y = position.y + particle.size.y / 2 * sin(currAngle);
+
+        it.color = particle.color;
+
+        currAngle += M_PI / 2;
+    }
+
+    if(texture.get() != nullptr)
+    {
+        std::pair<Vec2f, Vec2f> texCoord = texCoordIndexMap[tileID % texCoordIndexMap.size()];
+
+        particle.vertecies[0].texCoords = texCoord.first;
+        particle.vertecies[1].texCoords = Vec2f(texCoord.first.x, texCoord.second.y);
+        particle.vertecies[2].texCoords = texCoord.second;
+        particle.vertecies[3].texCoords = Vec2f(texCoord.second.x, texCoord.first.y);
+    }
+}
+void ParticleEffect::calculateTileCoords(int tileAmount) 
+{
+    float xCoord = 0;
+    float yCoord = 0;
+    for(int i = 0; i < tileAmount; ++i)
+    {
+        //Calculate the other end of the tile
+        Vec2f newCoord = Vec2f(xCoord + tileSize.x, yCoord + tileSize.y);
+
+        //If this tile is outside the of the texture
+        if(newCoord.x > texture->getSize().x)
+        {
+            xCoord = 0;
+            yCoord += tileSize.y;
+        }
+        std::pair<Vec2f, Vec2f> texCoords;
+        texCoords.first = Vec2f(xCoord, yCoord);
+        texCoords.second = Vec2f(xCoord + tileSize.x, yCoord + tileSize.y);
+
+        texCoordIndexMap.push_back(texCoords);
+        
+        xCoord += tileSize.x;
+    }
 }

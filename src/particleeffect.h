@@ -13,8 +13,9 @@ namespace zen
     {
     public:
         ParticleEffect(float frequency);
+        ParticleEffect();
 
-        virtual ParticleEffect* clone();
+        ParticleEffect* clone();
         
         //TODO READD
         //ParticleEffect(float frequency);
@@ -22,12 +23,12 @@ namespace zen
         virtual void draw(sf::RenderWindow* window);
         virtual void update(float frameTime);
 
-        virtual void setFrequency(float frequency);
+        void setFrequency(float frequency);
+        void setOffsetFunction(std::function<Vec2f(float, int)> offsetFunction);
+        void setSizeFunction(std::function<Vec2f(float, float)> sizeFunction);
+        void setKeyframeFunction(std::function<int(float, int)> keyframeFunction);
 
-        virtual void setStartSpeed(Vec2f minStartSpeed, Vec2f maxStartSpeed);
-        virtual void setMinLifetime(float minLifetime);
-        virtual void setTimeMods(float minTimeMod, float maxTimeMod);
-        virtual void setTexture(std::shared_ptr<sf::Texture> texture);
+        void setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tileSize, int tileAmount);
     private:
         struct Particle
         {
@@ -38,13 +39,16 @@ namespace zen
             Vec2f offset;
             Vec2f size; 
             float angle;
+            sf::Color color;
 
             std::vector<sf::Vertex> vertecies;
+            int tileID;
         };
 
-        ParticleEffect();
 
         void addParticle();
+        void calculateVertecies(Particle& particle);
+        void calculateTileCoords(int tileAmount);
 
         /*
          *  Function that decides when a particle gets removed from the system. The return value
@@ -73,6 +77,11 @@ namespace zen
          */
         std::function<int(float, int)> keyframeFunction;
         
+        /*
+         *  Decides the colour over time for the particles
+         */
+        std::function<sf::Color(float, int)> colorFunction;
+        
         //Emitter parameters
         float currentTime;
         float frequency; //Particles created per second
@@ -88,6 +97,8 @@ namespace zen
         std::vector<sf::Vertex> vertecies;
 
         std::shared_ptr<sf::Texture> texture;
+        Vec2f tileSize;
+        std::vector<std::pair<Vec2f, Vec2f>> texCoordIndexMap;
     };
 }
 #endif

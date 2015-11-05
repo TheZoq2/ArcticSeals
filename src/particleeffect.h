@@ -27,7 +27,7 @@ namespace zen
         void setOffsetFunction(std::function<Vec2f(float, int)> offsetFunction);
         void setSizeFunction(std::function<Vec2f(float, float)> sizeFunction);
         void setKeyframeFunction(std::function<int(float, int)> keyframeFunction);
-        void setDeathFunction(std::function<float(float, int)> deathFunction);
+        void setDeathFunction(std::function<bool(float, int)> deathFunction);
 
         void setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tileSize, int tileAmount);
     private:
@@ -52,13 +52,9 @@ namespace zen
         void calculateTileCoords(int tileAmount);
 
         /*
-         *  Function that decides when a particle gets removed from the system. The return value
-         *  is the probability of the particle getting removed at the current time
-         *
-         *  returning 0 means a particle with that lifetime will never get removed and 1 guarantees
-         *  removal
+         * Function that returns true if the particle should be deleted
          */
-        std::function<float(float, int)> deathFunction;
+        std::function<bool(float, int)> deathFunction;
         /*
          *  Function that decides the acceleration at the current lifetime of a particle
          */

@@ -109,7 +109,7 @@ void ParticleEffect::update(float frameTime)
     for(std::vector<Particle>::iterator particle = particles.begin(); particle != particles.end(); particle++)
     {
         //Checking if the particle has expired
-        if(rand() / (float)RAND_MAX <= deathFunction(particle->timeAlive, particle->seed))
+        if(deathFunction(particle->timeAlive, particle->seed))
         {
             particle = particles.erase(particle) - 1;
         }
@@ -142,7 +142,7 @@ void ParticleEffect::setKeyframeFunction(std::function<int(float, int)> keyframe
 {
     this->keyframeFunction = keyframeFunction;
 }
-void ParticleEffect::setDeathFunction(std::function<float(float, int)> deathFunction)
+void ParticleEffect::setDeathFunction(std::function<bool(float, int)> deathFunction)
 {
     this->deathFunction = deathFunction;
 }

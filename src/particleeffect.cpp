@@ -38,14 +38,7 @@ ParticleEffect::ParticleEffect()
     };
     colorFunction = [tMax](float t, int seed)
     {
-        if(t > tMax / 2)
-        {
-            return sf::Color(255, 255, 255, 255 * (1 - t/tMax));
-        }
-        else
-        {
-            return sf::Color(255, 255, 255, 255 * (t/tMax));
-        }
+        return sf::Color(255, 255, 255, 255);
     };
 }
 ParticleEffect::ParticleEffect(float frequency)

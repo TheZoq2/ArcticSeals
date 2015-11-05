@@ -52,8 +52,6 @@ void Game::setup()
     //player->setPosition(Vec2f(5, -100));
     //mainGroup->addEntity(player);
 
-    std::shared_ptr<sf::Texture> particleTexture(new sf::Texture());
-    particleTexture->loadFromFile("../media/img/particleTest.png");
 
     zen::Pathfinder pathfinder(mainGroup);
 
@@ -106,10 +104,13 @@ void Game::setup()
 
     mainGroup->addEntity(testEntity);
 
-    float lifetime = 3;
+    std::shared_ptr<sf::Texture> particleTexture(new sf::Texture());
+    particleTexture->loadFromFile("../media/img/fireParticle.png");
+
+    float lifetime = 1;
     //Test particle effect
     particleEffect = std::unique_ptr<ParticleEffect>(new ParticleEffect(50));
-    particleEffect->setTexture(particleTexture, Vec2f(16,16), 8);
+    particleEffect->setTexture(particleTexture, Vec2f(128,128), 16);
     particleEffect->setDeathFunction(
                 [lifetime](float t, int seed)
                 {
@@ -119,8 +120,8 @@ void Game::setup()
     particleEffect->setOffsetFunction(
             [lifetime](float t, int seed)
             {
-                float angle = M_PI * 2 * ((seed / (float)RAND_MAX));
-                return Vec2f(cos(angle) * 200, sin(angle) * 200) * t;
+                float angle = M_PI / 4 + M_PI / 2.0f * ((seed / (float)RAND_MAX));
+                return Vec2f(cos(angle) * 200, sin(angle) * 200) * (t / 2.0f);
             }
         );
     particleEffect->setSizeFunction(
@@ -132,7 +133,7 @@ void Game::setup()
     particleEffect->setKeyframeFunction(
             [lifetime](float t, int seed)
             {
-               return ceil(t / lifetime * 8);
+               return ceil(t / lifetime * 16);
             }
         );
 

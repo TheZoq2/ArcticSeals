@@ -27,6 +27,7 @@ namespace zen
         void setOffsetFunction(std::function<Vec2f(float, int)> offsetFunction);
         void setSizeFunction(std::function<Vec2f(float, float)> sizeFunction);
         void setKeyframeFunction(std::function<int(float, int)> keyframeFunction);
+        void setDeathFunction(std::function<float(float, int)> deathFunction);
 
         void setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tileSize, int tileAmount);
     private:

@@ -106,21 +106,33 @@ void Game::setup()
 
     mainGroup->addEntity(testEntity);
 
+    float lifetime = 3;
     //Test particle effect
     particleEffect = std::unique_ptr<ParticleEffect>(new ParticleEffect(50));
     particleEffect->setTexture(particleTexture, Vec2f(16,16), 8);
+    particleEffect->setDeathFunction(
+                [lifetime](float t, int seed)
+                {
+                    return t > lifetime;
+                }
+            );
     particleEffect->setOffsetFunction(
-            [](float t, int seed)
+            [lifetime](float t, int seed)
             {
                 float angle = M_PI * 2 * ((seed / (float)RAND_MAX));
-                //return Vec2f(500 * t * ((seed / (float)RAND_MAX)- 0.5), 500 * t * ((seed / (float)RAND_MAX)- 0.5));
                 return Vec2f(cos(angle) * 200, sin(angle) * 200) * t;
             }
         );
     particleEffect->setSizeFunction(
-            [](float t, int seed)
+            [lifetime](float t, int seed)
             {
                 return Vec2f(80,80);
+            }
+        );
+    particleEffect->setKeyframeFunction(
+            [lifetime](float t, int seed)
+            {
+               return ceil(t / lifetime * 8);
             }
         );
 

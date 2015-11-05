@@ -29,7 +29,7 @@ ParticleEffect::ParticleEffect()
     //Constant keyframe
     keyframeFunction = [](float t, int seed)
     {
-        return 1;
+        return 0;
     };
 
     sizeFunction = [](float t, int seed)
@@ -92,6 +92,7 @@ void ParticleEffect::update(float frameTime)
         particle.size = sizeFunction(timeAlive, seed);
         particle.angle = angleFunction(timeAlive, seed);
         particle.color = colorFunction(timeAlive, seed);
+        particle.tileID = keyframeFunction(timeAlive, seed);
 
         //Recalculating the vertecies of the particle
         calculateVertecies(particle);
@@ -140,6 +141,10 @@ void ParticleEffect::setSizeFunction(std::function<Vec2f(float, float)> sizeFunc
 void ParticleEffect::setKeyframeFunction(std::function<int(float, int)> keyframeFunction)
 {
     this->keyframeFunction = keyframeFunction;
+}
+void ParticleEffect::setDeathFunction(std::function<float(float, int)> deathFunction)
+{
+    this->deathFunction = deathFunction;
 }
 
 void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tileSize, int tileAmount)

@@ -120,8 +120,10 @@ void Game::setup()
     particleEffect->setOffsetFunction(
             [lifetime](float t, int seed)
             {
-                float angle = M_PI / 4 + M_PI / 2.0f * ((seed / (float)RAND_MAX));
-                return Vec2f(cos(angle) * 200, sin(angle) * 200) * (t / 2.0f);
+                float offsetAmount = 10;
+                Vec2f offset = Vec2f(cos(seed * 100), sin(seed * 1000)) * offsetAmount;
+                float angle = -M_PI / 2;
+                return offset + Vec2f(cos(angle) * 200, sin(angle) * 200) * (t / 2.0f);
             }
         );
     particleEffect->setSizeFunction(
@@ -134,6 +136,22 @@ void Game::setup()
             [lifetime](float t, int seed)
             {
                return ceil(t / lifetime * 16);
+            }
+        );
+    particleEffect->setColorFunction([lifetime](float t, int seed)
+            {
+                int rStart = 207;
+                int rEnd = 231;
+                int gStart = 107;
+                int gEnd = 182;
+                int bStart = 0;
+                int bEnd  = 7;
+
+                int r = rStart + (rEnd - rStart) * t / lifetime;
+                int g = gStart + (gEnd - gStart) * t / lifetime;
+                int b = bStart + (bEnd - bStart) * t / lifetime;
+
+                return sf::Color(r, g, b, 255 * t / lifetime);
             }
         );
 

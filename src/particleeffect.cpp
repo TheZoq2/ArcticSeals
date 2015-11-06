@@ -23,7 +23,7 @@ ParticleEffect::ParticleEffect()
     //No rotation
     angleFunction = [](float t, int seed)
     {
-        return 0;
+        return M_PI;
     };
     
     //Constant keyframe
@@ -31,7 +31,6 @@ ParticleEffect::ParticleEffect()
     {
         return 0;
     };
-
     sizeFunction = [](float t, int seed)
     {
         return Vec2f(100,100);
@@ -146,6 +145,11 @@ void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tile
     this->tileSize = tileSize;
 
     calculateTileCoords(tileAmount);
+}
+
+void ParticleEffect::setColorFunction(std::function<sf::Color(float, int)> colorFunction) 
+{
+    this->colorFunction = colorFunction;
 }
 
 ////////////////////////////////////////////////////////////////////

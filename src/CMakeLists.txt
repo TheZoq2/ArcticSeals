@@ -52,6 +52,7 @@ add_library(${LIB_NAME}
     components/PlatformComponent.cpp
     components/ShaderComponent.cpp
     components/SpriteShaderComponent.cpp
+    components/GroundComponent.cpp
     systems/System.cpp
     systems/DrawingSystem.cpp
     systems/PhysicsSystem.cpp

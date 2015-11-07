@@ -109,7 +109,7 @@ void Game::setup()
 
     float lifetime = 1;
     //Test particle effect
-    particleEffect = std::unique_ptr<ParticleEffect>(new ParticleEffect(50));
+    particleEffect = std::unique_ptr<ParticleEffect>(new ParticleEffect(20));
     particleEffect->setTexture(particleTexture, Vec2f(128,128), 16);
     particleEffect->setDeathFunction(
                 [lifetime](float t, int seed)
@@ -120,7 +120,7 @@ void Game::setup()
     particleEffect->setOffsetFunction(
             [lifetime](float t, int seed)
             {
-                float offsetAmount = 10;
+                float offsetAmount = 5;
                 Vec2f offset = Vec2f(cos(seed * 100), sin(seed * 1000)) * offsetAmount;
                 float angle = -M_PI / 2;
                 return offset + Vec2f(cos(angle) * 200, sin(angle) * 200) * (t / 2.0f);

@@ -40,6 +40,11 @@ void GroundComponent::draw(sf::RenderTarget* target)
     target->draw(vertecies, state);
 }
 
+std::vector<Vec2f>* GroundComponent::getPoints()
+{
+    return &points;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //								Private members

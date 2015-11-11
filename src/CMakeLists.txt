@@ -19,13 +19,27 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-arcs -Wall -Wextra -Wno-unused -pedantic")
 
-set(LIB_NAME "SharedCode")
-add_library(${LIB_NAME}
-    sprite.cpp
+set(ENGINE_NAME "engine")
+add_library(${ENGINE_NAME}
     world.cpp
     entity.cpp
     mouseeventhandler.cpp
     entitygroup.cpp
+    line.cpp
+    vec2f.cpp
+    platform.cpp
+    skeletal/bone.cpp
+    particleeffect.cpp
+    pathnode.cpp
+    pathfinder.cpp
+    components/Component.cpp
+    systems/System.cpp
+    components/DrawableComponent.cpp
+    systems/DrawingSystem.cpp
+)
+
+set(LIB_NAME "SharedCode")
+add_library(${LIB_NAME}
     zui/uicomponent.cpp
     zui/window.cpp
     zui/inputcomponent.cpp
@@ -33,19 +47,9 @@ add_library(${LIB_NAME}
     zui/textbutton.cpp
     zui/imglistelement.cpp
     zui/imglist.cpp
-    line.cpp
-    vec2f.cpp
-    platform.cpp
     sword.cpp
     meleeweapon.cpp
-    skeletal/bone.cpp
-    particleeffect.cpp
-    #keyframeval.cpp
-    pathnode.cpp
-    pathfinder.cpp
-    components/Component.cpp
     components/TransformComponent.cpp
-    components/DrawableComponent.cpp
     components/SpriteComponent.cpp
     components/PhysicsComponent.cpp
     components/ShapeComponent.cpp
@@ -53,8 +57,6 @@ add_library(${LIB_NAME}
     components/ShaderComponent.cpp
     components/SpriteShaderComponent.cpp
     components/GroundComponent.cpp
-    systems/System.cpp
-    systems/DrawingSystem.cpp
     systems/PhysicsSystem.cpp
     systems/KeyboardSystem.cpp
     systems/PlatformSystem.cpp
@@ -102,7 +104,7 @@ endif()
 #    message("QT5 not found, anim editor will not be built")
 #endif()
 
-target_link_libraries(${EXECUTABLE_NAME} ${LIB_NAME})
+target_link_libraries(${EXECUTABLE_NAME} ${LIB_NAME} ${ENGINE_NAME})
 # Install target
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION bin)
 

@@ -14,6 +14,8 @@ namespace zen
         void load(std::string filename);
         void draw(sf::RenderTarget* target) override;
 
+        std::vector<Vec2f>* getPoints();
+
     private:
         void generateVertexArray();
         sf::VertexArray vertecies;

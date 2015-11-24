@@ -21,6 +21,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-
 
 set(ENGINE_NAME "engine")
 add_library(${ENGINE_NAME}
+    IDList.cpp
     world.cpp
     entity.cpp
     mouseeventhandler.cpp

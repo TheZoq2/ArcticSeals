@@ -13,7 +13,15 @@ namespace zen
     class LightManager
     {
     public:
+        /*
+         *  Add a new light to be managed
+         */
+        int addLight(Light* light);
 
+        /*
+         *  Remove a light from the list. This does not run delete so that needs to be done elsewhere
+         */
+        void forgetLight(int id);
     private:
         IDList<Light> lights;
     };

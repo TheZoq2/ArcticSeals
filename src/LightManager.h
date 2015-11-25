@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Light.h"
+#include "IDList.h"
 
 namespace zen
 {
@@ -14,11 +15,7 @@ namespace zen
     public:
 
     private:
-        std::vector<std::shared_ptr<Light>> lights;
-
-        //Queue of available spots in the light vector. When lights are added, IDs in this list are
-        //used before appending to the end of the vector
-        std::queue<int> freeSpots;
+        IDList<Light> lights;
     };
 } /* zen */ 
 #endif

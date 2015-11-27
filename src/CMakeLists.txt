@@ -37,6 +37,8 @@ add_library(${ENGINE_NAME}
     systems/System.cpp
     components/DrawableComponent.cpp
     systems/DrawingSystem.cpp
+    LightManager.cpp
+    Light.cpp
 )
 
 set(LIB_NAME "SharedCode")

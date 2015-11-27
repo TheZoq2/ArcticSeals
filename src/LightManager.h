@@ -22,8 +22,12 @@ namespace zen
          *  Remove a light from the list. This does not run delete so that needs to be done elsewhere
          */
         void forgetLight(int id);
+
+        int lightAmount();
     private:
         IDList<Light> lights;
+
+        bool listHasChanged = true;
     };
 } /* zen */ 
 #endif

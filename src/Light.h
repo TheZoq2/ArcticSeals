@@ -8,11 +8,17 @@ namespace zen
     class Light
     {
     public:
+        Light() = default;
+        Light(Vec2f position, sf::Color color, float range);
+
+        void setPosition(Vec2f position);
     
     private:
         Vec2f position;
 
         sf::Color color;
+        
+        float range;
     };
 } /* zen */ 
 

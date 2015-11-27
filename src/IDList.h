@@ -16,12 +16,12 @@ namespace zen
          *
          *  O(1) plus possible removal of available ID
          */
-        int push_back(T* value)
+        std::size_t push_back(T* value)
         {
             hasCachedElements = false;
             if(freeSlots.size() > 0)
             {
-                int id = freeSlots.begin();
+                std::size_t id = *(freeSlots.begin());
 
                 data[id] = value;
                 freeSlots.erase(freeSlots.begin());
@@ -39,7 +39,7 @@ namespace zen
          *
          *  O(1)
          */
-        T* at(int id) const
+        T* at(std::size_t id) const
         {
             if(data.size() >= id)
             {
@@ -56,7 +56,7 @@ namespace zen
          *
          *  O(1)
          */
-        void forget(int id)
+        void forget(std::size_t id)
         {
             if(data.size() < id)
             {
@@ -73,7 +73,7 @@ namespace zen
          *
          *  O(1)
          */
-        int size() const
+        std::size_t size() const
         {
             return data.size() - freeSlots.size();
         }
@@ -84,7 +84,7 @@ namespace zen
          *
          *  O(n)
          */
-        std::vector<T*> getElements()
+        std::vector<T*> getElements() const
         {
             if(hasCachedElements)
             {
@@ -99,10 +99,9 @@ namespace zen
 
             return cachedElements;
         }
-    
     private:
         std::vector<T*> data;
-        std::set<int> freeSlots;
+        std::set<std::size_t> freeSlots;
 
         bool hasCachedElements;
         std::vector<T*> cachedElements;

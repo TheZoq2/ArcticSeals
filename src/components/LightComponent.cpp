@@ -7,8 +7,6 @@ using namespace zen;
 LightComponent::LightComponent(LightManager* lightManager)
 {
     this->lightManager = lightManager;
-
-    lightID = lightManager->addLight(&light);
 }
 
 void LightComponent::setLight(Light light)
@@ -25,6 +23,10 @@ void LightComponent::setOwner(Entity* owner)
     Component::setOwner(owner);
 
     owner->addComponentSubscriber<TransformComponent>(this);
+}
+void LightComponent::setPosition(Vec2f position)
+{
+    this->light.setPosition(position);
 }
 
 void LightComponent::receiveComponentMessage(Component* other, int message) 

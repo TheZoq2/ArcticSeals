@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <set>
+#include <iostream>
 
 namespace zen
 {
@@ -10,7 +11,6 @@ namespace zen
     class IDList
     {
     public:
-
         /*
          *  Add an element to the list and return the ID of that value
          *
@@ -18,6 +18,7 @@ namespace zen
          */
         std::size_t push_back(T* value)
         {
+            std::cout << freeSlots.size() << "   " << data.size() << "   " << cachedElements.size() << std::endl;
             hasCachedElements = false;
             if(freeSlots.size() > 0)
             {
@@ -100,10 +101,10 @@ namespace zen
             return cachedElements;
         }
     private:
-        std::vector<T*> data;
-        std::set<std::size_t> freeSlots;
+        std::vector<T*> data = std::vector<T*>();
+        std::set<std::size_t> freeSlots = std::set<std::size_t>();
 
-        bool hasCachedElements;
+        bool hasCachedElements = false;
         std::vector<T*> cachedElements;
     };
 } /* zen */ 

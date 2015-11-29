@@ -18,7 +18,7 @@ namespace zen
 
         sf::Color color;
         
-        float range;
+        float range = 0;
     };
 } /* zen */ 
 

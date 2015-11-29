@@ -18,6 +18,8 @@ namespace zen
     private:
         std::vector<std::pair<std::string, std::shared_ptr<sf::Texture>>> extraTextures;
         std::shared_ptr<sf::Shader> shader;
+
+
     };
 } /* zen */ 
 #endif

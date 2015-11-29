@@ -9,6 +9,7 @@
 #include "components/ShapeComponent.h"
 #include "components/PlatformComponent.h"
 #include "components/SpriteShaderComponent.h"
+#include "components/LightComponent.h"
 
 void Game::setup()
 {
@@ -94,6 +95,7 @@ void Game::setup()
             std::unique_ptr<zen::DrawableComponent>(std::move(spriteShaderComponent))
         );
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
+    testEntity->addComponent(std::unique_ptr<LightComponent>(new zen::LightComponent(mainGroup->getLightManager())));
 
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
     testEntity->addSystem(mainGroup->getSystem<PhysicsSystem>());

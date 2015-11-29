@@ -44,6 +44,10 @@ TransformComponent* Entity::getTransformComponent()
 {
     return this->transform.get();
 }
+EntityGroup* Entity::getGroup()
+{
+    return group;
+}
 
 void Entity::addSystem(System* system)
 {

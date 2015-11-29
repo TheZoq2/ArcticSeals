@@ -52,6 +52,7 @@ add_library(${LIB_NAME}
     zui/imglist.cpp
     sword.cpp
     meleeweapon.cpp
+
     components/TransformComponent.cpp
     components/SpriteComponent.cpp
     components/PhysicsComponent.cpp
@@ -60,6 +61,8 @@ add_library(${LIB_NAME}
     components/ShaderComponent.cpp
     components/SpriteShaderComponent.cpp
     components/GroundComponent.cpp
+    components/LightComponent.cpp
+
     systems/PhysicsSystem.cpp
     systems/KeyboardSystem.cpp
     systems/PlatformSystem.cpp

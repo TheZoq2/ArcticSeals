@@ -39,6 +39,7 @@ namespace zen
     
         int getDepth();
         TransformComponent* getTransformComponent();
+        EntityGroup* getGroup();
 
         void addSystem(System* system);
         void removeSystem(System* system);

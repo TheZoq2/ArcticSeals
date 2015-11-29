@@ -138,6 +138,10 @@ void ParticleEffect::setDeathFunction(std::function<bool(float, int)> deathFunct
 {
     this->deathFunction = deathFunction;
 }
+void ParticleEffect::setColorFunction(std::function<sf::Color(float, int)> colorFunction) 
+{
+    this->colorFunction = colorFunction;
+}
 
 void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tileSize, int tileAmount)
 {
@@ -147,10 +151,6 @@ void ParticleEffect::setTexture(std::shared_ptr<sf::Texture> texture, Vec2f tile
     calculateTileCoords(tileAmount);
 }
 
-void ParticleEffect::setColorFunction(std::function<sf::Color(float, int)> colorFunction) 
-{
-    this->colorFunction = colorFunction;
-}
 
 ////////////////////////////////////////////////////////////////////
 //                  Private member methods

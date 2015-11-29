@@ -102,6 +102,10 @@ Platform* EntityGroup::getPlatformByID(uint32_t id)
     }
     return NULL;
 }
+LightManager* EntityGroup::getLightManager()
+{
+    return &lightManager;
+}
 
 EntityGroup::PlatformCollisionResult EntityGroup::getPlatformCollision(Vec2f originPos, Line* line)
 {

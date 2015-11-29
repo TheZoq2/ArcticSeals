@@ -15,6 +15,7 @@ namespace zen
         void setLight(Light light);
 
         void setOwner(Entity* owner) override;
+        void setPosition(Vec2f position);
 
         void receiveComponentMessage(Component* other, int message) override;
     
@@ -22,7 +23,11 @@ namespace zen
         Light light;
         int lightID;
 
-        LightManager* lightManager;
+        /*
+         *  The light manager that this component will add its lights to.
+         *  It will be fetched from the entity group when setOwner is run
+         */
+        LightManager* lightManager = nullptr;
     };
 } /* zen */ 
 #endif

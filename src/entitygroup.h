@@ -10,6 +10,7 @@
 #include "platform.h"
 #include "systems/System.h"
 #include "exceptions/MissingSystemException.h"
+#include "LightManager.h"
 
 namespace zen
 {
@@ -47,6 +48,7 @@ namespace zen
         std::vector<IDPlatform> getPlatforms();
         Platform* getPlatformByID(uint32_t id);
         bool platformExists(uint32_t id);
+        LightManager* getLightManager();
 
 
         PlatformCollisionResult getPlatformCollision(Vec2f originPos, Line* line); 
@@ -88,6 +90,8 @@ namespace zen
 
         //std::vector<std::unique_ptr<System>> systems;
         std::map<std::type_index, std::unique_ptr<System>> systems;
+
+        LightManager lightManager;
     };
 }
 #endif

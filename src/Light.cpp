@@ -13,3 +13,16 @@ void Light::setPosition(Vec2f position)
 {
     this->position = position;
 }
+
+Vec2f Light::getPosition()
+{
+    return position;
+}
+sf::Color Light::getColor()
+{
+    return color;
+}
+float Light::getRange()
+{
+    return range;
+}

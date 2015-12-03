@@ -85,7 +85,7 @@ namespace zen
          *
          *  O(n)
          */
-        std::vector<T*> getElements() const
+        std::vector<T*> getElements()
         {
             if(hasCachedElements)
             {

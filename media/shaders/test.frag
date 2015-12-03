@@ -1,5 +1,13 @@
+#version 130
+const int MAX_LIGHTS = 64;
+
 uniform sampler2D texture;
 uniform sampler2D normalTexture;
+
+uniform int lightAmount = 0;
+uniform float lightRanges[64];
+uniform vec4 lightColors[64];
+uniform vec4 lightPositions[64];
 
 varying vec4 vertexPos;
 
@@ -15,15 +23,18 @@ void main()
     // lookup the pixel in the texture
     vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
 
-    //Calculating the light influence
-    vec4 lightToPoint = vertexPos, lightPos;
-    vec4 normalLightToPoint = normalize(lightToPoint);
-    float lightAmount = pow(dot(normalLightToPoint, texture2D(normalTexture, gl_TexCoord[0].xy)),5);
+    for(int i = 0; i < lightAmount; ++i)
+    {
+        //Calculating the light influence
+        vec4 lightToPoint = vertexPos, lightPos;
+        vec4 normalLightToPoint = normalize(lightToPoint);
+        float lightAmount = pow(dot(normalLightToPoint, texture2D(normalTexture, gl_TexCoord[0].xy)),5);
 
-    float lightRangeMod = 1.0 - length(lightToPoint) / lightRange;
-    clamp(lightRangeMod, 0, 1);
+        float lightRangeMod = 1.0 - length(lightToPoint) / lightRange;
+        clamp(lightRangeMod, 0, 1);
 
-    lightAmount *= lightRangeMod;
+        lightAmount *= lightRangeMod;
+    }
 
     // multiply it by the color
     gl_FragColor = gl_Color * pixel * ambientLight + pixel * lightColor * lightAmount;

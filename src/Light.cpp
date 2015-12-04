@@ -7,6 +7,8 @@ Light::Light(Vec2f position, sf::Color color, float range)
     this->position = position;
     this->color = color;
     this->range = range;
+
+    std::cout << range << std::endl;
 }
 
 void Light::setPosition(Vec2f position)

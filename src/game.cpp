@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "Light.h"
+
 #include "systems/DrawingSystem.h"
 #include "systems/randomMover.h"
 #include "systems/PhysicsSystem.h"
@@ -88,6 +90,10 @@ void Game::setup()
     spriteShaderComponent->setShader(testShader);
     spriteShaderComponent->addTexture(std::make_pair("normalTexture", testNormal));
     spriteShaderComponent->setOffset(Vec2f(0.5, 0.5));
+    spriteShaderComponent->setLightManager(mainGroup->getLightManager());
+
+    std::unique_ptr<LightComponent> lightComponent(new zen::LightComponent(mainGroup->getLightManager()));
+    lightComponent->setLight(Light(Vec2f(0,0), sf::Color(255,0,0), 100));
     
     Entity* testEntity = new Entity();
     testEntity->addComponent(std::unique_ptr<ShapeComponent>(new zen::ShapeComponent()));
@@ -95,7 +101,7 @@ void Game::setup()
             std::unique_ptr<zen::DrawableComponent>(std::move(spriteShaderComponent))
         );
     testEntity->addComponent(std::unique_ptr<PhysicsComponent>(new zen::PhysicsComponent()));
-    testEntity->addComponent(std::unique_ptr<LightComponent>(new zen::LightComponent(mainGroup->getLightManager())));
+    testEntity->addComponent(std::move(lightComponent));
 
     testEntity->addSystem(mainGroup->getSystem<DrawingSystem>());
     testEntity->addSystem(mainGroup->getSystem<PhysicsSystem>());

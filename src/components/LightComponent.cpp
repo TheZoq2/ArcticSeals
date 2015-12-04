@@ -7,6 +7,8 @@ using namespace zen;
 LightComponent::LightComponent(LightManager* lightManager)
 {
     this->lightManager = lightManager;
+
+    lightID = lightManager->addLight(&light);
 }
 
 void LightComponent::setLight(Light light)

@@ -59,7 +59,7 @@ namespace zen
          */
         void forget(std::size_t id)
         {
-            if(data.size() < id)
+            if(data.size() > id)
             {
                 hasCachedElements = false;
 

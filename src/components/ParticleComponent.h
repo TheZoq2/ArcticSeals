@@ -11,6 +11,7 @@ namespace zen
         ParticleComponent(std::unique_ptr<ParticleEffect> particle);
 
         void draw(sf::RenderTarget* target) override;
+        void update(float time) override;
     private:
         std::unique_ptr<ParticleEffect> particle;
     };

@@ -1,8 +1,8 @@
 #ifndef H_SHAPE_COMPONENT
 #define H_SHAPE_COMPONENT
 
-#include "Component.h"
-#include "../vec2f.h"
+#include "../seal/components/Component.h"
+#include "../seal/vec2f.h"
 
 namespace zen 
 {

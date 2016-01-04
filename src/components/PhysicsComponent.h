@@ -1,8 +1,8 @@
 #ifndef H_PHSYICS_COMPONENT
 #define H_PHSYICS_COMPONENT
 
-#include "Component.h"
-#include "../platform.h"
+#include "../seal/components/Component.h"
+#include "../seal/platform.h"
 
 namespace zen
 {

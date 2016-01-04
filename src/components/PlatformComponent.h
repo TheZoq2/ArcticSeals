@@ -1,10 +1,10 @@
 #ifndef H_PLATFORM_COMPONENT
 #define H_PLATFORM_COMPONENT
 
-#include "../platform.h"
-#include "../vec2f.h"
-#include "Component.h"
-#include "../entitygroup.h"
+#include "../seal/platform.h"
+#include "../seal/vec2f.h"
+#include "../seal/components/Component.h"
+#include "../seal/entitygroup.h"
 
 /*
  *  Component for keepign track of a collision platform.

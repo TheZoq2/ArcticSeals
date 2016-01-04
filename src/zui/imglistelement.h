@@ -6,7 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../vec2f.h"
+#include "../seal/vec2f.h"
 #include "uicomponent.h"
 #include "inputcomponent.h"
 

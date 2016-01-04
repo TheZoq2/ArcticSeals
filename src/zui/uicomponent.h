@@ -10,8 +10,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "inputcomponent.h"
-#include "../vec2f.h"
-#include "../mouseeventhandler.h"
+#include "../seal/vec2f.h"
+#include "../seal/mouseeventhandler.h"
 
 using namespace zen;
 

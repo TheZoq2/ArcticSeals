@@ -21,24 +21,24 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -g -ftest-coverage -fprofile-
 
 set(ENGINE_NAME "engine")
 add_library(${ENGINE_NAME}
-    IDList.cpp
-    world.cpp
-    entity.cpp
-    mouseeventhandler.cpp
-    entitygroup.cpp
-    line.cpp
-    vec2f.cpp
-    platform.cpp
-    skeletal/bone.cpp
-    particleeffect.cpp
-    pathnode.cpp
-    pathfinder.cpp
-    components/Component.cpp
-    systems/System.cpp
-    components/DrawableComponent.cpp
-    systems/DrawingSystem.cpp
-    LightManager.cpp
-    Light.cpp
+    seal/IDList.cpp
+    seal/world.cpp
+    seal/entity.cpp
+    seal/mouseeventhandler.cpp
+    seal/entitygroup.cpp
+    seal/line.cpp
+    seal/vec2f.cpp
+    seal/platform.cpp
+    seal/particleeffect.cpp
+    seal/pathnode.cpp
+    seal/pathfinder.cpp
+    seal/systems/System.cpp
+    seal/components/DrawableComponent.cpp
+    seal/components/TransformComponent.cpp
+    seal/components/Component.cpp
+    seal/systems/DrawingSystem.cpp
+    seal/LightManager.cpp
+    seal/Light.cpp
 )
 
 set(LIB_NAME "SharedCode")
@@ -50,10 +50,7 @@ add_library(${LIB_NAME}
     zui/textbutton.cpp
     zui/imglistelement.cpp
     zui/imglist.cpp
-    sword.cpp
-    meleeweapon.cpp
 
-    components/TransformComponent.cpp
     components/SpriteComponent.cpp
     components/PhysicsComponent.cpp
     components/ShapeComponent.cpp

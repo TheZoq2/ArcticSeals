@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../vec2f.h"
+#include "../seal/vec2f.h"
 
 namespace zui
 {

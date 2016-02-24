@@ -13,7 +13,7 @@
 #include "imglistelement.h"
 #include "textbutton.h"
 
-#include "../vec2f.h"
+#include "../seal/vec2f.h"
 
 namespace zui
 {

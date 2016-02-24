@@ -2,7 +2,7 @@
 #define H_TEXTBUTTON
 
 #include "button.h"
-#include "../vec2f.h"
+#include "../seal/vec2f.h"
 
 #include <memory>
 #include <SFML/Graphics.hpp>

@@ -1,7 +1,7 @@
 #ifndef H_SHADER_COMPONENT
 #define H_SHADER_COMPONENT
 
-#include "Component.h"
+#include "../seal/components/Component.h"
 
 #include <memory>
 
